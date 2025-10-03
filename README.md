@@ -28,6 +28,6 @@ This is a basic [Expo](https://expo.dev) project built with React Native. The go
      or
     npx expo start --go
 
-4. Choose how to run the app:
+5. Choose how to run the app:
     I am currently running in GO mode (you can switch modes with s if you didnt include --go)
-    Press a to open on Android Emulator (requires Android Studio)
+    Press a to open on Android Emulator (requires Android Studio emulator open and running)
