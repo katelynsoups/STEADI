@@ -3,12 +3,18 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <View>
-      <Text>Home</Text>
+    <View style={styles.container}>
+      <Text>This is the begining of Digital STEADI!</Text>
     </View>
   )
 }
 
 export default Home
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+    flex: 1,                  
+    justifyContent: 'center', 
+    alignItems: 'center',
+    }    
+})
