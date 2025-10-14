@@ -17,10 +17,10 @@ This is a basic [Expo](https://expo.dev) project built with React Native. The go
    git clone https://github.com/your-username/STEADI.git
    cd STEADI
 
-
 2. Install Dependencies
     ```bash
     npm install
+    npm install firebase --legacy-peer-deps 
 
 3. Start the Expo Dev Server
     ```bash
