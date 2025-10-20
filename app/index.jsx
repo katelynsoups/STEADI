@@ -3,6 +3,7 @@ import { Colors } from '../constants/Colors'
 import Shield from '../assets/Shield.png'
 import STDBtn from '../components/STDBtn'
 import React from 'react'
+import { addUserAuto } from '../src/firebase'
 
 const index = () => 
 {
