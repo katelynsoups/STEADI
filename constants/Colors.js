@@ -2,5 +2,6 @@
 
 export const Colors = 
 {
-    primary: "#2567e8",
+    primary: "#B14B02",
+    backgroundColor: "#F6F8FA",
 }
