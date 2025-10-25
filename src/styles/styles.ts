@@ -14,6 +14,8 @@ const buttonShadow = {
     shadowRadius: 4,
 };
 
+
+
 export const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
@@ -192,4 +194,62 @@ export const styles = StyleSheet.create({
         bottom: 16,
         right: 16,
     },
+
+    //Index Styles
+    inxContainer:
+    {
+        alignItems: 'center',
+        backgroundColor: "#B14B02",
+        flex: 1,
+    },
+    
+    sampleUserBtn:
+    {
+        top: "25%",
+    },  
+    
+    inxBtn:
+    {
+        justifyContent: 'center',
+        top: "73.55%",
+        paddingVertical: 12,
+        backgroundColor: '#3730A3',
+        borderRadius: 8,
+       ...Platform.select({
+          ios: {
+            buttonShadow,
+          },
+          android: {
+            elevation: 3,
+          },
+          web: {buttonShadow,
+          },
+        }),
+        position: 'absolute',
+        width: 214,
+    },
+    
+    tempText:
+    {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 48,
+        textAlign: 'center',
+    },
+    
+    inxBtnText:
+    {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    
+    shield: 
+    {
+        height: 217,
+        justifyContent: 'center',
+        top: '34.54%',
+        width: 218
+    }
 });
