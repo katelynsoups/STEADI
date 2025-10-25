@@ -1,7 +1,6 @@
 import { StyleSheet} from 'react-native'
 import React from 'react'
 import { Stack } from 'expo-router'
-import { Colors } from "../constants/Colors"
 import { StatusBar } from 'expo-status-bar'
 
 const RootLayout = () => 
@@ -12,7 +11,7 @@ const RootLayout = () =>
         <StatusBar style = "light" />
         <Stack screenOptions = 
         {{
-            headerStyle: {backgroundColor: Colors.primary},
+            headerStyle: {backgroundColor:'#B14B02'},
             //headerTintColor:
         }}>
             <Stack.Screen name = "index" options = {{headerShown: false}}/>
