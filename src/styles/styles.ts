@@ -195,6 +195,35 @@ export const styles = StyleSheet.create({
         right: 16,
     },
 
+    //Header Styles
+    layoutHeader:
+    {
+        height: 190,
+        backgroundColor:'#B14B02',
+    },
+
+    backBtn:
+    {
+        fontSize: 25,
+        color: 'white',
+        left: 13,
+        top: 56,
+        fontWeight: "bold",
+        position: "absolute"
+    },
+
+    headerText:
+    {
+        color: "white",
+        fontWeight: "bold",
+        top: 116,
+        marginLeft: 18,
+        fontSize: 16,
+        marginRight: 18,
+        lineHeight: 25,
+        position: "absolute"
+    },
+
     //Index Styles
     inxContainer:
     {
