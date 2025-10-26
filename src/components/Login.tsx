@@ -10,6 +10,7 @@ import { Svg, Path } from 'react-native-svg';
 import { styles } from '../styles/styles';
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useRouter } from 'expo-router';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -18,6 +19,8 @@ const Login: React.FC = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -79,7 +82,7 @@ const Login: React.FC = () => {
                     <View style={styles.signupContainer}>
                       <Text style={styles.signupText}>Don't have an account? </Text>
                       <TouchableOpacity>
-                        <Text style={styles.signupLink}>Sign Up</Text>
+                        <Text style={styles.signupLink} onPress = {() => router.navigate('/signup')}>Sign Up</Text>
                       </TouchableOpacity>
                     </View>
 

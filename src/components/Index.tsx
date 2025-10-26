@@ -4,9 +4,8 @@ import React from 'react'
 import { addUserAuto } from '../firebase'
 import { useRouter } from 'expo-router'
 import {styles} from '../styles/styles'
-import LinearGradient from 'react-native-linear-gradient';
 
-const index = () => 
+const Index = () => 
 {
   const handleCreateUser = async () => {
     const sample = {
@@ -42,4 +41,4 @@ const index = () =>
   )
 }
 
-export default index
+export default Index
