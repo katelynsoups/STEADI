@@ -8,13 +8,14 @@ import { styles } from '../src/styles/styles'
 const RootLayout = () => 
 { 
   //Custom header, Stack from expo-router does NOT allow you to asjust many things about it. 
-  //BUG: Back Button sometimes takes multiple presses to go back to previous page.
+  //BUG: White flash when back button is pressed
   const CustomHeader = ({ headerText }) => (
     <View style={styles.layoutHeader}>
 
-      <TouchableOpacity onPress = {() => router.back()}>
+      <TouchableOpacity>
         <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
           style = {styles.backBtn}
+          onPress = {() => router.back()}
         />
       </TouchableOpacity>
       <Text style={styles.headerText}>{headerText}</Text>

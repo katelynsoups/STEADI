@@ -200,6 +200,7 @@ export const styles = StyleSheet.create({
     {
         height: 190,
         backgroundColor:'#B14B02',
+        borderRadius: 8
     },
 
     backBtn:
@@ -218,29 +219,28 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         top: 116,
         marginLeft: 18,
-        fontSize: 16,
+        fontSize: 18,
         marginRight: 18,
         lineHeight: 25,
         position: "absolute"
-    },
-
-    //Index Styles
-    inxContainer:
-    {
-        alignItems: 'center',
-        backgroundColor: "#B14B02",
-        flex: 1,
     },
     
     sampleUserBtn:
     {
         top: "25%",
     },  
-    
+
     inxBtn:
     {
-        justifyContent: 'center',
         top: "73.55%",
+        position: 'absolute'
+    },
+
+    //Generic
+    
+    btn:
+    {
+        justifyContent: 'center',
         paddingVertical: 12,
         backgroundColor: '#3730A3',
         borderRadius: 8,
@@ -254,8 +254,8 @@ export const styles = StyleSheet.create({
           web: {buttonShadow,
           },
         }),
-        position: 'absolute',
-        width: 214,
+        position: 'static',
+        width: "80%",
     },
     
     tempText:
@@ -266,7 +266,7 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     
-    inxBtnText:
+    btnText:
     {
         color: 'white',
         fontSize: 18,
