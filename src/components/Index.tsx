@@ -4,6 +4,7 @@ import React from 'react'
 import { addUserAuto } from '../firebase'
 import { useRouter } from 'expo-router'
 import {styles} from '../styles/styles'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const Index = () => 
 {
@@ -24,19 +25,23 @@ const Index = () =>
     const router = useRouter()
 
   return (
-    <View style = {styles.inxContainer}>
-      <TouchableOpacity onPress = {handleCreateUser} style={[styles.inxBtn, styles.sampleUserBtn]}>
-        <Text style={styles.inxBtnText}>Create Sample User</Text>
+    <View style = {{flex: 1}}>
+      <LinearGradient
+        colors={['#FDB10D', '#B14B02', '#A1210F']}
+        style = {{alignItems: "center", flex: 1}}
+      >
+      <TouchableOpacity onPress = {handleCreateUser} style={[styles.btn, styles.inxBtn, styles.sampleUserBtn]}>
+        <Text style={styles.btnText}>Create Sample User</Text>
       </TouchableOpacity>
 
       <ImageBackground source = {Shield} style = {styles.shield}>
         <Text style = {styles.tempText}>STEADI</Text>
       </ImageBackground>
 
-      <TouchableOpacity onPress = {() => router.navigate('/login')} style = {styles.inxBtn}>
-        <Text style = {styles.inxBtnText}>Get Started</Text>
+      <TouchableOpacity onPress = {() => router.navigate('/login')} style = {[styles.btn, styles.inxBtn]}>
+        <Text style = {styles.btnText}>Get Started</Text>
       </TouchableOpacity>
-
+      </LinearGradient>
     </View>
   )
 }
