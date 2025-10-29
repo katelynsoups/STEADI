@@ -14,6 +14,8 @@ const buttonShadow = {
     shadowRadius: 4,
 };
 
+
+
 export const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
@@ -192,4 +194,91 @@ export const styles = StyleSheet.create({
         bottom: 16,
         right: 16,
     },
+
+    //Header Styles
+    layoutHeader:
+    {
+        height: 190,
+        backgroundColor:'#B14B02',
+        borderRadius: 8
+    },
+
+    backBtn:
+    {
+        fontSize: 25,
+        color: 'white',
+        left: 13,
+        top: 56,
+        fontWeight: "bold",
+        position: "absolute"
+    },
+
+    headerText:
+    {
+        color: "white",
+        fontWeight: "bold",
+        top: 116,
+        marginLeft: 18,
+        fontSize: 18,
+        marginRight: 18,
+        lineHeight: 25,
+        position: "absolute"
+    },
+    
+    sampleUserBtn:
+    {
+        top: "25%",
+    },  
+
+    inxBtn:
+    {
+        top: "73.55%",
+        position: 'absolute'
+    },
+
+    //Generic
+    
+    btn:
+    {
+        justifyContent: 'center',
+        paddingVertical: 12,
+        backgroundColor: '#3730A3',
+        borderRadius: 8,
+       ...Platform.select({
+          ios: {
+            buttonShadow,
+          },
+          android: {
+            elevation: 3,
+          },
+          web: {buttonShadow,
+          },
+        }),
+        position: 'static',
+        width: "80%",
+    },
+    
+    tempText:
+    {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 48,
+        textAlign: 'center',
+    },
+    
+    btnText:
+    {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    
+    shield: 
+    {
+        height: 217,
+        justifyContent: 'center',
+        top: '34.54%',
+        width: 218
+    }
 });
