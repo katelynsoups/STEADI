@@ -236,6 +236,12 @@ export const styles = StyleSheet.create({
         position: 'absolute'
     },
 
+    shortBtn:
+    {
+        top: "80%",
+        position: 'absolute'
+    },
+
     //Generic
     
     btn:

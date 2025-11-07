@@ -27,6 +27,20 @@
       "eas": {
         "projectId": "ff395ef2-c855-4583-973a-c0e11cbccfa5"
       }
-    }
+    },
+    "plugins": [
+    [
+      "react-native-video",
+      {
+        "enableNotificationControls": true,
+        "androidExtensions": {
+          "useExoplayerRtsp": false,
+          "useExoplayerSmoothStreaming": false,
+          "useExoplayerHls": false,
+          "useExoplayerDash": false
+        }
+      }
+    ]
+  ]
   }
 }
