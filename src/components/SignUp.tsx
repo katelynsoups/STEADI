@@ -18,18 +18,18 @@ const SignUp = () =>
     };
 
     return (
-        <View style = {styleSU.background}> 
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>First Name</Text>
+        <View style = {styles.background}> 
+            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
                 />
             </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>Last Name</Text>
+            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Last Name</Text>
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
                 />
             </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>Phone Number</Text>
+            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Phone Number</Text>
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
                     placeholder="(888) 888-8888"
@@ -37,7 +37,7 @@ const SignUp = () =>
                     keyboardType="phone-pad"
                 />
             </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>New Password</Text>
+            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>New Password</Text>
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
                     placeholder="********"
@@ -45,7 +45,7 @@ const SignUp = () =>
                     secureTextEntry={!passwordVisible}
                 />
             </View>
-               <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>Confirm Password</Text>
+               <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Confirm Password</Text>
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
                     placeholder="********"
@@ -62,22 +62,3 @@ const SignUp = () =>
 }
 
 export default SignUp;
-
-const styleSU = StyleSheet.create( 
-{
-    background:
-    {
-        flex: 1,
-        alignItems: 'center',
-        padding: 16,
-        backgroundColor: '#F6F8FA'
-    },
-
-    inputHeader:
-    {
-        left: "2%",
-        fontSize: 15,
-        color: "#6C7278",
-        marginBottom: 8
-    },
-});

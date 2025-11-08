@@ -1,13 +1,14 @@
-import { StyleSheet, Text, View, ImageBackground, Alert, TouchableOpacity, Platform} from 'react-native'
-import Shield from '../assets/Shield.png'
-import React from 'react'
-import { addUserAuto } from '../firebase'
-import { useRouter } from 'expo-router'
-import {styles} from '../styles/styles'
-import { LinearGradient } from 'expo-linear-gradient'
+import { StyleSheet, Text, View, ImageBackground, Alert, TouchableOpacity, Platform} from 'react-native';
+import React from 'react';
+import { addUserAuto } from '../firebase';
+import { useRouter } from 'expo-router';
+import {styles} from '../styles/styles';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Index = () => 
 {
+  const Shield = require('../assets/Shield.png');
+
   const handleCreateUser = async () => {
     const sample = {
       name: 'Test User',

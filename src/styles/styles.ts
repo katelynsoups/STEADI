@@ -286,5 +286,29 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         top: '34.54%',
         width: 218
-    }
+    },
+
+    background:
+    {
+        flex: 1,
+        alignItems: 'center',
+        padding: 16,
+        backgroundColor: '#F6F8FA'
+    },
+
+    video: 
+    {
+      marginTop: 8,
+      width: 350,
+      height: 200,
+      marginBottom: 8
+    },
+
+    inputHeader:
+    {
+      left: "2%",
+      fontSize: 15,
+      color: "#6C7278",
+      marginBottom: 8
+    },
 });
