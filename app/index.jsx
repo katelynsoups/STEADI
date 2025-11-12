@@ -1,10 +1,8 @@
 import React from 'react';
 import Index from '../src/components/Index';
 
-const StartPage = () => {
+export default function IndexScreen() {
     return (
       <Index />
     );
 };
-
-export default StartPage;

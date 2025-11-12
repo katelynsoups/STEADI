@@ -1,83 +1,88 @@
 import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { styles } from '../styles/styles';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
+import { signUp } from '../utils/gcipAuth';
+import { useRouter } from 'expo-router';
 
-const SignUp = () =>
-{
-    const [passwordVisible, setPasswordVisible] = useState(false);
+const SignUp = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const router = useRouter();
 
-    const togglePasswordVisibility = () => 
-    {
-        setPasswordVisible(!passwordVisible);
-    };
+  const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
+      return;
+    }
 
-    return (
-        <View style = {styleSU.background}> 
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>First Name</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                />
-            </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>Last Name</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                />
-            </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>Phone Number</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                    placeholder="(888) 888-8888"
-                    placeholderTextColor="#6B7280"
-                    keyboardType="phone-pad"
-                />
-            </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>New Password</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                    placeholder="********"
-                    placeholderTextColor="#6B7280"
-                    secureTextEntry={!passwordVisible}
-                />
-            </View>
-               <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styleSU.inputHeader}>Confirm Password</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                    placeholder="********"
-                    placeholderTextColor="#6B7280"
-                    secureTextEntry={!passwordVisible}
-                />
-            </View>
+    try {
+      const userCredential = await signUp(email, password);
+      console.log('User created:', userCredential.user);
+      Alert.alert('Success', 'Account created successfully');
+      router.push('/login');
+    } catch (error: any) {
+      console.error('Sign-up error:', error);
+      Alert.alert('Error', error.message);
+    }
+  };
 
-            <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]}>
-                <Text style = {[styles.btnText]}>Next</Text>
-            </TouchableOpacity>
-        </View>
-    )
-}
+  return (
+    <View style={styleSU.background}> 
+      <View style={[{ width: '100%', marginBottom: 8 }]}>
+        <Text style={styleSU.inputHeader}>Email</Text>
+        <TextInput
+          style={[styles.input, { backgroundColor: 'white' }]}
+          placeholder="email@example.com"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+      </View>
+
+      <View style={[{ width: '100%', marginBottom: 8 }]}>
+        <Text style={styleSU.inputHeader}>Password</Text>
+        <TextInput
+          style={[styles.input, { backgroundColor: 'white' }]}
+          placeholder="********"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+      </View>
+
+      <View style={[{ width: '100%', marginBottom: 8 }]}>
+        <Text style={styleSU.inputHeader}>Confirm Password</Text>
+        <TextInput
+          style={[styles.input, { backgroundColor: 'white' }]}
+          placeholder="********"
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+      </View>
+
+      <TouchableOpacity style={[styles.btn, { marginTop: 16 }]} onPress={handleSignUp}>
+        <Text style={styles.btnText}>Create Account</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default SignUp;
 
-const styleSU = StyleSheet.create( 
-{
-    background:
-    {
-        flex: 1,
-        alignItems: 'center',
-        padding: 16,
-        backgroundColor: '#F6F8FA'
-    },
-
-    inputHeader:
-    {
-        left: "2%",
-        fontSize: 15,
-        color: "#6C7278",
-        marginBottom: 8
-    },
+const styleSU = StyleSheet.create({
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#F6F8FA',
+  },
+  inputHeader: {
+    left: '2%',
+    fontSize: 15,
+    color: '#6C7278',
+    marginBottom: 8,
+  },
 });

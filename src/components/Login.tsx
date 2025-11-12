@@ -5,22 +5,38 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Alert
 } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
 import { styles } from '../styles/styles';
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
+import { signIn } from '../utils/gcipAuth';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [emailOrPhone, setEmailOrPhone] = useState('');
+  const [password, setPassword] = useState('');
+
+  const router = useRouter();
+
+const handleLogin = async () => {
+    try {
+      const userCredential = await signIn(emailOrPhone, password);
+      const token = await userCredential.user.getIdToken();
+      Alert.alert('Success', 'Logged in successfully!');
+      // Navigate to main/home screen after login
+      router.push('/home');
+    } catch (err: any) {
+      Alert.alert('Login Failed', err.response?.data?.error?.message || err.message);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
-
-  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -74,7 +90,7 @@ const Login: React.FC = () => {
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity style={styles.loginButton}>
+                        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
                             <Text style={styles.loginButtonText}>Log In</Text>
                         </TouchableOpacity>
                     </View>
