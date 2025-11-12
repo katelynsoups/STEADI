@@ -1,13 +1,14 @@
-import { StyleSheet, Text, View, ImageBackground, Alert, TouchableOpacity, Platform} from 'react-native'
-import Shield from '../assets/Shield.png'
-import React from 'react'
-import { addUserAuto } from '../firebase'
-import { useRouter } from 'expo-router'
-import {styles} from '../styles/styles'
-import { LinearGradient } from 'expo-linear-gradient'
+import { StyleSheet, Text, View, ImageBackground, Alert, TouchableOpacity, Platform} from 'react-native';
+import React from 'react';
+import { addUserAuto } from '../firebase';
+import { useRouter } from 'expo-router';
+import {styles} from '../styles/styles';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Index = () => 
 {
+  const Shield = require('../assets/Shield.png');
+
   const handleCreateUser = async () => {
     const sample = {
       name: 'Test User',
@@ -24,6 +25,7 @@ const Index = () =>
 
     const router = useRouter()
 
+  //Remove shortcut button when app is ready -Jean
   return (
     <View style = {{flex: 1}}>
       <LinearGradient
@@ -41,6 +43,11 @@ const Index = () =>
       <TouchableOpacity onPress = {() => router.navigate('/login')} style = {[styles.btn, styles.inxBtn]}>
         <Text style = {styles.btnText}>Get Started</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress = {() => router.navigate('/shortcut')} style = {[styles.btn, styles.shortBtn]}>
+        <Text style = {styles.btnText}>Page Shortcut</Text>
+      </TouchableOpacity>
+
       </LinearGradient>
     </View>
   )

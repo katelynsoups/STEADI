@@ -24,15 +24,29 @@ const RootLayout = () =>
 
   return (
     <>
-        <StatusBar style = "light" />
-        <Stack>
-            <Stack.Screen name = "index" options = {{headerShown: false}}/>
-            <Stack.Screen name = "login" options = {{headerShown: false}}/>
-            <Stack.Screen name = "signup" options = {{
-              header: () => 
-                <CustomHeader headerText = "Let's get to know you better! What is your name?"/>
-            }}/>
-        </Stack>
+      <StatusBar style = "light" />
+
+      <Stack>
+        <Stack.Screen name = "index" options = {{headerShown: false}}/>
+
+        <Stack.Screen name = "shortcut" options = {{
+          header: () => 
+            <CustomHeader headerText = "Temporary shortcut menu"/>
+        }}/>
+
+        <Stack.Screen name = "login" options = {{headerShown: false}}/>
+
+        <Stack.Screen name = "signup" options = {{
+          header: () => 
+            <CustomHeader headerText = "Let's get to know you better! What is your name?"/>
+        }}/>
+
+        <Stack.Screen name = "bloodtest" options = {{
+          header: () => 
+            <CustomHeader headerText = "Measure your orthostatic blood pressure."/>
+        }}/>
+            
+      </Stack>
     </>
   )
 }
