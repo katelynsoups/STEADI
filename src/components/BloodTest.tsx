@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { styles } from '../styles/styles';
 import {
@@ -14,6 +13,8 @@ const BloodTest = () =>
 {
 
   //Swap out for video url or changed video title
+  //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
+  //it will eventually pull from blob storage in the db
   const bloodInstruct = require('../assets/STEADItestvid.mp4');
 
   const player = useVideoPlayer(bloodInstruct, player => {

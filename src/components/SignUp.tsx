@@ -5,8 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert,
-  StyleSheet
+  Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { signUp } from '../utils/gcipAuth';
@@ -37,69 +36,64 @@ const SignUp = () => {
         }
     };
 
-    //const [passwordVisible, setPasswordVisible] = useState(false);
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     // const togglePasswordVisibility = () => 
     // {
     //     setPasswordVisible(!passwordVisible);
     // };
 
-      return (
-    <View style={styleSU.background}> 
-      <View style={[{ width: '100%', marginBottom: 8 }]}>
-        <Text style={styleSU.inputHeader}>Email</Text>
-        <TextInput
-          style={[styles.input, { backgroundColor: 'white' }]}
-          placeholder="email@example.com"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-      </View>
+    return (
+        <View style = {styles.background}> 
+            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
+                <TextInput
+                    style={[styles.input, {backgroundColor: "white"}]}
+                />
+            </View>
+            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Last Name</Text>
+                <TextInput
+                    style={[styles.input, {backgroundColor: "white"}]}
+                />
+            </View>
+            <View style={{ width: "100%", marginBottom: 8 }}>
+                <Text style={styles.inputHeader}>Email</Text>
+                <TextInput
+                    style={[styles.input, { backgroundColor: "white" }]}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="email@example.com"
+                    placeholderTextColor="#6B7280"
+                    keyboardType="email-address"
+                />
+            </View>
+            <View style={{ width: "100%", marginBottom: 8 }}>
+                <Text style={styles.inputHeader}>Password</Text>
+                <TextInput
+                    style={[styles.input, { backgroundColor: "white" }]}
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="********"
+                    placeholderTextColor="#6B7280"
+                    secureTextEntry={!passwordVisible}
+                />
+            </View>
+            <View style={{ width: "100%", marginBottom: 8 }}>
+                <Text style={styles.inputHeader}>Confirm Password</Text>
+                <TextInput
+                    style={[styles.input, { backgroundColor: "white" }]}
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    placeholder="********"
+                    placeholderTextColor="#6B7280"
+                    secureTextEntry={!passwordVisible}
+                />
+            </View>
 
-      <View style={[{ width: '100%', marginBottom: 8 }]}>
-        <Text style={styleSU.inputHeader}>Password</Text>
-        <TextInput
-          style={[styles.input, { backgroundColor: 'white' }]}
-          placeholder="********"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-      </View>
-
-      <View style={[{ width: '100%', marginBottom: 8 }]}>
-        <Text style={styleSU.inputHeader}>Confirm Password</Text>
-        <TextInput
-          style={[styles.input, { backgroundColor: 'white' }]}
-          placeholder="********"
-          secureTextEntry
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-        />
-      </View>
-
-      <TouchableOpacity style={[styles.btn, { marginTop: 16 }]} onPress={handleSignUp}>
-        <Text style={styles.btnText}>Create Account</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+            <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]} onPress={handleSignUp}>
+                <Text style = {[styles.btnText]}>Next</Text>
+            </TouchableOpacity>
+        </View>
+    )
+}
 
 export default SignUp;
-
-const styleSU = StyleSheet.create({
-  background: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#F6F8FA',
-  },
-  inputHeader: {
-    left: '2%',
-    fontSize: 15,
-    color: '#6C7278',
-    marginBottom: 8,
-  },
-});
