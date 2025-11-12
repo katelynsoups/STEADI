@@ -1,98 +1,133 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView,
   View,
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import { Svg, Path } from 'react-native-svg';
 import { styles } from '../styles/styles';
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
+import { signIn } from '../utils/gcipAuth';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [emailOrPhone, setEmailOrPhone] = useState('');
+  const [password, setPassword] = useState('');
+
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signIn(emailOrPhone, password);
+      const token = await userCredential.user.getIdToken();
+      Alert.alert('Success', 'Logged in successfully!');
+      router.push('/home');
+    } catch (err: any) {
+      Alert.alert('Login Failed', err.response?.data?.error?.message || err.message);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const router = useRouter();
-
   return (
-    <SafeAreaView style={styles.safeArea}>
-        {/* Header Section */}
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeArea}>
         <View style={styles.header}>
-            {/* TODO: Insert logo here */}
-            <Text style={styles.headerTitle}>Sign in to your Account</Text>
-            <Text style={styles.headerSubtitle}>Enter your phone number and password to log in</Text>
+          <Text style={styles.headerTitle}>Sign in to your Account</Text>
+          <Text style={styles.headerSubtitle}>
+            Enter your phone number and password to log in
+          </Text>
         </View>
 
         <View style={styles.outerContainer}>
-            <View style={styles.container}>
-                {/* Form Section */}
-                <View style={styles.formContainer}>
-                    <TouchableOpacity style={styles.appleButton}>
-                        <AntDesign name="apple" size={24} color="black" />
-                        <Text style={styles.appleButtonText}>Continue with Apple</Text>
-                    </TouchableOpacity>
+          <View style={styles.container}>
+            <View style={styles.formContainer}>
+              {/* Apple Button */}
+              <TouchableOpacity style={styles.appleButton}>
+                <AntDesign name="apple" size={24} color="black" />
+                <Text style={styles.appleButtonText}>Continue with Apple</Text>
+              </TouchableOpacity>
 
-                    <View style={styles.dividerContainer}>
-                        <View style={styles.dividerLine} />
-                        <Text style={styles.dividerText}>Or</Text>
-                        <View style={styles.dividerLine} />
-                    </View>
+              {/* Divider */}
+              <View style={styles.dividerContainer}>
+                <View style={styles.dividerLine} />
+                <Text style={styles.dividerText}>Or</Text>
+                <View style={styles.dividerLine} />
+              </View>
 
-                    <View style={styles.form}>
-                        <TextInput
-                            style={[styles.input, { marginBottom: 16 }]}
-                            placeholder="(888) 888-8888"
-                            placeholderTextColor="#6B7280"
-                            keyboardType="phone-pad"
-                        />
-                        <View style={[styles.passwordContainer, { marginBottom: 16 }]}>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="********"
-                                placeholderTextColor="#6B7280"
-                                secureTextEntry={!passwordVisible}
-                            />
-                            <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
-                                <AntDesign name="eye-invisible" size={20} color="#ACB5BB" /> {/* TODO: Move this color here to style sheet as 'Secondary Gray'*/}
-                            </TouchableOpacity>
-                        </View>
+              {/* Form Inputs */}
+              <View style={styles.form}>
+                <TextInput
+                  style={[styles.input, { marginBottom: 16 }]}
+                  placeholder="(888) 888-8888"
+                  placeholderTextColor="#6B7280"
+                  keyboardType="phone-pad"
+                  value={emailOrPhone}
+                  onChangeText={setEmailOrPhone}
+                />
 
-                        <View style={[styles.optionsContainer, { marginBottom: 16 }]}>                            <TouchableOpacity style={styles.rememberMeContainer} onPress={() => setRememberMe(!rememberMe)}>
-                                <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
-                                <Text style={styles.rememberMeText}>Remember me</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <TouchableOpacity style={styles.loginButton}>
-                            <Text style={styles.loginButtonText}>Log In</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.signupContainer}>
-                      <Text style={styles.signupText}>Don't have an account? </Text>
-                      <TouchableOpacity>
-                        <Text style={styles.signupLink} onPress = {() => router.navigate('/signup')}>Sign Up</Text>
-                      </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.globeContainer}>
-                        <Entypo name="language" size={24} color="#ACB5BB" />
-                    </View>
+                <View style={[styles.passwordContainer, { marginBottom: 16 }]}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="********"
+                    placeholderTextColor="#6B7280"
+                    secureTextEntry={!passwordVisible}
+                    value={password}
+                    onChangeText={setPassword}
+                  />
+                  <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
+                    <AntDesign
+                      name={passwordVisible ? 'eye' : 'eye-invisible'}
+                      size={20}
+                      color="#ACB5BB"
+                    />
+                  </TouchableOpacity>
                 </View>
+
+                {/* Options */}
+                <View style={[styles.optionsContainer, { marginBottom: 16 }]}>
+                  <TouchableOpacity
+                    style={styles.rememberMeContainer}
+                    onPress={() => setRememberMe(!rememberMe)}
+                  >
+                    <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
+                    <Text style={styles.rememberMeText}>Remember me</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                  </TouchableOpacity>
+                </View>
+
+                {/* Login Button */}
+                <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                  <Text style={styles.loginButtonText}>Log In</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Sign Up Link */}
+              <View style={styles.signupContainer}>
+                <Text style={styles.signupText}>Don't have an account? </Text>
+                <TouchableOpacity onPress={() => router.push('/signup')}>
+                  <Text style={styles.signupLink}>Sign Up</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Language Icon */}
+              <View style={styles.globeContainer}>
+                <Entypo name="language" size={24} color="#ACB5BB" />
+              </View>
             </View>
+          </View>
         </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
