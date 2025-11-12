@@ -21,8 +21,15 @@ This is a basic [Expo](https://expo.dev) project built with React Native. The go
     ```bash
     npm install
     npm install firebase --legacy-peer-deps 
+    npm install dotenv
 
-3. Start the Expo Dev Server
+3. Secrets
+    create .env file and get API key from google proj environment
+    run this command to load in environment vars:
+    ```bash
+    npm install dotenv
+
+4. Start the Expo Dev Server
     ```bash
     npx expo start
      or
