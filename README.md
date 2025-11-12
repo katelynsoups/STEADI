@@ -21,6 +21,7 @@ This is a basic [Expo](https://expo.dev) project built with React Native. The go
     ```bash
     npm install
     npm install firebase --legacy-peer-deps 
+    npm install @expo/vector-icons
 
 3. Start the Expo Dev Server
     ```bash
