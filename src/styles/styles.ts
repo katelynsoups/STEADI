@@ -14,7 +14,13 @@ const buttonShadow = {
     shadowRadius: 4,
 };
 
-
+const androidShadow = {
+  elevation: 20,
+  shadowColor: 'transparent', // just to match type
+  shadowOffset: { width: 0, height: 0 },
+  shadowOpacity: 0,
+  shadowRadius: 0,
+};
 
 export const styles = StyleSheet.create({
     safeArea: {
@@ -38,9 +44,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         ...Platform.select({
             ios: containerShadow,
-            android: {
-                elevation: 20,
-            },
+            android: androidShadow,
             web: containerShadow,
         }),
     },
@@ -165,9 +169,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         ...Platform.select({
             ios: buttonShadow,
-            android: {
-                elevation: 3,
-            },
+            android: androidShadow,
             web: buttonShadow,
         }),
     },
