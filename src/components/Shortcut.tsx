@@ -10,8 +10,8 @@ const Shortcut = () =>
 
   return (
     <View style = {{flex: 1}}>
-        <TouchableOpacity onPress = {() => router.navigate('/bloodtest')}style={[styles.btn, styles.inxBtn]}>
-            <Text style = {styles.btnText}>Go to Blood Test</Text>
+        <TouchableOpacity onPress = {() => router.navigate('/screening')}style={[styles.btn, styles.inxBtn]}>
+            <Text style = {styles.btnText}>Test screening pages</Text>
         </TouchableOpacity>
     </View>
   )

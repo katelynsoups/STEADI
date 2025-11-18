@@ -41,6 +41,36 @@ const RootLayout = () =>
             <CustomHeader headerText = "Let's get to know you better! What is your name?"/>
         }}/>
 
+        <Stack.Screen name = "screening" options = {{
+            header: () =>
+                <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
+        }}/>
+
+        <Stack.Screen name = "screening2" options = {{
+            header: () =>
+                <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
+        }}/>
+
+        <Stack.Screen name = "screening3" options = {{
+            header: () =>
+                <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
+        }}/>
+
+        <Stack.Screen name = "screening4" options = {{
+            header: () =>
+                <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
+        }}/>
+
+        <Stack.Screen name = "screening5" options = {{
+            header: () =>
+                <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
+        }}/>
+
+        <Stack.Screen name = "screening6" options = {{
+            header: () =>
+                <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
+        }}/>
+
         <Stack.Screen name = "bloodtest" options = {{
           header: () => 
             <CustomHeader headerText = "Measure your orthostatic blood pressure."/>
