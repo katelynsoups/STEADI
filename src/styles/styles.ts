@@ -173,11 +173,25 @@ export const styles = StyleSheet.create({
             web: buttonShadow,
         }),
     },
-    loginButtonText: {
+
+    // Use these for all the 'Next' buttons
+    blueButtonText: {
         color: '#FFFFFF',
         fontWeight: '600',
         fontSize: 16,
     },
+    blueNextButton: {
+            marginTop: 8,
+            backgroundColor: '#172063',
+            borderRadius: 12,
+            paddingVertical: 16,
+            alignItems: 'center',
+            justifyContent: 'center',
+    },
+    nextButtonDisabled: {
+            opacity: 0.4,
+    },
+
     signupContainer: {
         marginTop: 32,
         flexDirection: 'row',
@@ -244,7 +258,7 @@ export const styles = StyleSheet.create({
         position: 'absolute'
     },
 
-    //Generic
+    // Generic
     
     btn:
     {
@@ -312,5 +326,76 @@ export const styles = StyleSheet.create({
       fontSize: 15,
       color: "#6C7278",
       marginBottom: 8
+    },
+
+    // Screening component styles
+    screeningContent: {
+        paddingHorizontal: 24,
+        paddingTop: 16,
+        paddingBottom: 32,
+    },
+    screeningCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        paddingHorizontal: 20,
+        paddingVertical: 24,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+    },
+    screeningQuestionText: {
+        fontSize: 17,
+        color: '#111827',
+        fontWeight: '500',
+        marginBottom: 12,
+    },
+    screeningWhyItMatters: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        marginBottom: 18,
+    },
+    screeningWhyText: {
+        color: '#6B7280',
+        fontSize: 14,
+        textDecorationLine: 'underline',
+    },
+    screeningOptionRow: {
+        flexDirection: 'row',
+        gap: 12,
+    },
+    screeningOptionButton: {
+        flex: 1,
+        borderRadius: 16,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+        backgroundColor: '#FFFFFF',
+    },
+    screeningBubble: {
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#D1D5DB',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    screeningBubbleSelected: {
+        borderColor: '#172063',
+    },
+    screeningBubbleDot: {
+        height: 10,
+        width: 10,
+        backgroundColor: '#172063',
+        borderRadius: 5,
+    },
+    screeningOptionLabel: {
+        fontSize: 16,
+        color: '#111827',
+        fontWeight: '600',
     },
 });
