@@ -43,7 +43,7 @@ const BloodTest = () =>
         />
       </View>
 
-      <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]}>
+      <TouchableOpacity onPress = {() => {player.pause()}} style = {[styles.btn, {position: "static", marginTop: 16}]}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>
