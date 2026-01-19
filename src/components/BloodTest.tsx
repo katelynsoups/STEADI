@@ -35,18 +35,18 @@ const BloodTest = () =>
         style = {styles.video}
       />
 
-      <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Standing Blood Pressure:</Text>
+      <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Standing Blood Pressure:</Text>
         <TextInput
           style={[styles.input, {backgroundColor: "white"}]}
         />
       </View>
-      <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Lying Down Blood Pressure:</Text>
+      <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Lying Down Blood Pressure:</Text>
         <TextInput
           style={[styles.input, {backgroundColor: "white"}]}
         />
       </View>
 
-      <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/homehazards')}} style = {[styles.btn, {position: "static", marginTop: 16}]}>
+      <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/homehazards')}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

@@ -7,12 +7,15 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 
 type buttonStats = {
     id: number;
     top: number;
     left: number;
 }
+
+const router = useRouter()
 
 const buttonMap = new Map<number, boolean>();
 //source @ https://www.vecteezy.com/vector-art/5218154-footprint-heel-the-black-color-icon, look into whether I need to attribute or pay a sub for image
@@ -86,16 +89,17 @@ const FootTest = () =>
 
             </View>
 
-            <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]}>
+            <TouchableOpacity onPress = {() => {router.navigate('/vitamindtest')}} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>
         
-        )
+    )
 }
 
 export default FootTest;
 
+//id this being used?
 const footStyle = StyleSheet.create(
 {
     button: {

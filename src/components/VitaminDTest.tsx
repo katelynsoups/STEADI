@@ -2,48 +2,35 @@ import React, { useState } from 'react';
 import { styles } from '../styles/styles';
 import {
   View,
-  Text, //copied -> make changes to remove video and just have text box entry
+  Text,
   TextInput,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { useVideoPlayer, VideoView } from 'expo-video';
+import Radiobtn from './RadioBtn';
 
-const BloodTest = () =>
+const VitaminDTest = () =>
 {
-
-  //Swap out for video url or changed video title
-  //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
-  //it will eventually pull from blob storage in the db
-  const bloodInstruct = require('../assets/STEADItestvid.mp4');
-
-  const player = useVideoPlayer(bloodInstruct, player => {
-    player.loop = false;
-    player.play();
-  });
+    const[vitaminD, setVitaminD] = useState("");
 
   return (
     <View style = {styles.background}> 
-      <Text style = {styles.inputHeader}>Watch the video tutorial on how to use your at-home kit blood pressure reader.</Text>
+      <Text style = {[styles.inputHeader, {marginBottom : 20}]}>You are almost finished with the assessment.</Text>
 
-      <VideoView
-        player = {player}
-        allowsFullscreen
-        style = {styles.video}
+      <Text style = {[styles.inputHeader, {marginBottom : 20}]}>Now, check the Vitamin D test you took at the start of the assessment and select one of the following results.</Text>
+
+      <Text style = {[styles.inputHeader, {marginBottom : 20}]}>Select one:</Text>
+
+      <Radiobtn options = {[
+        {label: "Normal (Can see line easily)", value: "Normal"},
+        {label: "Low (No line or very faint line)", value: "Low"}
+      ]}
+       checkedValue ={vitaminD}
+       onChange ={setVitaminD}
+       style = {{marginBottom: 15}}
       />
 
-      <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Standing Blood Pressure:</Text>
-        <TextInput
-          style={[styles.input, {backgroundColor: "white"}]}
-        />
-      </View>
-      <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Lying Down Blood Pressure:</Text>
-        <TextInput
-          style={[styles.input, {backgroundColor: "white"}]}
-        />
-      </View>
-
-      <TouchableOpacity onPress = {() => {player.pause()}} style = {[styles.btn, {position: "static", marginTop: 16}]}>
+      <TouchableOpacity style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -51,4 +38,4 @@ const BloodTest = () =>
     )
 }
 
-export default BloodTest;
+export default VitaminDTest;

@@ -181,14 +181,16 @@ export const styles = StyleSheet.create({
         fontSize: 16,
     },
     blueNextButton: {
-        marginTop: 8,
+        position: 'absolute',
+        bottom: 60, // Increase this to move button down
+        left: '10%',  // Add this
+        right: '10%', // Add this
         backgroundColor: '#172063',
         borderRadius: 12,
         paddingVertical: 16,
         alignItems: 'center',
-        justifyContent: 'center',
-        width: '80%', // take 80% of the parent width
-        alignSelf: 'center', 
+        justifyContent: 'center', 
+        height: 56,
     },
     nextButtonDisabled: {
             opacity: 0.4,
@@ -266,7 +268,7 @@ export const styles = StyleSheet.create({
     {
         justifyContent: 'center',
         paddingVertical: 12,
-        backgroundColor: '#3730A3',
+        backgroundColor: '#172063', //upped for contrast & to match figma
         borderRadius: 8,
        ...Platform.select({
           ios: {
@@ -324,10 +326,11 @@ export const styles = StyleSheet.create({
 
     inputHeader:
     {
-      left: "2%",
-      fontSize: 15,
-      color: "#6C7278",
-      marginBottom: 8
+      width: "95%", //changed for consistency
+      fontSize: 17, //upped for the elders ts
+      color: "#171717", //changed for contrast
+      marginBottom: 8,
+      textAlign: 'left' //changed for consistency
     },
 
     // Screening component styles

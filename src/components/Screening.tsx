@@ -138,16 +138,18 @@ const Screening: React.FC<ScreeningProps> = ({
           );
         })}
 
-        {/* Next button highlights when const allAnswered is True */}
-        <TouchableOpacity
-          style={[appStyles.blueNextButton, !allAnswered && appStyles.nextButtonDisabled]}
-          activeOpacity={0.9}
-          onPress={handleNext}
-          disabled={!allAnswered}
-        >
-          <Text style={appStyles.blueButtonText}>{ctaLabel}</Text>
-        </TouchableOpacity>
       </ScrollView>
+
+      {/* Next button highlights when const allAnswered is True */}
+      {/*moved this section to try and keep next button consistent*/}
+      <TouchableOpacity
+        style={[appStyles.blueNextButton, !allAnswered && appStyles.nextButtonDisabled]}
+        activeOpacity={0.9}
+        onPress={handleNext}
+        disabled={!allAnswered}
+      >
+        <Text style={appStyles.blueButtonText}>{ctaLabel}</Text>
+      </TouchableOpacity>
 
       <Modal
         visible={!!activeQuestion}

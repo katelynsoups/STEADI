@@ -36,7 +36,7 @@ const VitaminDTestInstruct = () =>
             <Text style = {styles.inputHeader}>Once completed, set the test aside for later. 
     Results take approximately 20 minutes to appear.</Text>
 
-            <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/bloodtest')}} style = {[styles.btn, {position: "static", marginTop: 190}]}>
+            <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/bloodtest')}} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>
