@@ -2,18 +2,15 @@ import React, { useState } from 'react';
 import { styles } from '../styles/styles';
 import {
   View,
-  Text,
+  Text, //copied -> make changes to remove video and just have text box entry
   TextInput,
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 
 const BloodTest = () =>
 {
-
-  const router = useRouter()
 
   //Swap out for video url or changed video title
   //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
@@ -46,7 +43,7 @@ const BloodTest = () =>
         />
       </View>
 
-      <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/homehazards')}} style = {[styles.btn, {position: "static", marginTop: 16}]}>
+      <TouchableOpacity onPress = {() => {player.pause()}} style = {[styles.btn, {position: "static", marginTop: 16}]}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

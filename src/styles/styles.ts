@@ -181,12 +181,14 @@ export const styles = StyleSheet.create({
         fontSize: 16,
     },
     blueNextButton: {
-            marginTop: 8,
-            backgroundColor: '#172063',
-            borderRadius: 12,
-            paddingVertical: 16,
-            alignItems: 'center',
-            justifyContent: 'center',
+        marginTop: 8,
+        backgroundColor: '#172063',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '80%', // take 80% of the parent width
+        alignSelf: 'center', 
     },
     nextButtonDisabled: {
             opacity: 0.4,
