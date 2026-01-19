@@ -76,6 +76,16 @@ const RootLayout = () =>
             <CustomHeader headerText = "Measure your orthostatic blood pressure."/>
         }}/>
 
+        <Stack.Screen name = "homehazards" options = {{
+          header: () => 
+            <CustomHeader headerText = "What kind of fall hazards do you have in your home?"/>
+        }}/>
+
+        <Stack.Screen name = "homehazards2" options = {{
+          header: () => 
+            <CustomHeader headerText = "What kind of fall hazards do you have in your home?"/>
+        }}/>
+
         <Stack.Screen name = "foottestinstruct" options = {{
           header: () => 
             <CustomHeader headerText = "How to use a monofilament to test for foot neuropathy:"/>
