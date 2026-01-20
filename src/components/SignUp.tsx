@@ -46,18 +46,19 @@ const SignUp = () => {
     return (
         <View style = {styles.background}> 
             <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
-                <TextInput
+                <TextInput testID="firstNameInput"
                     style={[styles.input, {backgroundColor: "white"}]}
                 />
             </View>
             <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Last Name</Text>
-                <TextInput
+                <TextInput testID="lastNameInput"
                     style={[styles.input, {backgroundColor: "white"}]}
                 />
             </View>
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>Email</Text>
                 <TextInput
+                    testID="emailInput"
                     style={[styles.input, { backgroundColor: "white" }]}
                     value={email}
                     onChangeText={setEmail}
@@ -69,6 +70,7 @@ const SignUp = () => {
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>Password</Text>
                 <TextInput
+                    testID="passwordInput"
                     style={[styles.input, { backgroundColor: "white" }]}
                     value={password}
                     onChangeText={setPassword}
@@ -80,6 +82,7 @@ const SignUp = () => {
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>Confirm Password</Text>
                 <TextInput
+                    testID="confirmPasswordInput"
                     style={[styles.input, { backgroundColor: "white" }]}
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
@@ -89,7 +92,7 @@ const SignUp = () => {
                 />
             </View>
 
-            <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]} onPress={handleSignUp}>
+            <TouchableOpacity testID="nextButton" style = {[styles.btn, {position: "static", marginTop: 16}]} onPress={handleSignUp}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>
