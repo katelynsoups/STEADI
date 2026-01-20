@@ -111,7 +111,7 @@ const Screening: React.FC<ScreeningProps> = ({
           return (
             <View key={question.id} style={appStyles.screeningCard}>
               <Text style={appStyles.screeningQuestionText}>{`${startNumber + index}. ${question.prompt}`}</Text>
-              <TouchableOpacity style={appStyles.screeningWhyItMatters} onPress={() => setActiveQuestion(question)}>
+              <TouchableOpacity testID={`why-${question.id}`} style={appStyles.screeningWhyItMatters} onPress={() => setActiveQuestion(question)}>
                 <Text style={appStyles.screeningWhyText}>Why it matters</Text>
                 <Ionicons name="information-circle-outline" size={16} color="#6B7280" />
               </TouchableOpacity>
@@ -121,6 +121,7 @@ const Screening: React.FC<ScreeningProps> = ({
                   const selected = value === option;
                   return (
                     <TouchableOpacity
+                      testID={`answer-${question.id}-${option}`}
                       key={option}
                       onPress={() => handleSelect(question.id, option)}
                       style={appStyles.screeningOptionButton}
@@ -140,6 +141,7 @@ const Screening: React.FC<ScreeningProps> = ({
 
         {/* Next button highlights when const allAnswered is True */}
         <TouchableOpacity
+          testID="nextButton"
           style={[appStyles.blueNextButton, !allAnswered && appStyles.nextButtonDisabled]}
           activeOpacity={0.9}
           onPress={handleNext}
@@ -155,7 +157,7 @@ const Screening: React.FC<ScreeningProps> = ({
         transparent
         onRequestClose={() => setActiveQuestion(null)}
       >
-        <Pressable style={screeningStyles.modalBackdrop} onPress={() => setActiveQuestion(null)}>
+        <Pressable testID="whyModalBackdrop" style={screeningStyles.modalBackdrop} onPress={() => setActiveQuestion(null)}>
           <Pressable style={screeningStyles.modalCard}>
             <Text style={screeningStyles.modalText}>{activeQuestion?.whyItMatters}</Text>
             <TouchableOpacity style={screeningStyles.modalButton} onPress={() => setActiveQuestion(null)}>
