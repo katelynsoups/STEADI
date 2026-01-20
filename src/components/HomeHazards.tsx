@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { styles } from '../styles/styles';
 import {
     View,
@@ -20,7 +20,7 @@ type buttonText = {text : string};
 const HomeHazards: React.FC<PageData> = ({questions, next}) =>
 {
     const router = useRouter();
-    const hazardsMap = new Map<string, boolean>();
+    const hazardsMap = useRef(new Map<string, boolean>()).current;
 
     const HazardButton: React.FC<buttonText> = ({text}) =>
     {
@@ -28,8 +28,9 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
 
         const press = () =>
         {
-            setPressed(!isPressed);
-            hazardsMap.set(text, isPressed);
+            const newValue = !isPressed;
+            setPressed(newValue);
+            hazardsMap.set(text, newValue);
         }
 
         return (
@@ -43,13 +44,14 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
         <View style = {styles.background}> 
             <Text style = {styles.inputHeader}>You can choose more than one:</Text>
 
+            {/*added key options to take care of console logs*/}
             {
-                questions.map((option) => (
-                    <HazardButton text = {option.text}/>      
-                )) 
+            questions.map((option) => (
+                <HazardButton key={option.text} text={option.text}/>
+            )) 
             }
 
-            <TouchableOpacity onPress = {() => {router.navigate(next)}} style = {[styles.btn, {position: "absolute", top: 450}]}>
+            <TouchableOpacity onPress = {() => {router.navigate(next)}} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>

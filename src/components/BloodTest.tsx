@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 
 const BloodTest = () =>
 {
+
+  const router = useRouter()
 
   //Swap out for video url or changed video title
   //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
@@ -32,18 +35,18 @@ const BloodTest = () =>
         style = {styles.video}
       />
 
-      <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Standing Blood Pressure:</Text>
+      <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Standing Blood Pressure:</Text>
         <TextInput
           style={[styles.input, {backgroundColor: "white"}]}
         />
       </View>
-      <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Lying Down Blood Pressure:</Text>
+      <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Lying Down Blood Pressure:</Text>
         <TextInput
           style={[styles.input, {backgroundColor: "white"}]}
         />
       </View>
 
-      <TouchableOpacity onPress = {() => {player.pause()}} style = {[styles.btn, {position: "static", marginTop: 16}]}>
+      <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/homehazards')}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

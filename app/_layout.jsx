@@ -95,6 +95,16 @@ const RootLayout = () =>
           header: () => 
             <CustomHeader headerText = "Perform the monofilament foot test."/>
         }}/>
+
+        <Stack.Screen name = "vitamindtestinstruct" options = {{
+          header: () => 
+            <CustomHeader headerText = "Vitamin D Assesment"/>
+        }}/>
+
+        <Stack.Screen name = "vitamindtest" options = {{
+          header: () => 
+            <CustomHeader headerText = "Record vitamin D assesment results."/>
+        }}/>
             
       </Stack>
     </>

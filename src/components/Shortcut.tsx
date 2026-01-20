@@ -6,13 +6,33 @@ import {styles} from '../styles/styles'
 const Shortcut = () => 
 {
 
-    const router = useRouter()
+  const router = useRouter()
 
   return (
-    <View style = {{flex: 1}}>
-        <TouchableOpacity onPress = {() => router.navigate('/homehazards')}style={[styles.btn, styles.inxBtn]}>
-            <Text style = {styles.btnText}>Test Home Hazards pages</Text>
-        </TouchableOpacity>
+    <View style={{ flex: 1, alignItems: 'center', paddingTop: 40 }}>
+    <TouchableOpacity
+      onPress={() => router.navigate('/screening')}
+      style={[
+        styles.btn,
+        {
+          height: 56,
+          marginBottom: 16,
+        },
+      ]}>
+      <Text style = {styles.btnText}>Begin Screening</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      onPress={() => router.navigate('/vitamindtestinstruct')}
+      style={[
+        styles.btn,
+        {
+          height: 56,
+          justifyContent: 'center',
+        },
+      ]}>
+      <Text style = {styles.btnText}>Begin Modifiable Risk Assesment</Text>
+    </TouchableOpacity>
     </View>
   )
 }
