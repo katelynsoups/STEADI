@@ -65,6 +65,7 @@ const Login: React.FC = () => {
               {/* Form Inputs */}
               <View style={styles.form}>
                 <TextInput
+                  testID="emailOrPhoneInput"
                   style={[styles.input, { marginBottom: 16 }]}
                   placeholder="(888) 888-8888"
                   placeholderTextColor="#6B7280"
@@ -75,6 +76,7 @@ const Login: React.FC = () => {
 
                 <View style={[styles.passwordContainer, { marginBottom: 16 }]}>
                   <TextInput
+                    testID="passwordInput"
                     style={styles.input}
                     placeholder="********"
                     placeholderTextColor="#6B7280"
@@ -82,7 +84,7 @@ const Login: React.FC = () => {
                     value={password}
                     onChangeText={setPassword}
                   />
-                  <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
+                  <TouchableOpacity testID="togglePasswordVisibility" onPress={togglePasswordVisibility} style={styles.eyeIcon}>
                     <AntDesign
                       name={passwordVisible ? 'eye' : 'eye-invisible'}
                       size={20}
@@ -106,7 +108,7 @@ const Login: React.FC = () => {
                 </View>
 
                 {/* Login Button */}
-                <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                <TouchableOpacity testID="loginButton" style={styles.loginButton} onPress={handleLogin}>
                   <Text style={styles.blueButtonText}>Log In</Text>
                 </TouchableOpacity>
               </View>
