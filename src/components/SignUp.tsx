@@ -8,10 +8,11 @@ import {
   Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { signUp } from '../utils/gcipAuth';
+import { createDeIDUser, signUp } from '../utils/gcipAuth';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
+    const [participantID, setparticipantID] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
@@ -27,6 +28,9 @@ const SignUp = () => {
             //currently the only info being stored in GCIP is email and password (no names)
             const userCredential = await signUp(email, password);
             console.log('User created:', userCredential.user);
+            //create second user in table with participantID and userCredential.user.uid----------------------------------
+            const pid = await createDeIDUser(participantID, userCredential.user.uid); 
+            console.log('Deidentified Log:', pid);
             Alert.alert('Success', 'Account created successfully');
             //routing back to login page for now
             router.push('/login');
@@ -64,6 +68,17 @@ const SignUp = () => {
                     placeholder="email@example.com"
                     placeholderTextColor="#6B7280"
                     keyboardType="email-address"
+                />
+            </View>
+            <View style={{ width: "100%", marginBottom: 8 }}>
+                <Text style={styles.inputHeader}>Participant ID</Text>
+                <TextInput
+                    style={[styles.input, { backgroundColor: "white" }]}
+                    value={participantID}
+                    onChangeText={setparticipantID}
+                    placeholder="11111111"
+                    placeholderTextColor="#6B7280"
+                    keyboardType="number-pad"
                 />
             </View>
             <View style={{ width: "100%", marginBottom: 8 }}>
