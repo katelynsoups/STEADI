@@ -66,9 +66,9 @@ const Login: React.FC = () => {
               <View style={styles.form}>
                 <TextInput
                   style={[styles.input, { marginBottom: 16 }]}
-                  placeholder="(888) 888-8888"
+                  placeholder="email@example.com"
                   placeholderTextColor="#6B7280"
-                  keyboardType="phone-pad"
+                  keyboardType="email-address"
                   value={emailOrPhone}
                   onChangeText={setEmailOrPhone}
                 />
