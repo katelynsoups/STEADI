@@ -76,6 +76,11 @@ const RootLayout = () =>
             <CustomHeader headerText = "Measure your orthostatic blood pressure."/>
         }}/>
 
+                <Stack.Screen name = "visionupload" options = {{
+          header: () => 
+            <CustomHeader headerText = "Complete the vision assessment while recording."/>
+        }}/>
+
         <Stack.Screen name = "homehazards" options = {{
           header: () => 
             <CustomHeader headerText = "What kind of fall hazards do you have in your home?"/>

@@ -46,7 +46,7 @@ const BloodTest = () =>
         />
       </View>
 
-      <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/homehazards')}} style = {styles.blueNextButton}>
+      <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/visionupload')}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>
