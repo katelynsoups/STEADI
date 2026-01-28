@@ -78,3 +78,7 @@ export const screeningQuestionSets: ScreeningQuestion[][] = [
 export const getScreeningQuestionsForStep = (stepIndex: number) =>
   screeningQuestionSets[stepIndex] ?? [];
 
+/** this map has all 12 screening question IDs in order for fall risk scoring. */
+export const allScreeningQuestionIds: string[] = screeningQuestionSets.flatMap((set) =>
+  set.map((q) => q.id)
+);

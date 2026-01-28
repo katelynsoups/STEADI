@@ -71,6 +71,8 @@ const RootLayout = () =>
                 <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
         }}/>
 
+        <Stack.Screen name = "screeningresult" options = {{ headerShown: false }}/>
+
         <Stack.Screen name = "bloodtest" options = {{
           header: () => 
             <CustomHeader headerText = "Measure your orthostatic blood pressure."/>
