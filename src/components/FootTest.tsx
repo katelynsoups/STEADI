@@ -98,17 +98,3 @@ const FootTest = () =>
 }
 
 export default FootTest;
-
-//id this being used?
-const footStyle = StyleSheet.create(
-{
-    button: {
-    width: 31,
-    height: 31,
-    borderRadius: 30,
-    borderColor: "blue",
-    borderWidth: 7,
-    backgroundColor: "white",
-    position: "absolute"
-    }
-})
