@@ -15,9 +15,9 @@ const BloodTest = () =>
 {
   const [standingBP, setStandingBP] = useState('');
   const [lyingBP, setLyingBP] = useState('');
-  const router = useRouter()
+  const router = useRouter();
 
-  const handleEntry = async () => {
+  const handleBP = async () => {
     try{
       await enterBP(standingBP, lyingBP);
       router.navigate('/homehazards');
@@ -65,7 +65,7 @@ const BloodTest = () =>
         />
       </View>
 
-      <TouchableOpacity onPress ={() => {player.pause(); handleEntry();}} style = {styles.blueNextButton}>
+      <TouchableOpacity onPress ={() => {player.pause(); handleBP();}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

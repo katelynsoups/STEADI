@@ -16,3 +16,11 @@ export async function enterBP(standing: string, lying: string): Promise<void> {
     });
     return;
 };
+
+export async function enterVitaminD(vitamin: string): Promise<void> {
+    const pid = await getPID();
+    await updateDoc(doc(db, "Users-StudyData", pid), {
+        VitaminD: vitamin
+    });
+    return;
+};
