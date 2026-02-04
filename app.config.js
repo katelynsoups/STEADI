@@ -30,6 +30,7 @@ export default{
         projectId: "ff395ef2-c855-4583-973a-c0e11cbccfa5"
       },
       apiKey: process.env.API_KEY,
+      visionApiKey: process.env.VISION_KEY,
     },
     plugins: [
       [
