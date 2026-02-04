@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from './gcipAuth';
 
 async function getPID(): Promise<string> {
@@ -22,5 +22,13 @@ export async function enterVitaminD(vitamin: string): Promise<void> {
     await updateDoc(doc(db, "Users-StudyData", pid), {
         VitaminD: vitamin
     });
+    return;
+};
+
+export async function enterHazards(hazards: Map<string, boolean>): Promise<void> {
+    const pid = await getPID();
+    await setDoc(doc(db, "Users-StudyData", pid), {
+        homeHazards: Object.fromEntries(hazards)
+    }, { merge: true });
     return;
 };
