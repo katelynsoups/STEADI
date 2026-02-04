@@ -37,6 +37,6 @@ export async function enterFootTest(footTest: Map<number, boolean>): Promise<voi
     const pid = await getPID();
     await setDoc(doc(db, "Users-StudyData", pid), {
         footNeuropathyTest: Object.fromEntries(footTest)
-    });
+    },{ merge: true });
     return;
 }
