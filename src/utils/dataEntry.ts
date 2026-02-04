@@ -32,3 +32,11 @@ export async function enterHazards(hazards: Map<string, boolean>): Promise<void>
     }, { merge: true });
     return;
 };
+
+export async function enterFootTest(footTest: Map<number, boolean>): Promise<void> {
+    const pid = await getPID();
+    await setDoc(doc(db, "Users-StudyData", pid), {
+        footNeuropathyTest: Object.fromEntries(footTest)
+    });
+    return;
+}

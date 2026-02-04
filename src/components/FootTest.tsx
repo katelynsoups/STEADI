@@ -8,6 +8,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { enterFootTest } from '../utils/dataEntry';
 
 type buttonStats = {
     id: number;
@@ -20,6 +21,15 @@ const router = useRouter()
 const buttonMap = new Map<number, boolean>();
 //source @ https://www.vecteezy.com/vector-art/5218154-footprint-heel-the-black-color-icon, look into whether I need to attribute or pay a sub for image
 const feet = require('../assets/FootTest.png');
+
+const handleFootTest = async () => {
+    try{
+        await enterFootTest(buttonMap);
+        router.navigate('/vitamindtest');
+    } catch (error: any) {
+        console.error('Database entry error:', error);
+    }
+};
 
 const FootTest = () =>
 {
@@ -89,7 +99,7 @@ const FootTest = () =>
 
             </View>
 
-            <TouchableOpacity onPress = {() => {router.navigate('/vitamindtest')}} style = {styles.blueNextButton}>
+            <TouchableOpacity onPress = {handleFootTest} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>
