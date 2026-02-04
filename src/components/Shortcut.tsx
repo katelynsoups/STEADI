@@ -29,10 +29,24 @@ const Shortcut = () =>
         {
           height: 56,
           justifyContent: 'center',
+          marginBottom: 16,
         },
       ]}>
       <Text style = {styles.btnText}>Begin Modifiable Risk Assesment</Text>
     </TouchableOpacity>
+
+       <TouchableOpacity
+      onPress={() => router.navigate('/medicationupload')}
+      style={[
+        styles.btn,
+        {
+          height: 56,
+          justifyContent: 'center',
+        },
+      ]}>
+      <Text style = {styles.btnText}>Jump to medication upload</Text>
+    </TouchableOpacity>
+
     </View>
   )
 }

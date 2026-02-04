@@ -117,7 +117,17 @@ const RootLayout = () =>
           header: () => 
             <CustomHeader headerText = "Record vitamin D assesment results."/>
         }}/>
-            
+
+        <Stack.Screen name = "medicationupload" options = {{
+          header: () => 
+            <CustomHeader headerText = "Next, we want to assess your medications to find out if they can contribute to increased fall risk."/>
+        }}/>
+
+        <Stack.Screen name = "medicationresults" options = {{
+          header: () => 
+            <CustomHeader headerText = "Please view the summary of your medication below."/>
+        }}/>
+
       </Stack>
     </>
   )
