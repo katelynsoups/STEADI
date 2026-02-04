@@ -71,19 +71,31 @@ const RootLayout = () =>
                 <CustomHeader headerText = "Check your risk of falling by answering the following questions:"/>
         }}/>
 
+        <Stack.Screen name = "screeningresult" options = {{ headerShown: false }}/>
+
         <Stack.Screen name = "bloodtest" options = {{
           header: () => 
             <CustomHeader headerText = "Measure your orthostatic blood pressure."/>
         }}/>
 
+        <Stack.Screen name = "visionupload" options = {{
+          header: () => 
+            <CustomHeader headerText = "Complete the vision assessment while recording."/>
+        }}/>
+
+        <Stack.Screen name = "visionsuccess" options = {{
+          header: () => 
+            <CustomHeader headerText = "Success!"/>
+        }}/>
+
         <Stack.Screen name = "homehazards" options = {{
           header: () => 
-            <CustomHeader headerText = "What kind of fall hazards do you have in your home?"/>
+            <CustomHeader headerText = "Please select which of the following elements you have in your home:"/>
         }}/>
 
         <Stack.Screen name = "homehazards2" options = {{
           header: () => 
-            <CustomHeader headerText = "What kind of fall hazards do you have in your home?"/>
+            <CustomHeader headerText = "Please select which of the following elements you have in your home:"/>
         }}/>
 
         <Stack.Screen name = "foottestinstruct" options = {{
