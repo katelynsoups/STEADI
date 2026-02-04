@@ -20,7 +20,7 @@ const BloodTest = () =>
   const handleBP = async () => {
     try{
       await enterBP(standingBP, lyingBP);
-      router.navigate('/homehazards');
+      router.navigate('/visionupload');
     } catch (error: any) {
       console.error('Database entry error:', error);
     }
