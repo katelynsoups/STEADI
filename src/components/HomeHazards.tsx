@@ -32,15 +32,17 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
         }
     };
 
+    for (let i = 0; i < questions.length; i++)
+        hazardsMap.set(questions[i].text, false);
+
     const HazardButton: React.FC<buttonText> = ({text}) =>
     {
         const [isPressed, setPressed] = useState(true);
 
         const press = () =>
         {
-            const newValue = !isPressed;
-            setPressed(newValue);
-            hazardsMap.set(text, newValue);
+            setPressed(!isPressed);
+            hazardsMap.set(text, isPressed);
         }
 
         return (
