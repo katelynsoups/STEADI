@@ -9,11 +9,22 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import { enterBP } from '../utils/dataEntry';
 
 const BloodTest = () =>
 {
+  const [standingBP, setStandingBP] = useState('');
+  const [lyingBP, setLyingBP] = useState('');
+  const router = useRouter();
 
-  const router = useRouter()
+  const handleBP = async () => {
+    try{
+      await enterBP(standingBP, lyingBP);
+      router.navigate('/visionupload');
+    } catch (error: any) {
+      console.error('Database entry error:', error);
+    }
+  };
 
   //Swap out for video url or changed video title
   //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
@@ -38,15 +49,23 @@ const BloodTest = () =>
       <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Standing Blood Pressure:</Text>
         <TextInput
           style={[styles.input, {backgroundColor: "white"}]}
+          value={standingBP}
+          onChangeText={setStandingBP}
+          placeholder="120/80"
+          placeholderTextColor="#6B7280"
         />
       </View>
       <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Lying Down Blood Pressure:</Text>
         <TextInput
           style={[styles.input, {backgroundColor: "white"}]}
+          value={lyingBP}
+          onChangeText={setLyingBP}
+          placeholder="120/80"
+          placeholderTextColor="#6B7280"
         />
       </View>
 
-      <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/visionupload')}} style = {styles.blueNextButton}>
+      <TouchableOpacity onPress ={() => {player.pause(); handleBP();}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

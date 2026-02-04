@@ -7,7 +7,6 @@ import {
   UserCredential
 } from 'firebase/auth';
 import Constants from "expo-constants";
-// come back ------------------------------------------------------
 import { 
   getFirestore,
   doc,
@@ -28,7 +27,7 @@ const firebaseConfig = {
 // Initialize Firebase/GCIP/Database
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 // Helper functions
 export async function signUp(email: string, password: string): Promise<UserCredential> {

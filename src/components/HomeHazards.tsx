@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import {buttonStats} from "../data/hazardQuestions";
+import { enterHazards } from '../utils/dataEntry';
 
 type PageData =
 {
@@ -22,15 +23,26 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
     const router = useRouter();
     const hazardsMap = useRef(new Map<string, boolean>()).current;
 
+    const handleHazards = async () => {
+        try{
+            await enterHazards(hazardsMap);
+            router.navigate(next);
+        } catch (error: any) {
+            console.error('Database entry error:', error);
+        }
+    };
+
+    for (let i = 0; i < questions.length; i++)
+        hazardsMap.set(questions[i].text, false);
+
     const HazardButton: React.FC<buttonText> = ({text}) =>
     {
         const [isPressed, setPressed] = useState(true);
 
         const press = () =>
         {
-            const newValue = !isPressed;
-            setPressed(newValue);
-            hazardsMap.set(text, newValue);
+            setPressed(!isPressed);
+            hazardsMap.set(text, isPressed);
         }
 
         return (
@@ -51,7 +63,7 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
             )) 
             }
 
-            <TouchableOpacity onPress = {() => {router.navigate(next)}} style = {styles.blueNextButton}>
+            <TouchableOpacity onPress = {handleHazards} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>

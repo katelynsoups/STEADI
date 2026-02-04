@@ -8,10 +8,22 @@ import {
   StyleSheet
 } from 'react-native';
 import Radiobtn from './RadioBtn';
+import { useRouter } from 'expo-router';
+import { enterVitaminD } from '../utils/dataEntry';
 
 const VitaminDTest = () =>
 {
     const[vitaminD, setVitaminD] = useState("");
+    const router = useRouter();
+
+    const handleVitaminD = async () => {
+      try{
+        await enterVitaminD(vitaminD);
+        router.navigate('/login');
+      } catch (error: any) {
+        console.error('Database entry error:', error);
+      }
+    };
 
   return (
     <View style = {styles.background}> 
@@ -30,7 +42,7 @@ const VitaminDTest = () =>
        style = {{marginBottom: 15}}
       />
 
-      <TouchableOpacity style = {styles.blueNextButton}>
+      <TouchableOpacity onPress = {handleVitaminD} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>
