@@ -8,15 +8,21 @@ type ScreeningResultProps = {
 };
 
 const ScreeningResult: React.FC<ScreeningResultProps> = ({ bodyHeader, bodyText }) => {
+  const bodyTextGroups = bodyText.split(".");
+
   return (
     <ScrollView
       style={resultStyles.scroll}
       contentContainerStyle={resultStyles.content}
       showsVerticalScrollIndicator={false}
     >
-      <View style={resultStyles.bodyContainer}>
+      <View style={[resultStyles.bodyContainer, {alignItems: 'center'}]}>
         {bodyHeader ? <Text style={appStyles.inputHeader}>{bodyHeader}</Text> : null}
-        <Text style={resultStyles.bodyText}>{bodyText}</Text>
+
+        { bodyTextGroups.map((group) => (
+          <Text key = {group} style={[resultStyles.bodyText, {}]}>{group}.</Text>
+        ))}
+
       </View>
     </ScrollView>
   );
@@ -37,7 +43,8 @@ const resultStyles = StyleSheet.create({
     fontSize: 18,
     color: '#111827',
     lineHeight: 28,
-    textAlign: 'left',
+    marginBottom: '15%', 
+    textAlign: 'center'
   },
 });
 

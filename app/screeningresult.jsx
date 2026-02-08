@@ -9,12 +9,12 @@ import ScreeningResult from '../src/components/ScreeningResult';
 // at risk text
 const AT_RISK_HEADER = 'You have been screened: At risk of falling.';
 const AT_RISK_BODY =
-  'Next, you will be completing an assessment to assess your modifiable risk factors. Once completed, you will receive an overall fall risk score and Fall Risk Factors printable form for your records. The assessment will take approximately 60 minutes and requires use of your at-home kit.';
+  'Next, you will be completing an assessment to assess your modifiable risk factors.Once completed, you will receive an overall fall risk score and Fall Risk Factors printable form for your records.The assessment will take approximately 60 minutes and requires use of your at-home kit.';
 
 // not at risk text
 const NOT_AT_RISK_HEADER = 'You have been screened: Not at risk of falling.';
 const NOT_AT_RISK_BODY =
-  'You are not currently at risk for falling.  Please see the following resources to continue to reduce your chances:';
+  'You are not currently at risk for falling.Please see the following resources to continue to reduce your chances:';
 
 const ScreeningResultPage = () => {
   const router = useRouter();
@@ -41,7 +41,7 @@ const ScreeningResultPage = () => {
           <TouchableOpacity
             style={styles.blueNextButton}
             activeOpacity={0.9}
-            onPress={() => router.push('/shortcut')}
+            onPress={() => router.push('/vitamindtestinstruct')}
           >
             <Text style={styles.blueButtonText}>Start Assessment</Text>
           </TouchableOpacity>
