@@ -83,6 +83,11 @@ const RootLayout = () =>
             <CustomHeader headerText = "Complete the vision assessment while recording."/>
         }}/>
 
+        <Stack.Screen name = "walkingupload" options = {{
+          header: () =>
+            <CustomHeader headerText = "Complete the walking assessment while recording."/>
+        }}/>
+
         <Stack.Screen name = "visionsuccess" options = {{
           header: () => 
             <CustomHeader headerText = "Success!"/>
