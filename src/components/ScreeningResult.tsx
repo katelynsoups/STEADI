@@ -16,11 +16,11 @@ const ScreeningResult: React.FC<ScreeningResultProps> = ({ bodyHeader, bodyText 
       contentContainerStyle={resultStyles.content}
       showsVerticalScrollIndicator={false}
     >
-      <View style={[resultStyles.bodyContainer, {alignItems: 'center'}]}>
+      <View style={[resultStyles.content, {alignItems: 'center'}]}>
         {bodyHeader ? <Text style={appStyles.inputHeader}>{bodyHeader}</Text> : null}
 
         { bodyTextGroups.map((group) => (
-          <Text key = {group} style={[resultStyles.bodyText, {}]}>{group}.</Text>
+          <Text key = {group} style={[resultStyles.bodyText, {}]}>{group}</Text>
         ))}
 
       </View>
