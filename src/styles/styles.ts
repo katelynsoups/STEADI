@@ -182,9 +182,21 @@ export const styles = StyleSheet.create({
     },
     blueNextButton: {
         position: 'absolute',
-        bottom: 60, // Increase this to move button down
-        left: '10%',  // Add this
-        right: '10%', // Add this
+        bottom: 60,
+        left: '10%',
+        right: '10%', 
+        backgroundColor: '#172063',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        justifyContent: 'center', 
+        height: 56,
+    },
+    blueExtraButton: { //when we need a second button over the next button
+        position: 'absolute',
+        bottom: 140,
+        left: '10%',
+        right: '10%',
         backgroundColor: '#172063',
         borderRadius: 12,
         paddingVertical: 16,
@@ -194,6 +206,27 @@ export const styles = StyleSheet.create({
     },
     nextButtonDisabled: {
             opacity: 0.4,
+    },
+
+    greySkipButtonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '500',
+    },
+
+    greySkipButton: {
+        position: 'absolute',
+        bottom: 60,
+        left: '10%',
+        right: '10%', 
+        backgroundColor: '#bdbdbd',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        justifyContent: 'center', 
+        height: 56,
+        borderWidth: 1,          // thin border
+        borderColor: '#000000',  // black border
     },
 
     signupContainer: {
