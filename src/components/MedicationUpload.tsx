@@ -225,8 +225,15 @@ const medicationUpload = () =>
                 Please only include one medication label in your image. You will have the oportunity to repeat this step until you have uploaded all current medications.
             </Text>
             <Text style = {styles.inputHeader}>Click "Upload" to either select photo from camera roll or take photo.</Text>
-            <TouchableOpacity onPress = {cameraOrGallery} style = {styles.blueExtraButton}>
+            <TouchableOpacity 
+            onPress = {cameraOrGallery} 
+            style={[styles.blueExtraButton, {bottom: 220}]}>
                 <Text style = {[styles.btnText]}>Upload</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+            onPress = {() => { router.navigate('/medicationtypedupload')}}  
+            style = {[styles.greySkipButton, {bottom: 140}]}>
+                <Text style = {[styles.greySkipButtonText]}>Type Medication Names</Text>
             </TouchableOpacity>
             <TouchableOpacity 
             onPress = {() => { router.navigate('/visionupload')}}  
