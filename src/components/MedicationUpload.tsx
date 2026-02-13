@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import { styles } from '../styles/styles';
 import {
   Alert,
@@ -11,11 +11,13 @@ import * as ImagePicker from 'expo-image-picker';
 import Constants from "expo-constants";
 import medicationList from '../utils/medications.json'; //from RXNorm used to extract drug names
 
+//just extracting text here. no database
 const medicationUpload = () =>
 {
     const router = useRouter();
     //this is the data to be sent to database (will be able to store multiple meds for multiple uploads)
-    const [medications, setMedications] = useState<string[][]>([]);
+    //const [medications, setMedications] = useState<string[][]>([]);
+    //const medicationMap = useRef(new Map<string, boolean>()).current; //modling after home hazards
 
     //OCR function - calls Google Cloud Vision API
     const sendToOCR = async (imageUri: string): Promise<string | null> => {
@@ -84,7 +86,7 @@ const medicationUpload = () =>
     const normalizeText = (text: string): string[] => {
         return text
             .toLowerCase()
-            .replace(/[^a-z\s]/g, '') // keep spaces
+            .replace(/[^a-z\s]/g, '') //keep spaces
             .split(/\s+/)
             .filter(Boolean);
     };
@@ -171,10 +173,10 @@ const medicationUpload = () =>
                 const medicationName = await extractMedication(imageText);
                 console.log('Extracted Medication:', medicationName);
                 
-                if (medicationName) {
-                    //add to medications array
-                    setMedications(prev => [...prev, [medicationName, "yes"]]);
-                }
+                // if (medicationName) {
+                //     //add to medications array
+                //     medicationMap.set(medicationName, false);//leaving as false for now
+                // }
                 
                 //pass empty string if no medication found in text
                 router.push({

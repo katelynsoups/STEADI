@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { styles } from '../styles/styles';
 import {
   Image,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { getDrugSideEffects } from '../utils/medService'
+import { enterMedication } from '../utils/dataEntry';
 
 const checkmark = require('../assets/success.png');
 
@@ -25,7 +26,17 @@ const MedicationResults = () =>
     const { medicationName } = useLocalSearchParams();
     const [drugInfo, setDrugInfo] = useState<DrugInfo | null>(null);
     const [loading, setLoading] = useState(false);
+    const medicationMap = useRef(new Map<string, boolean>()).current; //modling after home hazards
     
+    const handleMedication = async () => {
+        try{
+            await enterMedication(medicationMap);
+            //router.navigate(next);
+        } catch (error: any) {
+            console.error('Database entry error:', error);
+        }
+    };
+
     const hasMedication = medicationName && medicationName !== '';
 
     useEffect(() => {
@@ -33,6 +44,14 @@ const MedicationResults = () =>
             fetchDrugInfo(medicationName);
         }
     }, [medicationName]);
+
+    //once drung info loads we will add med name and fall risk to database
+    useEffect(() => {
+        if (drugInfo && typeof medicationName === 'string') {
+            medicationMap.set(medicationName, drugInfo.hasFallRisk ?? false);
+            handleMedication();
+        }
+    }, [drugInfo]);
 
     const fetchDrugInfo = async (medName: string) => {
         setLoading(true);
