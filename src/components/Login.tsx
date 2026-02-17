@@ -12,6 +12,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
 import { signIn } from '../utils/gcipAuth';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { getSaveStatus } from '../utils/saveUnit';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -26,7 +27,7 @@ const Login: React.FC = () => {
       const userCredential = await signIn(emailOrPhone, password);
       const token = await userCredential.user.getIdToken();
       Alert.alert('Success', 'Logged in successfully!');
-      router.push('/home');
+      router.push(await getSaveStatus());
     } catch (err: any) {
       Alert.alert('Login Failed', err.response?.data?.error?.message || err.message);
     }

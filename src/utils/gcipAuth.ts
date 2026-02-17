@@ -34,11 +34,11 @@ export async function signUp(email: string, password: string): Promise<UserCrede
   return await createUserWithEmailAndPassword(auth, email, password);
 }
 
-export async function createDeIDUser(participantID: string, uid: string): Promise<string> {
+export async function createDeIDUser(participantID: string): Promise<string> {
   // first make a document in Users-AppData with uid as doc id, participant id, and save status "info"
-  await setDoc(doc(db, "Users-AppData", uid), {
+  await setDoc(doc(db, "Users-AppData", auth.currentUser!.uid), {
     participantID: participantID,
-    saveStatus: "info"
+    saveStatus: "/home"
   });
   // then make a document in Users-StudyData with participantID as doc id
   await setDoc(doc(db, "Users-StudyData", participantID), {});
