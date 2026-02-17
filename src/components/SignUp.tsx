@@ -29,7 +29,7 @@ const SignUp = () => {
             const userCredential = await signUp(email, password);
             console.log('User created:', userCredential.user);
             //create second user in table with participantID and userCredential.user.uid----------------------------------
-            const pid = await createDeIDUser(participantID, userCredential.user.uid); 
+            const pid = await createDeIDUser(participantID); 
             console.log('Deidentified Log:', pid);
             Alert.alert('Success', 'Account created successfully');
             //routing back to login page for now

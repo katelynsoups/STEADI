@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 const FootTestInstruct = () =>
 {
@@ -19,6 +20,8 @@ const FootTestInstruct = () =>
     //it will eventually pull from blob storage in the db
     const footInstruct = require('../assets/STEADItestvid.mp4');
 
+    updateSaveStatus();
+    
     const player = useVideoPlayer(footInstruct, player => {
         player.loop = false;
         player.play();

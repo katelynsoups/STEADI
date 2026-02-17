@@ -8,6 +8,7 @@ import {
    StyleSheet,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 export type successState = {text : string};
 
@@ -16,6 +17,7 @@ const checkmark = require('../assets/success.png');
 const Success: React.FC<successState> = ({text}) =>
 {
     const router = useRouter()
+    updateSaveStatus();
 
      const successStyle = StyleSheet.create(
             {

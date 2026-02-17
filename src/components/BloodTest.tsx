@@ -12,12 +12,14 @@ import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { enterBP } from '../utils/dataEntry';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 const BloodTest = () =>
 {
   const [standingBP, setStandingBP] = useState('');
   const [lyingBP, setLyingBP] = useState('');
   const router = useRouter();
+  updateSaveStatus();
 
   const handleBP = async () => {
     let finalStand = standingBP.match(/(0|[1-9][0-9]*)\/(0|[1-9][0-9]*)/);
