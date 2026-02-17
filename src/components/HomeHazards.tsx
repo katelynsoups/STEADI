@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'expo-router';
 import {buttonStats} from "../data/hazardQuestions";
 import { enterHazards } from '../utils/dataEntry';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 type PageData =
 {
@@ -22,7 +23,9 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
 {
     const router = useRouter();
     const hazardsMap = useRef(new Map<string, boolean>()).current;
-
+    
+    updateSaveStatus();
+    
     const handleHazards = async () => {
         try{
             await enterHazards(hazardsMap);

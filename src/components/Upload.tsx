@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView, VideoSource } from 'expo-video';
 import * as ImagePicker from 'expo-image-picker';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 type uploadType = 
 {
@@ -24,7 +25,8 @@ const Upload : React.FC <uploadType> = ({test, text, vid, route}) =>
 {
     const [vision, setVision] = useState<string | null>(null);
     const router = useRouter();
-
+    updateSaveStatus();
+    
     const pickVideo = async () => 
     {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();

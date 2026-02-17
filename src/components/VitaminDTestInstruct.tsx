@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 const VitaminDTestInstruct = () =>
 {
@@ -17,7 +18,8 @@ const VitaminDTestInstruct = () =>
     //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
     //it will eventually pull from blob storage in the db
     const vitaminDInstruct = require('../assets/STEADItestvid.mp4');
-
+    updateSaveStatus();
+    
     const player = useVideoPlayer(vitaminDInstruct, player => {
         player.loop = false;
         player.play();

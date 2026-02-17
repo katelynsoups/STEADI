@@ -10,12 +10,14 @@ import {
 import Radiobtn from './RadioBtn';
 import { useRouter } from 'expo-router';
 import { enterVitaminD } from '../utils/dataEntry';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 const VitaminDTest = () =>
 {
     const[vitaminD, setVitaminD] = useState("");
     const router = useRouter();
-
+    updateSaveStatus();
+    
     const handleVitaminD = async () => {
       try{
         await enterVitaminD(vitaminD);
