@@ -98,7 +98,7 @@ const BloodTest = () =>
         />
       </View>
 
-      <TouchableOpacity onPress ={() => {player.pause(); handleBP();}} style = {styles.blueNextButton}>
+      <TouchableOpacity onPress ={() => {player.pause(); handleBP();router.navigate('/medicationupload')}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </KeyboardAwareScrollView>

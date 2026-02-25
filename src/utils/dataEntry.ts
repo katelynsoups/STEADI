@@ -40,3 +40,11 @@ export async function enterFootTest(footTest: Map<number, boolean>): Promise<voi
     },{ merge: true });
     return;
 }
+
+export async function enterMedication(medications: Map<string, boolean>): Promise<void> {
+    const pid = await getPID();
+    await setDoc(doc(db, "Users-StudyData", pid), {
+        medications: Object.fromEntries(medications)
+    }, { merge: true });
+    return;
+};
