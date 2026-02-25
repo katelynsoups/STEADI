@@ -11,6 +11,7 @@ import {
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { getDrugSideEffects } from '../utils/medService'
 import { enterMedication } from '../utils/dataEntry';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 const checkmark = require('../assets/success.png');
 
@@ -27,7 +28,8 @@ const MedicationResults = () =>
     const [drugInfo, setDrugInfo] = useState<DrugInfo | null>(null);
     const [loading, setLoading] = useState(false);
     const medicationMap = useRef(new Map<string, boolean>()).current; //modling after home hazards
-    
+    updateSaveStatus();
+
     const handleMedication = async () => {
         try{
             await enterMedication(medicationMap);
