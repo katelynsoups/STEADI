@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import medicationList from '../utils/medications.json';
+import { updateSaveStatus } from '../utils/saveUnit';
 
 const MedicationTextUpload = () => {
   const router = useRouter();
-
+  updateSaveStatus();
+  
   // manual entry
   const [inputText, setInputText] = useState('');
   const [medications, setMedications] = useState<string[][]>([]);
