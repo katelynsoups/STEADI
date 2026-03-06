@@ -26,7 +26,7 @@ const feet = require('../assets/FootTest.png');
 const handleFootTest = async () => {
     try{
         await enterFootTest(buttonMap);
-        router.navigate('/vitamindtest');
+        router.navigate('/moodquestions');
     } catch (error: any) {
         console.error('Database entry error:', error);
     }

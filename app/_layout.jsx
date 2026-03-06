@@ -133,6 +133,11 @@ const RootLayout = () =>
             <CustomHeader headerText = "Next, we want to assess your medications to determine how they might influence fall risk."/>
         }}/>
 
+        <Stack.Screen name = "moodquestions" options = {{
+          header: () => 
+            <CustomHeader headerText = "Answer the following questions:"/>
+        }}/>
+
       </Stack>
     </>
   )

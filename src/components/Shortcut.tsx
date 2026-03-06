@@ -36,7 +36,7 @@ const Shortcut = () =>
     </TouchableOpacity>
 
        <TouchableOpacity
-      onPress={() => router.navigate('/medicationupload')}
+      onPress={() => router.navigate('/moodquestions')}
       style={[
         styles.btn,
         {
@@ -44,7 +44,7 @@ const Shortcut = () =>
           justifyContent: 'center',
         },
       ]}>
-      <Text style = {styles.btnText}>Jump to medication upload</Text>
+      <Text style = {styles.btnText}>Jump to Mood Questions</Text>
     </TouchableOpacity>
 
     </View>
