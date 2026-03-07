@@ -16,17 +16,17 @@ import { updateSaveStatus } from '../utils/saveUnit';
 
 const BloodTest = () =>
 {
-  const [firstStand, setFirstStand] = useState('');
-  const [lastStand, setLastStand] = useState('');
-  const [firstLying, setFirstLying] = useState('');
-  const [lastLying, setLastLying] = useState('');
+  const [sysStanding, setFirstStand] = useState('');
+  const [diaStanding, setLastStand] = useState('');
+  const [sysLying, setFirstLying] = useState('');
+  const [diaLying, setLastLying] = useState('');
   const [filter, setFilter] = useState('');
   const router = useRouter();
   updateSaveStatus();
 
   const handleBP = async () => {
     
-    if((firstStand == null) || (lastStand == null) || (firstLying == null) || (lastLying == null))
+    if((sysStanding == null) || (diaStanding == null) || (sysLying == null) || (diaLying == null))
     {
       Alert.alert(
         "Missing Input",
@@ -41,8 +41,8 @@ const BloodTest = () =>
       );
     }
 
-      let standingBP = `${firstStand}/${lastStand}`;
-      let lyingBP = `${firstLying}/${lastLying}`;
+      let standingBP = `${sysStanding}/${diaStanding}`;
+      let lyingBP = `${sysStanding}/${diaLying}`;
       let filterStand = standingBP.match(/(0|[1-9][0-9]*)\/(0|[1-9][0-9]*)/);
       let filterLying = lyingBP.match(/(0|[1-9][0-9]*)\/(0|[1-9][0-9]*)/);
 
@@ -96,49 +96,57 @@ const BloodTest = () =>
         style = {styles.video}
       />
 
-      <View style = {{flexDirection: 'row', justifyContent: 'center'}}>
-        <View style = {bt.textbox}>
-          <Text style = {[styles.inputHeader, {fontSize: 15}]}>Standing Blood Pressure</Text>
-
+    {/* Standing BP */}
+      <View style={bt.card}>
+        <Text style={bt.cardTitle}>Standing Blood Pressure</Text>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>SYS: </Text>
           <TextInput
-            style={[styles.input, bt.innerText]}
-            value={firstStand}
+            style={bt.input}
+            value={sysStanding}
             onChangeText={setFirstStand}
             placeholder="120"
-            placeholderTextColor="#6B7280"
-            keyboardType= "numeric"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
           />
+        </View>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>DIA: </Text>
           <TextInput
-            style={[styles.input, bt.innerText]}
-            value={lastStand}
+            style={bt.input}
+            value={diaStanding}
             onChangeText={setLastStand}
             placeholder="80"
-            placeholderTextColor="#6B7280"
-            keyboardType= "numeric"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
           />
-
         </View>
+      </View>
 
-        <View style = {bt.textbox}>
-          <Text style = {[styles.inputHeader, {fontSize: 15}]}>Lying Down Blood Pressure</Text>
-          
+      {/* Lying BP */}
+      <View style={bt.card}>
+        <Text style={bt.cardTitle}>Lying Blood Pressure</Text>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>SYS: </Text>
           <TextInput
-            style={[styles.input, bt.innerText]}
-            value={firstLying}
+            style={bt.input}
+            value={sysLying}
             onChangeText={setFirstLying}
             placeholder="120"
-            placeholderTextColor="#6B7280"
-            keyboardType= "numeric"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
           />
+        </View>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>DIA: </Text>
           <TextInput
-            style={[styles.input, bt.innerText]}
-            value={lastLying}
+            style={bt.input}
+            value={diaLying}
             onChangeText={setLastLying}
             placeholder="80"
-            placeholderTextColor="#6B7280"
-            keyboardType= "numeric"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
           />
-
         </View>
       </View>
 
@@ -150,20 +158,53 @@ const BloodTest = () =>
   )
 }
 
-const bt = StyleSheet.create (
-{
-  textbox: 
-  {
-    marginBottom: 8, 
-    display: 'flex', 
-    width: "45%"
+
+const bt = StyleSheet.create({
+  card: {
+    width: '85%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
   },
 
-  innerText:
-  {
-    backgroundColor: "white", 
-    width: "60%"
-  }
-})
+  cardTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 14,
+  },
+
+  inputGroup: {
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  label: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#6B7280',
+    letterSpacing: 1,
+    marginBottom: 6,
+    textTransform: 'uppercase',
+  },
+
+  input: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#111827',
+    width: '80%',
+  },
+});
 
 export default BloodTest;

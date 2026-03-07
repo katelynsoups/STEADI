@@ -375,7 +375,8 @@ export const styles = StyleSheet.create({
     inputHeader:
     {
       width: "95%", //changed for consistency
-      fontSize: 17, //upped for the elders ts
+      fontSize: 18, //upped for the elders
+      fontWeight: '500',
       color: "#171717", //changed for contrast
       marginBottom: 8,
       textAlign: 'left' //changed for consistency
