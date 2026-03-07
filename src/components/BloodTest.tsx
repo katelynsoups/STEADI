@@ -16,20 +16,21 @@ import { updateSaveStatus } from '../utils/saveUnit';
 
 const BloodTest = () =>
 {
-  const [standingBP, setStandingBP] = useState('');
-  const [lyingBP, setLyingBP] = useState('');
+  const [sysStanding, setFirstStand] = useState('');
+  const [diaStanding, setLastStand] = useState('');
+  const [sysLying, setFirstLying] = useState('');
+  const [diaLying, setLastLying] = useState('');
+  const [filter, setFilter] = useState('');
   const router = useRouter();
   updateSaveStatus();
 
   const handleBP = async () => {
-    let finalStand = standingBP.match(/(0|[1-9][0-9]*)\/(0|[1-9][0-9]*)/);
-    let finalRest = lyingBP.match(/(0|[1-9][0-9]*)\/(0|[1-9][0-9]*)/);
-
-    if((finalStand == null) || (finalRest == null) || standingBP !== finalStand[0] || lyingBP !== finalRest[0])
+    
+    if((sysStanding == null) || (diaStanding == null) || (sysLying == null) || (diaLying == null))
     {
       Alert.alert(
-        "Incorrect Format",
-        "The blood pressure you entered is in an incorrect format. Please try again.",
+        "Missing Input",
+        "Please ensure all fields have been filled.",
           [
             {
               text: "Try Again",
@@ -38,28 +39,42 @@ const BloodTest = () =>
           ],
         { cancelable: true }
       );
-
-      console.log(`STANDING ENTERED: ${standingBP} STANDING REGEX: ${finalStand}`);
-      console.log(`LYING ENTERED: ${lyingBP} LYING REGEX: ${finalRest}`);
     }
 
-    try{
-      await enterBP(standingBP, lyingBP);
-      router.navigate('/visionupload');
-    } catch (error: any) {
-      console.error('Database entry error:', error);
-    }
+      let standingBP = `${sysStanding}/${diaStanding}`;
+      let lyingBP = `${sysStanding}/${diaLying}`;
+      let filterStand = standingBP.match(/(0|[1-9][0-9]*)\/(0|[1-9][0-9]*)/);
+      let filterLying = lyingBP.match(/(0|[1-9][0-9]*)\/(0|[1-9][0-9]*)/);
+
+      if(filterStand == null || filterLying == null || standingBP !== filterStand[0] || lyingBP !== filterLying[0])
+      {
+        Alert.alert(
+          "Incorrect Format",
+          "The blood pressure you entered is in an incorrect format. Please try again.",
+            [
+              {
+                text: "Try Again",
+                style: "cancel"
+              },
+            ],
+          { cancelable: true }
+        );
+
+        console.log(`STANDING ENTERED: ${standingBP} STANDING REGEX: ${filterStand}`);
+        console.log(`LYING ENTERED: ${lyingBP} LYING REGEX: ${filterLying}`);
+        return;
+      }
+
+      try
+      {
+        await enterBP(standingBP, lyingBP);
+        router.navigate('/medicationupload');
+      } 
+      catch (error: any) 
+      {
+        console.error('Database entry error:', error);
+      }
   };
-
-  const checkStandingBP = (pressure:string) => {
-    const newPressure = pressure.replace(/[^0-9\/]/gm, '');
-    setStandingBP(newPressure);
-  }
-
-  const checkLyingBP = (pressure:string) => {
-    const newPressure = pressure.replace(/[^0-9\/]/gm, '');
-    setLyingBP(newPressure);
-  }
 
   //Swap out for video url or changed video title
   //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
@@ -72,7 +87,7 @@ const BloodTest = () =>
   });
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle = {[styles.background, {flex: 0, flexGrow: 1}]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
+    <KeyboardAwareScrollView contentContainerStyle = {[styles.background, styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
       <Text style = {styles.inputHeader}>Watch the video tutorial on how to use your at-home kit blood pressure reader.</Text>
 
       <VideoView
@@ -81,31 +96,115 @@ const BloodTest = () =>
         style = {styles.video}
       />
 
-      <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Standing Blood Pressure:</Text>
-        <TextInput
-          style={[styles.input, {backgroundColor: "white"}]}
-          value={standingBP}
-          onChangeText={checkStandingBP}
-          placeholder="120/80"
-          placeholderTextColor="#6B7280"
-        />
-      </View>
-      <View style = {[{width: "95%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Lying Down Blood Pressure:</Text>
-        <TextInput
-          style={[styles.input, {backgroundColor: "white"}]}
-          value={lyingBP}
-          onChangeText={checkLyingBP}
-          placeholder="120/80"
-          placeholderTextColor="#6B7280"
-        />
+    {/* Standing BP */}
+      <View style={bt.card}>
+        <Text style={bt.cardTitle}>Standing Blood Pressure</Text>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>SYS: </Text>
+          <TextInput
+            style={bt.input}
+            value={sysStanding}
+            onChangeText={setFirstStand}
+            placeholder="120"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>DIA: </Text>
+          <TextInput
+            style={bt.input}
+            value={diaStanding}
+            onChangeText={setLastStand}
+            placeholder="80"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
+          />
+        </View>
       </View>
 
-      <TouchableOpacity onPress ={() => {player.pause(); handleBP();router.navigate('/medicationupload')}} style = {styles.blueNextButton}>
+      {/* Lying BP */}
+      <View style={bt.card}>
+        <Text style={bt.cardTitle}>Lying Blood Pressure</Text>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>SYS: </Text>
+          <TextInput
+            style={bt.input}
+            value={sysLying}
+            onChangeText={setFirstLying}
+            placeholder="120"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={bt.inputGroup}>
+          <Text style={bt.label}>DIA: </Text>
+          <TextInput
+            style={bt.input}
+            value={diaLying}
+            onChangeText={setLastLying}
+            placeholder="80"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="numeric"
+          />
+        </View>
+      </View>
+
+      <TouchableOpacity onPress = {() => {player.pause(); handleBP();}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </KeyboardAwareScrollView>
     
-    )
+  )
 }
+
+
+const bt = StyleSheet.create({
+  card: {
+    width: '85%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+
+  cardTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 14,
+  },
+
+  inputGroup: {
+    marginBottom: 12,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  label: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#6B7280',
+    letterSpacing: 1,
+    marginBottom: 6,
+    textTransform: 'uppercase',
+  },
+
+  input: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#111827',
+    width: '80%',
+  },
+});
 
 export default BloodTest;

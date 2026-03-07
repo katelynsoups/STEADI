@@ -33,10 +33,11 @@ const Shortcut = () =>
         },
       ]}>
       <Text style = {styles.btnText}>Begin Modifiable Risk Assesment</Text>
+
     </TouchableOpacity>
 
        <TouchableOpacity
-      onPress={() => router.navigate('/medicationupload')}
+      onPress={() => router.navigate('/home')}
       style={[
         styles.btn,
         {
@@ -44,7 +45,7 @@ const Shortcut = () =>
           justifyContent: 'center',
         },
       ]}>
-      <Text style = {styles.btnText}>Jump to medication upload</Text>
+      <Text style = {styles.btnText}>Jump to home page</Text>
     </TouchableOpacity>
 
     </View>
