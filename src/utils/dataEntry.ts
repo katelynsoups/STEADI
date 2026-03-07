@@ -48,3 +48,14 @@ export async function enterMedication(medications: Map<string, boolean>): Promis
     }, { merge: true });
     return;
 };
+
+export async function enterMood(pleasure: string, depress: string): Promise<void> {
+    const pid = await getPID();
+    await updateDoc(doc(db, "Users-StudyData", pid), {
+        mood: {
+            lackPleasure: pleasure,
+            depression: depress
+        }
+    });
+    return;
+};
