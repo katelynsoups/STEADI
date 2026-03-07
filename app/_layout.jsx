@@ -22,6 +22,13 @@ const RootLayout = () =>
     </View>
   );
 
+  const HomeHeader = ({ welcomeText, dateText }) => (
+    <View style={styles.layoutHeader}>
+      <Text style={[styles.headerText, {top: 75, fontSize: 25, textAlign: 'center', position: 'relative'}]}>{welcomeText}</Text>
+      <Text style={[styles.headerText, {top: 100, textAlign: 'center', position: 'relative'}]}>{dateText}</Text>
+    </View>
+  );
+
   return (
     <>
       <StatusBar style = "light" />
@@ -35,6 +42,16 @@ const RootLayout = () =>
         }}/>
 
         <Stack.Screen name = "login" options = {{headerShown: false}}/>
+
+        <Stack.Screen name = "home" options = {{
+          header: () => 
+            <HomeHeader welcomeText = {`Welcome back, USER!`}  dateText = {'Its been # months since your last assessment.'}/>
+        }}/>
+
+        <Stack.Screen name = "pastassessments" options = {{
+          header: () => 
+            <CustomHeader headerText = "Past Assessments"/>
+        }}/>
 
         <Stack.Screen name = "signup" options = {{
           header: () => 

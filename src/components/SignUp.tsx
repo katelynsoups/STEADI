@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { createDeIDUser, signUp } from '../utils/gcipAuth';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -48,7 +49,7 @@ const SignUp = () => {
     // };
 
     return (
-        <View style = {styles.background}> 
+         <KeyboardAwareScrollView contentContainerStyle = {[styles.background, styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
             <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
@@ -107,7 +108,7 @@ const SignUp = () => {
             <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]} onPress={handleSignUp}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 

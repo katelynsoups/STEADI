@@ -33,6 +33,7 @@ const Shortcut = () =>
         },
       ]}>
       <Text style = {styles.btnText}>Begin Modifiable Risk Assesment</Text>
+
     </TouchableOpacity>
 
        <TouchableOpacity

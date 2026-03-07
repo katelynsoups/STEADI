@@ -50,8 +50,7 @@ export const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: '#B14B02', // orange background color
-        paddingTop: 304,
-        paddingBottom: 32,
+        height: 336,
         paddingHorizontal: 24,
     },
     logoContainer: {
@@ -63,6 +62,7 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
+        marginTop: 100
     },
     headerSubtitle: {
         color: '#FFFFFF',
@@ -229,6 +229,15 @@ export const styles = StyleSheet.create({
         borderColor: '#000000',  // black border
     },
 
+    logout: 
+    {
+        bottom: 60, 
+        position: 'absolute', 
+        fontWeight: 'bold', 
+        fontSize: 16, 
+        textDecorationLine: 'underline'
+    },
+
     signupContainer: {
         marginTop: 32,
         flexDirection: 'row',
@@ -349,6 +358,12 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F6F8FA'
     },
 
+    keyboardScroll:
+    {
+        flex: 0, 
+        flexGrow: 1
+    },
+
     video: 
     {
       marginTop: 8,
@@ -360,7 +375,8 @@ export const styles = StyleSheet.create({
     inputHeader:
     {
       width: "95%", //changed for consistency
-      fontSize: 17, //upped for the elders ts
+      fontSize: 18, //upped for the elders
+      fontWeight: '500',
       color: "#171717", //changed for contrast
       marginBottom: 8,
       textAlign: 'left' //changed for consistency
