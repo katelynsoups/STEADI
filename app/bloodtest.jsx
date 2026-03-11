@@ -3,7 +3,9 @@ import BloodTest from '../src/components/BloodTest';
 
 const BloodTestPage = () => {
     return (
-        <BloodTest />
+        <BloodTest 
+            screenId={'blood-pressure-test'}
+        />
     );
 };
 

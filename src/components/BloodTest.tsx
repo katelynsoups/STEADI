@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styles } from '../styles/styles';
 import {
   Alert,
@@ -13,15 +13,24 @@ import { useVideoPlayer, VideoView } from 'expo-video';
 import { enterBP } from '../utils/dataEntry';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { updateSaveStatus } from '../utils/saveUnit';
+import { getVideoURL} from '../utils/videoUtils';
 
-const BloodTest = () =>
+const BloodTest = ({screenId}: {screenId: string}) =>
 {
   const [sysStanding, setFirstStand] = useState('');
   const [diaStanding, setLastStand] = useState('');
   const [sysLying, setFirstLying] = useState('');
   const [diaLying, setLastLying] = useState('');
-  const [filter, setFilter] = useState('');
+
   const router = useRouter();
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  //const [filter, setFilter] = useState(''); 
+
+  useEffect(() => {
+          getVideoURL(screenId).then(url => {
+              if (url) setVideoUrl(url);
+          });
+      }, [screenId]);
   updateSaveStatus();
 
   const handleBP = async () => {
@@ -76,14 +85,9 @@ const BloodTest = () =>
       }
   };
 
-  //Swap out for video url or changed video title
-  //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
-  //it will eventually pull from blob storage in the db
-  const bloodInstruct = require('../assets/STEADItestvid.mp4');
-
-  const player = useVideoPlayer(bloodInstruct, player => {
-    player.loop = false;
-    player.play();
+  const player = useVideoPlayer(videoUrl ?? '', player => {
+      player.loop = false;
+      player.play();
   });
 
   return (
