@@ -100,7 +100,12 @@ const RootLayout = () =>
             <CustomHeader headerText = "Complete the vision assessment while recording."/>
         }}/>
 
-        <Stack.Screen name = "visionsuccess" options = {{
+        <Stack.Screen name = "walkingupload" options = {{
+          header: () =>
+            <CustomHeader headerText = "Complete the walking assessment while recording."/>
+        }}/>
+
+        <Stack.Screen name = "success" options = {{
           header: () => 
             <CustomHeader headerText = "Success!"/>
         }}/>
@@ -136,17 +141,17 @@ const RootLayout = () =>
         }}/>
 
         <Stack.Screen name = "medicationupload" options = {{
-          header: () => 
+          header: () =>
             <CustomHeader headerText = "Next, we want to assess your medications to determine how they might influence fall risk."/>
         }}/>
 
         <Stack.Screen name = "medicationresults" options = {{
-          header: () => 
+          header: () =>
             <CustomHeader headerText = "Please view the summary of your medication below."/>
         }}/>
 
         <Stack.Screen name = "medicationtypedupload" options = {{
-          header: () => 
+          header: () =>
             <CustomHeader headerText = "Next, we want to assess your medications to determine how they might influence fall risk."/>
         }}/>
 
