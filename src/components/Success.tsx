@@ -10,11 +10,14 @@ import {
 import { useRouter } from 'expo-router';
 import { updateSaveStatus } from '../utils/saveUnit';
 
-export type successState = {text : string};
+export type successState = {
+    text : string,
+    nextRoute : string,
+};
 
 const checkmark = require('../assets/success.png');
 
-const Success: React.FC<successState> = ({text}) =>
+const Success: React.FC<successState> = ({text, nextRoute}) =>
 {
     const router = useRouter()
     updateSaveStatus();
@@ -35,7 +38,7 @@ const Success: React.FC<successState> = ({text}) =>
 
             <Image source = {checkmark} style = {{width: 150, height: 150}}/>
 
-            <TouchableOpacity onPress = {() => { router.navigate('/homehazards')}} style = {styles.blueNextButton}>
+            <TouchableOpacity onPress = {() => { router.navigate(nextRoute)}} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>

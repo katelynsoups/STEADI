@@ -8,7 +8,7 @@ const VisionUploadPage = () => {
             test = {'vision'} 
             text = {'Watch the video tutorial for completing the vision test using your at-home kit.'}
             vid = {visionVid}
-            route = {'/visionsuccess'}
+            route = {'/success?test=vision'}
         />
     );
 };

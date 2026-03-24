@@ -88,7 +88,7 @@ const RootLayout = () =>
             <CustomHeader headerText = "Complete the walking assessment while recording."/>
         }}/>
 
-        <Stack.Screen name = "visionsuccess" options = {{
+        <Stack.Screen name = "success" options = {{
           header: () => 
             <CustomHeader headerText = "Success!"/>
         }}/>

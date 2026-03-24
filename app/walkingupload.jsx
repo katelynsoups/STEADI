@@ -8,7 +8,7 @@ const TimedUpAndGoUpload = () => {
             test = {'walking'}
             text = {'Watch the video tutorial for completing the Up & Go test.'}
             vid = {visionVid}
-            route = {'/login'}
+            route = {'/success?test=walking'}
         />
     );
 };
