@@ -7,25 +7,32 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useVideoPlayer, VideoView, VideoSource } from 'expo-video';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import * as ImagePicker from 'expo-image-picker';
 import { updateSaveStatus } from '../utils/saveUnit';
+import { getVideoURL} from '../utils/videoUtils';
 
 type uploadType = 
 {
     //Vision or Walking, determines where video gets sent for processing
     test : string,
     text : string,
-    vid : VideoSource,
+    screenId :string,
     route : string,
 
 };
 
-const Upload : React.FC <uploadType> = ({test, text, vid, route}) =>
+const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
 {
     const [vision, setVision] = useState<string | null>(null);
+    const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const router = useRouter();
     updateSaveStatus();
+    useEffect(() => {
+        getVideoURL(screenId).then(url => {
+            if (url) setVideoUrl(url);
+        });
+    }, [screenId]);
     
     const pickVideo = async () => 
     {
@@ -114,12 +121,7 @@ const Upload : React.FC <uploadType> = ({test, text, vid, route}) =>
         );
     };
 
-
-    //Swap out for video url or changed video title
-    //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
-    //it will eventually pull from blob storage in the db
-
-    const player = useVideoPlayer(vid, player => {
+    const player = useVideoPlayer(videoUrl ?? '', player => {
         player.loop = false;
         player.play();
     });

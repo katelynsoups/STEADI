@@ -10,8 +10,9 @@ import Constants from "expo-constants";
 import { 
   getFirestore,
   doc,
-  setDoc 
+  setDoc,
 } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const extra = Constants.expoConfig?.extra ?? Constants.extra;
 
@@ -19,7 +20,7 @@ const firebaseConfig = {
   apiKey: extra?.apiKey,
   authDomain: 'research-digital-steadi-dev.firebaseapp.com',
   projectId: 'research-digital-steadi-dev',
-  //storageBucket: "research-digital-steadi-dev.firebasestorage.app",
+  storageBucket: "research-digital-steadi-dev.firebasestorage.app",
   //messagingSenderId: "228929058201",
   //appId: "1:228929058201:web:5299155e03c12213efcf08"
 };
@@ -28,6 +29,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+export const storage = getStorage(app);
 
 // Helper functions
 export async function signUp(email: string, password: string): Promise<UserCredential> {

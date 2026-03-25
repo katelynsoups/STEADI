@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { styles } from '../styles/styles';
 import {
   View,
@@ -8,19 +8,21 @@ import {
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { updateSaveStatus } from '../utils/saveUnit';
+import { getVideoURL} from '../utils/videoUtils';
 
-const VitaminDTestInstruct = () =>
+const VitaminDTestInstruct = ({screenId}: {screenId: string}) =>
 {
-
     const router = useRouter()
+    const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-    //Swap out for video url or changed video title
-    //mp4 is a large file, currently this is pulling from files and you will need to add your own to assets
-    //it will eventually pull from blob storage in the db
-    const vitaminDInstruct = require('../assets/STEADItestvid.mp4');
+    useEffect(() => {
+        getVideoURL(screenId).then(url => {
+            if (url) setVideoUrl(url);
+        });
+    }, [screenId]);
     updateSaveStatus();
     
-    const player = useVideoPlayer(vitaminDInstruct, player => {
+    const player = useVideoPlayer(videoUrl ?? '', player => {
         player.loop = false;
         player.play();
     });

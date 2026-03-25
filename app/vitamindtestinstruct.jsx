@@ -3,7 +3,9 @@ import VitaminDTestInstruct from '../src/components/VitaminDTestInstruct';
 
 const VitaminDTestInstructPage = () => {
     return (
-        <VitaminDTestInstruct />
+        <VitaminDTestInstruct 
+            screenId={'vitamin-d-test'}
+        />
     );
 };
 
