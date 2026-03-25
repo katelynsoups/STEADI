@@ -29,9 +29,17 @@ const Login: React.FC = () => {
   const handleLogin = async () => {
     try {
       const userCredential = await signIn(emailOrPhone, password);
-      const token = await userCredential.user.getIdToken();
-      Alert.alert('Success', 'Logged in successfully!');
-      router.push(await getSaveStatus());
+      const { user } = userCredential;
+      const token = await user.getIdToken();
+
+      const { creationTime, lastSignInTime } = user.metadata;
+      const isNewUser = creationTime === lastSignInTime;
+
+      if (isNewUser) {
+        router.push('/screening');
+      } else {
+        router.push('/home');
+      }
     } catch (err: any) {
       Alert.alert('Login Failed', err.response?.data?.error?.message || err.message);
     }

@@ -45,7 +45,7 @@ const RootLayout = () =>
 
         <Stack.Screen name = "home" options = {{
           header: () => 
-            <HomeHeader welcomeText = {`Welcome back, USER!`}  dateText = {'Its been # months since your last assessment.'}/>
+            <HomeHeader welcomeText = {`Welcome back!`}  dateText = {'Its been # months since your last assessment.'}/>
         }}/>
 
         <Stack.Screen name = "pastassessments" options = {{
@@ -55,7 +55,7 @@ const RootLayout = () =>
 
         <Stack.Screen name = "signup" options = {{
           header: () => 
-            <CustomHeader headerText = "Let's get to know you better! What is your name?"/>
+            <CustomHeader headerText = "Please create an account using the participant ID provided by the research team:"/>
         }}/>
 
         <Stack.Screen name = "screening" options = {{
