@@ -50,7 +50,7 @@ const SignUp = () => {
 
     return (
          <KeyboardAwareScrollView contentContainerStyle = {[styles.background, styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
-            {/* <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
+            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
                 />
@@ -59,7 +59,7 @@ const SignUp = () => {
                 <TextInput
                     style={[styles.input, {backgroundColor: "white"}]}
                 />
-            </View> */}
+            </View>
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>Email</Text>
                 <TextInput
@@ -105,7 +105,7 @@ const SignUp = () => {
                 />
             </View>
 
-            <TouchableOpacity onPress = {() => {router.navigate('/login')}} style = {styles.blueNextButton}>
+            <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]} onPress={handleSignUp}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </KeyboardAwareScrollView>

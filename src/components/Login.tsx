@@ -14,7 +14,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
 import { signIn } from '../utils/gcipAuth';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { getSaveStatus } from '../utils/saveUnit';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const Login: React.FC = () => {

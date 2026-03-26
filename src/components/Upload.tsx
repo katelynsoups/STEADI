@@ -9,7 +9,6 @@ import {
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import * as ImagePicker from 'expo-image-picker';
-import { updateSaveStatus } from '../utils/saveUnit';
 import { getVideoURL} from '../utils/videoUtils';
 
 type uploadType = 
@@ -27,7 +26,6 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
     const [vision, setVision] = useState<string | null>(null);
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const router = useRouter();
-    updateSaveStatus();
     useEffect(() => {
         getVideoURL(screenId).then(url => {
             if (url) setVideoUrl(url);

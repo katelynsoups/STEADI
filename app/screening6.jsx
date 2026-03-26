@@ -3,10 +3,13 @@ import { useRouter } from 'expo-router';
 import Screening from '../src/components/Screening';
 import { getScreeningQuestionsForStep } from '../src/data/screeningQuestions';
 import { isAtRisk } from '../src/utils/eventLogger';
+import { updateSaveStatus } from '../src/utils/saveUnit';
 
 const Screening6Page = () => {
   const router = useRouter();
   const questions = getScreeningQuestionsForStep(5);
+
+  updateSaveStatus(`/screening6`);
 
   const handleComplete = () => {
     const atRisk = isAtRisk();
