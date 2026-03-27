@@ -38,7 +38,7 @@ export default{
         {
           supportsBackgroundPlayback: false,
           supportsPictureInPicture: false
-        }
+        },
       ]
     ]
   }

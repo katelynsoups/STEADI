@@ -37,7 +37,7 @@ const Shortcut = () =>
     </TouchableOpacity>
 
        <TouchableOpacity
-      onPress={() => router.navigate('/moodquestions')}
+      onPress={() => router.navigate('/pdfgen')}
       style={[
         styles.btn,
         {
@@ -45,7 +45,19 @@ const Shortcut = () =>
           justifyContent: 'center',
         },
       ]}>
-      <Text style = {styles.btnText}>Jump to Mood Questions</Text>
+      <Text style = {styles.btnText}>Test PDFGen</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      onPress={() => router.navigate('/foottest')}
+      style={[
+        styles.btn,
+        {
+          height: 56,
+          justifyContent: 'center',
+        },
+      ]}>
+      <Text style = {styles.btnText}>Go to FootTest</Text>
     </TouchableOpacity>
 
     </View>
