@@ -57,6 +57,11 @@ const Home = () =>
                 <Text style = {[styles.btnText]}>Start New Assessment</Text>
             </TouchableOpacity>
 
+            {/*TO TEST PDF GEN*/}
+            <TouchableOpacity onPress = {() => {router.navigate('/shortcut')}} style = {[styles.blueNextButton, {top: '60%'}]}>
+                <Text style = {[styles.btnText]}>Shortcuts</Text>
+            </TouchableOpacity>
+
             <Logout/>
 
         </View>

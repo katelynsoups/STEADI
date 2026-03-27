@@ -41,6 +41,8 @@ const RootLayout = () =>
             <CustomHeader headerText = "Temporary shortcut menu"/>
         }}/>
 
+        <Stack.Screen name = "pdfgen"/>
+
         <Stack.Screen name = "login" options = {{headerShown: false}}/>
 
         <Stack.Screen name = "home" options = {{

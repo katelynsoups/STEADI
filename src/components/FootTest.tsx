@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { styles } from '../styles/styles';
 import {
     Image,
@@ -8,14 +8,18 @@ import {
     StyleSheet,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import ViewShot, {captureRef} from 'react-native-view-shot';
+import * as FileSystem from 'expo-file-system/legacy';
 import { enterFootTest } from '../utils/dataEntry';
 import { updateSaveStatus } from '../utils/saveUnit';
 
-type buttonStats = {
+export type buttonStats = {
     id: number;
     top: number;
     left: number;
 }
+
+export const diagramFileName : string = "NeuropathyDiagram.png";
 
 const router = useRouter()
 
@@ -35,8 +39,11 @@ const handleFootTest = async () => {
 const FootTest = () =>
 {
     updateSaveStatus();
+
     for (let i:number = 0; i < 20; i++)
         buttonMap.set(i, false)
+
+    const diagramRef = useRef(null);
 
     const FootButton = (props: buttonStats) =>
     {
@@ -70,10 +77,52 @@ const FootTest = () =>
     
     };
 
+    const diagramURI = async () =>
+    {
+
+        try 
+        {
+            const uri = await captureRef(diagramRef,
+            {
+                format: 'png',
+                quality: 0.9,
+                fileName: diagramFileName
+            });
+
+            const newURI : string = FileSystem.documentDirectory + 'images';
+            const dirCheck = await FileSystem.getInfoAsync(newURI)
+
+            console.log(dirCheck)
+
+            if(!dirCheck.exists)
+            {
+                await FileSystem.makeDirectoryAsync(newURI, { intermediates: true })
+                console.log("Created directory!");
+            }
+
+            const base64 : string = await FileSystem.readAsStringAsync(uri,
+            {
+                encoding: FileSystem.EncodingType.Base64
+            })
+
+            await FileSystem.writeAsStringAsync(newURI + diagramFileName, base64, 
+            {
+                encoding: FileSystem.EncodingType.Base64
+            })
+
+            console.log('Image saved successfully to:', newURI);
+        }
+        catch (error)
+        {
+            console.error('Could not get foot diagram snapshot: ', error);
+        }
+    }
+
     return (
         <View style = {styles.background}> 
             <Text style = {styles.inputHeader}>When the patient feels the monofilament touching their feet, instruct them to tap on the screen where it was felt.</Text>
             
+            <ViewShot ref = {diagramRef} options = {{format: 'png', quality: 0.9}}>
             <View style = {{width: 375, height: 375}}>
                 <Image source = {feet} style = {{width: 375, height: 375}}/>
 
@@ -100,8 +149,9 @@ const FootTest = () =>
                 <FootButton id = {19} top = {300} left = {235}/> 
 
             </View>
+            </ViewShot>
 
-            <TouchableOpacity onPress = {handleFootTest} style = {styles.blueNextButton}>
+            <TouchableOpacity onPress = {() => {diagramURI(); handleFootTest()}} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>
