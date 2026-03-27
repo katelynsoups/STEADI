@@ -59,3 +59,12 @@ export async function enterMood(pleasure: string, depress: string): Promise<void
     });
     return;
 };
+
+export async function enterScreeningResponse(questionId: string, answer: string): Promise<void> {
+    const pid = await getPID();
+    await setDoc(doc(db, "Users-StudyData", pid), {
+        screening: {
+            [questionId]: answer
+        }
+    }, { merge: true });
+}

@@ -43,11 +43,6 @@ const SignUp = () => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    // const togglePasswordVisibility = () => 
-    // {
-    //     setPasswordVisible(!passwordVisible);
-    // };
-
     return (
          <KeyboardAwareScrollView
             style={{ flex: 1, backgroundColor: '#F6F8FA' }}
@@ -55,17 +50,6 @@ const SignUp = () => {
             enableOnAndroid={true}
             enableAutomaticScroll={true}
         >
-            {/*no need to store users name currently*/}
-            {/* <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                />
-            </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Last Name</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                />
-            </View> */}
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>Email</Text>
                 <TextInput

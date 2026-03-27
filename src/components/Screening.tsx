@@ -15,6 +15,7 @@ import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { saveScreeningEvent } from '../utils/eventLogger';
 import { styles as appStyles } from '../styles/styles';
+import { enterScreeningResponse } from '../utils/dataEntry';
 
 type AnswerOption = 'Yes' | 'No';
 
@@ -75,6 +76,7 @@ const Screening: React.FC<ScreeningProps> = ({
   const handleSelect = (questionId: string, option: AnswerOption) => {
     setResponses((prev) => ({ ...prev, [questionId]: option }));
     saveScreeningEvent(questionId, option);
+    enterScreeningResponse(questionId, option);
 
      if (
        followUpModal &&

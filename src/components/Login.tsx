@@ -15,6 +15,8 @@ import { useRouter } from 'expo-router';
 import { signIn } from '../utils/gcipAuth';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../utils/gcipAuth';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -29,12 +31,12 @@ const Login: React.FC = () => {
     try {
       const userCredential = await signIn(emailOrPhone, password);
       const { user } = userCredential;
-      const token = await user.getIdToken();
+      const docRef = doc(db, "Users-AppData", user.uid);
+      const docSnap = await getDoc(docRef);
+      const isFirstLogin = docSnap.data()?.firstLogin === true;
 
-      const { creationTime, lastSignInTime } = user.metadata;
-      const isNewUser = creationTime === lastSignInTime;
-
-      if (isNewUser) {
+      if (isFirstLogin) {
+        await updateDoc(docRef, { firstLogin: false }); 
         router.push('/screening');
       } else {
         router.push('/home');
