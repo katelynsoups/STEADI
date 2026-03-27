@@ -19,10 +19,9 @@ export async function enterBP(standing: string, lying: string): Promise<void> {
 
 export async function enterVitaminD(vitamin: string): Promise<void> {
     const pid = await getPID();
-    await updateDoc(doc(db, "Users-StudyData", pid), {
+    await setDoc(doc(db, "Users-StudyData", pid), {
         VitaminD: vitamin
-    });
-    return;
+    }, { merge: true });
 };
 
 export async function enterHazards(hazards: Map<string, boolean>): Promise<void> {

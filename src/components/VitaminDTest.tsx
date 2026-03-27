@@ -16,14 +16,14 @@ const VitaminDTest = () =>
     const[vitaminD, setVitaminD] = useState("");
     const router = useRouter();
     
-    const handleVitaminD = async () => {
-      try{
-        await enterVitaminD(vitaminD);
-        router.navigate('/login');
-      } catch (error: any) {
-        console.error('Database entry error:', error);
-      }
-    };
+  const handleVitaminD = async () => {
+    try {
+      await enterVitaminD(vitaminD);
+      router.navigate('/home');
+    } catch (error: any) {
+      console.error('Database entry error:', error);
+    }
+  };
 
   return (
     <View style = {styles.background}> 
@@ -42,7 +42,7 @@ const VitaminDTest = () =>
        style = {{marginBottom: 15}}
       />
 
-      <TouchableOpacity onPress = {() => {handleVitaminD; router.navigate('/home')}} style = {styles.blueNextButton}>
+      <TouchableOpacity onPress={handleVitaminD} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

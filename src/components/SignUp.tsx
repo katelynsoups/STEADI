@@ -95,7 +95,7 @@ const SignUp = () => {
                 />
             </View>
 
-            <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]} onPress={handleSignUp}>
+            <TouchableOpacity style = {[styles.blueNextButton]} onPress={handleSignUp}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </KeyboardAwareScrollView>
