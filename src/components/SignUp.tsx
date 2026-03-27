@@ -43,23 +43,13 @@ const SignUp = () => {
 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    // const togglePasswordVisibility = () => 
-    // {
-    //     setPasswordVisible(!passwordVisible);
-    // };
-
     return (
-         <KeyboardAwareScrollView contentContainerStyle = {[styles.background, styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>First Name</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                />
-            </View>
-            <View style = {[{width: "100%"}, {marginBottom: 8}]}><Text style = {styles.inputHeader}>Last Name</Text>
-                <TextInput
-                    style={[styles.input, {backgroundColor: "white"}]}
-                />
-            </View>
+         <KeyboardAwareScrollView
+            style={{ flex: 1, backgroundColor: '#F6F8FA' }}
+            contentContainerStyle={[styles.background, styles.keyboardScroll]}
+            enableOnAndroid={true}
+            enableAutomaticScroll={true}
+        >
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>Email</Text>
                 <TextInput
@@ -105,7 +95,7 @@ const SignUp = () => {
                 />
             </View>
 
-            <TouchableOpacity style = {[styles.btn, {position: "static", marginTop: 16}]} onPress={handleSignUp}>
+            <TouchableOpacity style = {[styles.blueNextButton]} onPress={handleSignUp}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </KeyboardAwareScrollView>

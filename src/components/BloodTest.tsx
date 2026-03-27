@@ -12,7 +12,6 @@ import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { enterBP } from '../utils/dataEntry';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { updateSaveStatus } from '../utils/saveUnit';
 import { getVideoURL} from '../utils/videoUtils';
 
 const BloodTest = ({screenId}: {screenId: string}) =>
@@ -31,7 +30,6 @@ const BloodTest = ({screenId}: {screenId: string}) =>
               if (url) setVideoUrl(url);
           });
       }, [screenId]);
-  updateSaveStatus();
 
   const handleBP = async () => {
     

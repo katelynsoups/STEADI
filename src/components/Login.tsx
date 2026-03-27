@@ -14,8 +14,9 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
 import { signIn } from '../utils/gcipAuth';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { getSaveStatus } from '../utils/saveUnit';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../utils/gcipAuth';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -29,9 +30,17 @@ const Login: React.FC = () => {
   const handleLogin = async () => {
     try {
       const userCredential = await signIn(emailOrPhone, password);
-      const token = await userCredential.user.getIdToken();
-      Alert.alert('Success', 'Logged in successfully!');
-      router.push(await getSaveStatus());
+      const { user } = userCredential;
+      const docRef = doc(db, "Users-AppData", user.uid);
+      const docSnap = await getDoc(docRef);
+      const isFirstLogin = docSnap.data()?.firstLogin === true;
+
+      if (isFirstLogin) {
+        await updateDoc(docRef, { firstLogin: false }); 
+        router.push('/screening');
+      } else {
+        router.push('/home');
+      }
     } catch (err: any) {
       Alert.alert('Login Failed', err.response?.data?.error?.message || err.message);
     }

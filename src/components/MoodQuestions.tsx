@@ -7,7 +7,6 @@ import {
   StyleSheet
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { updateSaveStatus } from '../utils/saveUnit';
 import { enterMood } from '../utils/dataEntry';
 
 interface ButtonInfo
@@ -24,8 +23,6 @@ const MoodQuestions = () =>
     const [depressState, setDState] = useState([false, false, false, false]);
     const [allAnswered, setAnswered] = useState(false);
     const router = useRouter();
-
-    updateSaveStatus();
 
     const handleMood = async () => {
        if (!allAnswered)

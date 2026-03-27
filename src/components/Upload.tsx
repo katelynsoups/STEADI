@@ -31,7 +31,6 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
     const [vision, setVision] = useState<string | null>(null);
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const router = useRouter();
-    updateSaveStatus();
 
     // uses expo-video-audio-extractor 3rd party dependency to convert uploaded mp4 -> wav
     // FIXME: store wav in cache and ensure it deletes off local storage / store somewhere else temporarily

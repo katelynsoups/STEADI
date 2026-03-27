@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { styles as appStyles } from '../styles/styles';
-import { updateSaveStatus } from '../utils/saveUnit';
 
 type ScreeningResultProps = {
   bodyHeader?: string;
@@ -9,7 +8,6 @@ type ScreeningResultProps = {
 };
 
 const ScreeningResult: React.FC<ScreeningResultProps> = ({ bodyHeader, bodyText }) => {
-  updateSaveStatus();
   const bodyTextGroups = bodyText.split(".");
 
   return (

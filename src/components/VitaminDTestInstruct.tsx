@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
-import { updateSaveStatus } from '../utils/saveUnit';
 import { getVideoURL} from '../utils/videoUtils';
 
 const VitaminDTestInstruct = ({screenId}: {screenId: string}) =>
@@ -20,7 +19,6 @@ const VitaminDTestInstruct = ({screenId}: {screenId: string}) =>
             if (url) setVideoUrl(url);
         });
     }, [screenId]);
-    updateSaveStatus();
     
     const player = useVideoPlayer(videoUrl ?? '', player => {
         player.loop = false;
