@@ -14,6 +14,7 @@ import * as FileSystem from 'expo-file-system/legacy';
 import { updateSaveStatus } from '../utils/saveUnit';
 import { getVideoURL} from '../utils/videoUtils';
 import { transcribeAudio } from '../utils/transcribeAudio';
+import { enterVisionTest } from '../utils/dataEntry';
 
 type uploadType = 
 {
@@ -87,6 +88,7 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
 
             const transcription = await transcribeAudio(verifyUri);
             console.log('[Upload] Transcription:', transcription);
+            await enterVisionTest(transcription);
 
             return verifyUri;
         } catch (err) {
@@ -102,8 +104,7 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
         });
     }, [screenId]);
 
-    // FIXME: change so that processVideoToAudio function only called during vision assessment
-    const pickVideo = async () => 
+    const pickVideo = async () =>
     {
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -128,13 +129,12 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
             //URI points to cache, which is temporary. Users may need to re-upload the video to server if session is interrupted.
             setVision(result.assets[0].uri);
             console.log('[Upload] Video selected from gallery:', result.assets[0].uri);
-            await processVideoToAudio(result.assets[0].uri);
+            if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
             router.navigate(route);
         }
     }
 
-    // FIXME: change so that processVideoToAudio function only called during vision assessment
-    const takeVideo = async () => 
+    const takeVideo = async () =>
     {
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
@@ -158,7 +158,7 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
         {
             setVision(result.assets[0].uri);
             console.log('[Upload] Video captured from camera:', result.assets[0].uri);
-            await processVideoToAudio(result.assets[0].uri);
+            if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
             router.navigate(route);
         }
     }

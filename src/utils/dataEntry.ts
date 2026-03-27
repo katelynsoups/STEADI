@@ -49,6 +49,14 @@ export async function enterMedication(medications: Map<string, boolean>): Promis
     return;
 };
 
+export async function enterVisionTest(transcription: string): Promise<void> {
+    const pid = await getPID();
+    await setDoc(doc(db, "Users-StudyData", pid), {
+        visionTranscription: transcription
+    }, { merge: true });
+    return;
+};
+
 export async function enterMood(pleasure: string, depress: string): Promise<void> {
     const pid = await getPID();
     await updateDoc(doc(db, "Users-StudyData", pid), {
