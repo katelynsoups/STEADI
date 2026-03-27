@@ -1,6 +1,10 @@
 import Upload from '../src/components/Upload';
+import { updateSaveStatus } from '../src/utils/saveUnit';
 
 const TimedUpAndGoUpload = () => {
+
+    updateSaveStatus('/walkingupload');
+
     return (
         <Upload
             test = {'walking'}

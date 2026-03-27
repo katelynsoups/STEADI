@@ -1,6 +1,10 @@
 import Upload from '../src/components/Upload';
+import { updateSaveStatus } from '../src/utils/saveUnit';
 
 const VisionUploadPage = () => {
+
+    updateSaveStatus('/visionupload');
+    
     return (
         <Upload 
             test = {'vision'} 

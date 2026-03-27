@@ -1,9 +1,14 @@
 import React from 'react';
 import Screening, { FollowUpModalConfig } from '../src/components/Screening';
 import { getScreeningQuestionsForStep } from '../src/data/screeningQuestions';
+import { updateSaveStatus } from '../src/utils/saveUnit';
 
 const ScreeningPage = () => {
   const questions = getScreeningQuestionsForStep(0);
+
+  updateSaveStatus(`/screening`);
+
+  //changes this file to tsx to allow types for the modal
   const followUpModal: FollowUpModalConfig = {
     questionId: 'fallen',
     triggerAnswer: 'Yes',

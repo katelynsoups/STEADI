@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { enterFootTest } from '../utils/dataEntry';
-import { updateSaveStatus } from '../utils/saveUnit';
 
 type buttonStats = {
     id: number;
@@ -34,7 +33,6 @@ const handleFootTest = async () => {
 
 const FootTest = () =>
 {
-    updateSaveStatus();
     for (let i:number = 0; i < 20; i++)
         buttonMap.set(i, false)
 

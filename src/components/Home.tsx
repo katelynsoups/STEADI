@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { getSaveStatus } from '../utils/saveUnit';
 import Logout from './Logout';
 
 const Home = () =>
@@ -14,25 +15,18 @@ const Home = () =>
 
     const router = useRouter()
 
-    const handleResume = () => 
-    {
-        //const [resumeRoute, setRoute] = useState('');
-        //Need some sort of logic here to grab prev data and ascertain where to send user
+    //checks if there is a parameter with the saved status - used for the screening results page
+    const handleResume = async () => {
+        try {
+            const saved = await getSaveStatus();
+            const [pathname, query] = saved.split('?');
+            const params = query ? Object.fromEntries(new URLSearchParams(query)) : {};
 
-        Alert.alert(
-                "Feature Not Yet Functional",
-                "Resuming assessments has not been implemented.",
-                  [
-                    {
-                      text: "OK",
-                      style: "cancel"
-                    },
-                  ],
-                { cancelable: true }
-              );
-
-        //router.navigate(resumeRoute)
-    }
+            router.navigate({ pathname, params });
+        } catch (err: any) {
+            Alert.alert('Error', 'Could not retrieve your assessment progress.');
+        }
+    };
 
     const handleLogOut = () => 
     {

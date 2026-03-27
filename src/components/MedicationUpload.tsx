@@ -10,13 +10,12 @@ import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from "expo-constants";
 import medicationList from '../utils/medications.json'; //from RXNorm used to extract drug names
-import { updateSaveStatus } from '../utils/saveUnit';
 
 //just extracting text here. no database
 const medicationUpload = () =>
 {
     const router = useRouter();
-    updateSaveStatus();
+    
     //this is the data to be sent to database (will be able to store multiple meds for multiple uploads)
     //const [medications, setMedications] = useState<string[][]>([]);
     //const medicationMap = useRef(new Map<string, boolean>()).current; //modling after home hazards

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { styles } from '../src/styles/styles';
+import { updateSaveStatus } from '../src/utils/saveUnit';
 import ScreeningResult from '../src/components/ScreeningResult';
 
 // we use these constants so that the same component can be used for two different results screens
@@ -20,6 +21,9 @@ const ScreeningResultPage = () => {
   const router = useRouter();
   const { atRisk } = useLocalSearchParams();
   const isAtRisk = atRisk === 'true';
+
+  //needs to be called here so we have the correct conditional statement
+  updateSaveStatus(`/screeningresult?atRisk=${isAtRisk}`);
 
   const headerText = isAtRisk ? AT_RISK_HEADER : NOT_AT_RISK_HEADER;
   const bodyText = isAtRisk ? AT_RISK_BODY : NOT_AT_RISK_BODY;

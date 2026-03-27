@@ -15,7 +15,7 @@ import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { saveScreeningEvent } from '../utils/eventLogger';
 import { styles as appStyles } from '../styles/styles';
-import { updateSaveStatus } from '../utils/saveUnit';
+import { enterScreeningResponse } from '../utils/dataEntry';
 
 type AnswerOption = 'Yes' | 'No';
 
@@ -65,7 +65,7 @@ const Screening: React.FC<ScreeningProps> = ({
   const [activeQuestion, setActiveQuestion] = useState<ScreeningQuestion | null>(null);
   const [followUpVisible, setFollowUpVisible] = useState(false);
   const [followUpValues, setFollowUpValues] = useState<Record<string, string>>({});
-  updateSaveStatus();
+  //instead of calling update save status here we will do it in the app screens since 6 screens use this component
 
   // is True when each question on the page is answered. Used for highlighting 'Next' button
   const allAnswered = useMemo(
@@ -76,6 +76,7 @@ const Screening: React.FC<ScreeningProps> = ({
   const handleSelect = (questionId: string, option: AnswerOption) => {
     setResponses((prev) => ({ ...prev, [questionId]: option }));
     saveScreeningEvent(questionId, option);
+    enterScreeningResponse(questionId, option);
 
      if (
        followUpModal &&
