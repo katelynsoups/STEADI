@@ -1,6 +1,9 @@
-import React, {useEffect, useState} from 'react';
+// @refresh reset
+
+import React, {useEffect, useRef, useState} from 'react';
 import { styles } from '../styles/styles';
 import {
+    Alert,
     View,
     Text,
     TouchableOpacity,
@@ -10,7 +13,6 @@ import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system/legacy';
 import {diagramFileName} from './FootTest';
-import {getScreeningEvents} from '../utils/eventLogger';
 import {getUserStudyData} from '../utils/getData';
 import {getHazards} from '../data/hazardQuestions';
 
@@ -18,6 +20,7 @@ const router = useRouter()
 
 const PDFGen = () =>
 {
+    const [riskScore, setRiskScore] = useState<number>(0);
     const [standingBP, setStandingBP] = useState<string>("");
     const [lyingBP, setLyingBP] = useState<string>("");
     const [medications, setMedications] = useState<string>("");
@@ -25,8 +28,25 @@ const PDFGen = () =>
     const [diagram, setDiagram] = useState<string>("");
     const [depress, setDepress] = useState<string>("");
     const [pleasure, setPleasure] = useState<string>("");
+    const [vitaminD, setVitamin] = useState<string>("");
+    const [isLoaded, setLoaded] = useState(false);
+    const [ready, isReady] = useState(false);
+    const screenResults = useRef(new Map<string, string>()).current;
 
-    const checkMedications = (meds : Object) =>
+    const setScreenings = async (results : Object) =>
+    {
+        let risk : number = 0;
+        for (const [key, value] of Object.entries(results))
+        {
+            screenResults.set(key, value);
+            if(value == 'Yes')
+                risk++;
+        }
+
+        setRiskScore(risk);
+    }
+
+    const checkMedications = async (meds : Object) =>
     {
         let trueMeds : string = "" 
 
@@ -37,21 +57,19 @@ const PDFGen = () =>
         setMedications(trueMeds);
     }
 
-    const checkHazards = (hazards : Object) =>
+    const checkHazards = async (hazards : Object) =>
     {
         let trueHazards : string = "" 
         let bedLight : string = getHazards(1)[1].text;
         let nightLight : string = getHazards(1)[2].text;
         let stool : string = getHazards(1)[0].text;
 
-        console.log(hazards);
-
         for (const [key, value] of Object.entries(hazards))
         {
             if (key === bedLight || key === nightLight || key === stool)
             {
                 if(value == false)
-                    trueHazards = trueHazards.concat("Does not have ", key, "<br>");
+                    trueHazards = trueHazards.concat("Does not have ", key.toLowerCase(), "<br>");
             }
             else if (value == true)
                 trueHazards = trueHazards.concat(key, "<br>");
@@ -62,20 +80,24 @@ const PDFGen = () =>
 
     const convertURI = async () =>
     {  
-        try
+        const uri : string = FileSystem.documentDirectory + 'images';
+        const dirCheck = await FileSystem.getInfoAsync(uri)
+        
+        if(!dirCheck.exists)
         {
-            const base64 : string = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'images' + diagramFileName,
-            {
-                encoding: FileSystem.EncodingType.Base64
-            })
+            await FileSystem.makeDirectoryAsync(uri, { intermediates: true })
+            console.log("Created directory!");
+        }
 
-            setDiagram(base64);
-        }
-        catch(error)
+        let base64 : string = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'images' + diagramFileName,
         {
-            console.log("Error converting saved Foot Diagram to base64: ", error)
-        }
+            encoding: FileSystem.EncodingType.Base64
+        })
+
+        setDiagram(base64);
     }
+
+    convertURI();
 
     useEffect(() => 
     {
@@ -83,6 +105,9 @@ const PDFGen = () =>
         {
             if(userData)
             { 
+                if (userData[6])
+                    setScreenings(userData[6])
+
                 if(userData[0])
                 {
                     setStandingBP(userData[0].standingBP);
@@ -95,19 +120,32 @@ const PDFGen = () =>
                 if(userData[2])
                     checkHazards(userData[2]);
 
-                if(userData[3])
-                    convertURI();
-
                 if(userData[4] && userData[5])
                 {
                     setDepress(userData[4]);
                     setPleasure(userData[5]);
                 }
+
+                if(userData[7])
+                    setVitamin(userData[7])
+
             }
+
+        }).then(result =>
+        {
+            setLoaded(true);
         });
     }, []);
 
-    const screeningEvents = getScreeningEvents();
+    useEffect(() =>
+    {
+        if(isLoaded)
+        {
+            savePDF();
+        }
+
+        isReady(true);
+    }, [isLoaded]);
 
     const html = `
 <html>
@@ -176,62 +214,54 @@ const PDFGen = () =>
         </tr>
         <tr>
             <th>I have fallen in the past year.</th>
-            <th>TEMP</th>
-        </tr>
-        <tr>
-            <th>How many times have you fallen in the last year?</th>
-            <th>TEMP</th>
-        </tr>
-        <tr>
-            <th>Were you injured?</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("fallen")}</th>
         </tr>
         <tr>
             <th>I use or have been advised to use a cane or walker to get around safely.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("cane")}</th>
         </tr>
         <tr>
             <th>Sometimes I feel unsteady when walking.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("unsteady")}</th>
         </tr>
         <tr>
             <th>I worry about falling.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("worried")}</th>
         </tr>
         <tr>
             <th>I need to push with my hands to stand up from a chair.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("handsToStand")}</th>
         </tr>
         <tr>
             <th>I have trouble stepping up onto a curb.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("curb")}</th>
         </tr>
         <tr>
             <th>I have lost some feeling in my feet.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("numbFeet")}</th>
         </tr>
         <tr>
             <th>I often feel light-headed when getting up.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("lightheaded")}</th>
         </tr>
         <tr>
             <th>I take medicine that makes me feel tired or dizzy.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("medDizzy")}</th>
         </tr>
         <tr>
             <th>I take medicine to help me sleep or improve my mood.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("sleepMeds")}</th>
         </tr>
         <tr>
             <th>I often feel sad or depressed.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("sad")}</th>
         </tr>
         <tr>
             <th>I have to rush to the toilet.</th>
-            <th>TEMP</th>
+            <th>${screenResults.get("rushBathroom")}</th>
         </tr>
     </table>
-    <h2>Fall Risk Score: </h2h2>
+    <h1>Fall Risk Score: ${riskScore}</h1>
 
     <h1>Blood Pressure</h1>
     <table>
@@ -270,6 +300,8 @@ const PDFGen = () =>
         </tr>
     </table>
 
+    <h1>Vitamin D Levels: ${vitaminD}</h1>
+
   </body>
 </html>
     `;
@@ -286,21 +318,62 @@ const PDFGen = () =>
         const uri = await printToFile();
         if (uri) 
         {
-            if(await Sharing.isAvailableAsync())
+            const pdfURI = `${FileSystem.documentDirectory}pdf/${new Date().toDateString()}.pdf`
+            const dirCheck = await FileSystem.getInfoAsync(FileSystem.documentDirectory + "pdf")
+
+            if(!dirCheck.exists)
             {
-                await Sharing.shareAsync(uri);
+                await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + "pdf", { intermediates: true })
+                console.log("Created directory!");
+            }
+
+            try
+            {
+                await FileSystem.moveAsync({
+                    from: uri,
+                    to: pdfURI
+                })
+            }
+            catch (error)
+            {
+                console.log("Could not save PDF: ", error);
+                Alert.alert(
+                    "Could not generate PDF!",
+                    "There was an issue generating your results.",
+                    [
+                        {
+                            text: "Ok",
+                            style: "cancel"
+                        },
+                    ],
+                    { cancelable: false }
+                );
             }
         }
+    }
 
+    const downloadPDF = async () =>
+    {
+        const pdfURI = `${FileSystem.documentDirectory}pdf/${new Date().toDateString()}.pdf`
+
+        if(await Sharing.isAvailableAsync())
+        {
+            await Sharing.shareAsync(pdfURI);
+        }
     }
 
     return (
         <View style = {styles.background}> 
-            <Text style = {styles.inputHeader}>Solely for testing out PDF Generation. This page should not exist in our final version.</Text>
+            {!ready && <Text style = {styles.inputHeader}>Saving results...</Text>}
+            {ready && <Text style = {styles.inputHeader}>Thank you for your patience! You may download your results and return to the Home Page.</Text>}
 
-            <TouchableOpacity onPress = {() => savePDF()} style = {styles.blueNextButton}>
-                    <Text style = {[styles.btnText]}>PRINT HTML</Text>
-            </TouchableOpacity>
+            {ready && <TouchableOpacity onPress = {() => downloadPDF()} style = {[styles.blueNextButton, {bottom: 150}]}>
+                    <Text style = {[styles.btnText]}>Download Results PDF</Text>
+            </TouchableOpacity>}
+
+            {ready && <TouchableOpacity onPress = {() => router.navigate('/home')} style = {[styles.blueNextButton, {bottom: 60}]}>
+                    <Text style = {[styles.btnText]}>End Assessment</Text>
+            </TouchableOpacity>}
         </View>
         
     )

@@ -42,7 +42,7 @@ const VitaminDTest = () =>
        style = {{marginBottom: 15}}
       />
 
-      <TouchableOpacity onPress={handleVitaminD} style = {styles.blueNextButton}>
+      <TouchableOpacity onPress = {() => {handleVitaminD; router.navigate('/pdfgen')}} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

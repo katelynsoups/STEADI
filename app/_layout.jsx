@@ -41,13 +41,16 @@ const RootLayout = () =>
             <CustomHeader headerText = "Temporary shortcut menu"/>
         }}/>
 
-        <Stack.Screen name = "pdfgen"/>
+        <Stack.Screen name = "pdfgen" options = {{
+          header: () => 
+            <CustomHeader headerText = "Congratulations! You have finished the assessment!"/>
+        }}/>
 
         <Stack.Screen name = "login" options = {{headerShown: false}}/>
 
         <Stack.Screen name = "home" options = {{
           header: () => 
-            <HomeHeader welcomeText = {`Welcome back!`}  dateText = {'Its been # months since your last assessment.'}/>
+            <HomeHeader welcomeText = {`Welcome!`}/>
         }}/>
 
         <Stack.Screen name = "pastassessments" options = {{
