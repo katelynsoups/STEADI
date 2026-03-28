@@ -20,6 +20,8 @@ Promise<[
     Object | null, 
     Object | null,
     string | null,
+    string | null,
+    Object | null,
     string | null] 
     | null>
 {
@@ -35,6 +37,7 @@ Promise<[
     const footNeuropathyTest = docSnap.data()?.footNeuropathyTest as Object;
     const depression = docSnap.data()?.mood?.depression as string;
     const lackPleasure = docSnap.data()?.mood?.lackPleasure as string;
-    console.log("User Data: ", userData);
-    return [bloodPressure, medications, hazards, footNeuropathyTest, depression, lackPleasure];
+    const screening = docSnap.data()?.screening as Object;
+    const vitaminD = docSnap.data()?.VitaminD as string;
+    return [bloodPressure, medications, hazards, footNeuropathyTest, depression, lackPleasure, screening, vitaminD];
 }
