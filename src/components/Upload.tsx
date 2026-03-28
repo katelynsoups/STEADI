@@ -32,71 +32,6 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const router = useRouter();
 
-    // uses expo-video-audio-extractor 3rd party dependency to convert uploaded mp4 -> wav
-    // FIXME: store wav in cache and ensure it deletes off local storage / store somewhere else temporarily
-    const processVideoToAudio = async (videoUri: string) => {
-        console.log('[Upload] Starting video->audio processing');
-        console.log('[Upload] Input video uri:', videoUri);
-
-        try {
-            const baseDir = FileSystem.documentDirectory ?? FileSystem.cacheDirectory;
-            if (!baseDir) throw new Error('FileSystem base directory is not available');
-            const assetsAudioDir = `${baseDir}assets/audio/`;
-            await FileSystem.makeDirectoryAsync(assetsAudioDir, { intermediates: true });
-
-            const audioFileName = `audio-${Date.now()}.wav`;
-            const outputUri = `${assetsAudioDir}${audioFileName}`;
-            const rawOutputPath = outputUri.replace('file://', '').replace(/^\/+/, '/');
-
-            try {
-                const videoInfo = await FileSystem.getInfoAsync(videoUri);
-                console.log('[Upload] Video read/info result:', videoInfo);
-                if (videoInfo.exists) {
-                    console.log('[Upload] Video uploaded/readable successfully (for extraction).');
-                }
-            } catch (e) {
-                console.log('[Upload] Video info check skipped/failed:', e);
-            }
-
-            console.log('[Upload] Extracting audio to:', outputUri);
-            const savedAudioUri = await extractAudio({
-                video: videoUri,
-                output: rawOutputPath,
-                format: 'wav',
-            });
-
-            console.log('[Upload] transformVideo completed. Saved audio uri:', savedAudioUri);
-            console.log('[Upload] Audio file saved successfully (extractAudio returned):', savedAudioUri);
-
-            const verifyUri = savedAudioUri.startsWith('file://')
-                ? savedAudioUri
-                : `file://${savedAudioUri}`;
-
-            try {
-                const outInfo = await FileSystem.getInfoAsync(verifyUri);
-                console.log('[Upload] Audio output info:', outInfo);
-                if (outInfo.exists) {
-                    console.log('[Upload] Audio file saved successfully:', verifyUri);
-                } else {
-                    console.log('[Upload] Audio output reported missing:', verifyUri);
-                }
-            } catch (e) {
-                console.log('[Upload] Audio output verification failed:', e);
-                console.log('[Upload] Audio file saved successfully (unverified):', verifyUri);
-            }
-
-            const transcription = await transcribeAudio(verifyUri);
-            console.log('[Upload] Transcription:', transcription);
-            await enterVisionTest(transcription);
-
-            return verifyUri;
-        } catch (err) {
-            console.log('[Upload] transformVideo (video->audio) failed:', err);
-            Alert.alert('Upload failed', 'Failed to process video/audio.');
-            throw err;
-        }
-    };
-
     useEffect(() => {
         getVideoURL(screenId).then(url => {
             if (url) setVideoUrl(url);
@@ -191,6 +126,71 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
         player.loop = false;
         player.play();
     });
+
+    // uses expo-video-audio-extractor 3rd party dependency to convert uploaded mp4 -> wav
+    // FIXME: store wav in cache and ensure it deletes off local storage / store somewhere else temporarily
+    const processVideoToAudio = async (videoUri: string) => {
+        console.log('[Upload] Starting video->audio processing');
+        console.log('[Upload] Input video uri:', videoUri);
+
+        try {
+            const baseDir = FileSystem.documentDirectory ?? FileSystem.cacheDirectory;
+            if (!baseDir) throw new Error('FileSystem base directory is not available');
+            const assetsAudioDir = `${baseDir}assets/audio/`;
+            await FileSystem.makeDirectoryAsync(assetsAudioDir, { intermediates: true });
+
+            const audioFileName = `audio-${Date.now()}.wav`;
+            const outputUri = `${assetsAudioDir}${audioFileName}`;
+            const rawOutputPath = outputUri.replace('file://', '').replace(/^\/+/, '/');
+
+            try {
+                const videoInfo = await FileSystem.getInfoAsync(videoUri);
+                console.log('[Upload] Video read/info result:', videoInfo);
+                if (videoInfo.exists) {
+                    console.log('[Upload] Video uploaded/readable successfully (for extraction).');
+                }
+            } catch (e) {
+                console.log('[Upload] Video info check skipped/failed:', e);
+            }
+
+            console.log('[Upload] Extracting audio to:', outputUri);
+            const savedAudioUri = await extractAudio({
+                video: videoUri,
+                output: rawOutputPath,
+                format: 'wav',
+            });
+
+            console.log('[Upload] transformVideo completed. Saved audio uri:', savedAudioUri);
+            console.log('[Upload] Audio file saved successfully (extractAudio returned):', savedAudioUri);
+
+            const verifyUri = savedAudioUri.startsWith('file://')
+                ? savedAudioUri
+                : `file://${savedAudioUri}`;
+
+            try {
+                const outInfo = await FileSystem.getInfoAsync(verifyUri);
+                console.log('[Upload] Audio output info:', outInfo);
+                if (outInfo.exists) {
+                    console.log('[Upload] Audio file saved successfully:', verifyUri);
+                } else {
+                    console.log('[Upload] Audio output reported missing:', verifyUri);
+                }
+            } catch (e) {
+                console.log('[Upload] Audio output verification failed:', e);
+                console.log('[Upload] Audio file saved successfully (unverified):', verifyUri);
+            }
+
+            const transcription = await transcribeAudio(verifyUri);
+            console.log('[Upload] Transcription:', transcription);
+            await enterVisionTest(transcription);
+
+            return verifyUri;
+        } catch (err) {
+            console.log('[Upload] transformVideo (video->audio) failed:', err);
+            Alert.alert('Upload failed', 'Failed to process video/audio.');
+            throw err;
+        }
+    };
 
     return (
         <View style = {styles.background}> 
