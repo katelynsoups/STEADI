@@ -96,7 +96,7 @@ The app uses a local Node.js server to communicate with the Google Cloud Speech-
 ### 1. Navigate to the server folder
 
 ```bash
-cd speech-server
+cd speech-to-text-server
 ```
 
 ### 2. Install server dependencies
@@ -107,7 +107,7 @@ npm install
 
 ### 3. Add your API key
 
-Open `speech-server/server.js` and replace the placeholder with your Google Cloud API key:
+Open `speech-to-text-server/server.js` and replace the placeholder with your Google Cloud API key:
 
 ```javascript
 const API_KEY = 'YOUR_API_KEY_HERE';
@@ -152,7 +152,7 @@ Keep this terminal open while testing. The server must be running for transcript
 
 ## ▶️ Running the App
 
-With your Android emulator open and the speech server running, start the Expo dev server:
+With your Android emulator running and the speech server running, start the Expo dev server:
 
 ```bash
 npx expo start
