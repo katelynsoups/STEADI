@@ -10,8 +10,10 @@ import {
 import { useRouter } from 'expo-router';
 import { createDeIDUser, signUp } from '../utils/gcipAuth';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useTranslation } from 'react-i18next';
 
 const SignUp = () => {
+    const { t, i18n } = useTranslation();
     const [email, setEmail] = useState('');
     const [participantID, setparticipantID] = useState('');
     const [password, setPassword] = useState('');
@@ -32,12 +34,12 @@ const SignUp = () => {
             //create second user in table with participantID and userCredential.user.uid----------------------------------
             const pid = await createDeIDUser(participantID); 
             console.log('Deidentified Log:', pid);
-            Alert.alert('Success', 'Account created successfully');
+            Alert.alert('Success', t('signup.successAlert'));
             //routing back to login page for now
             router.push('/login');
         } catch (error: any) {
             console.error('Sign-up error:', error);
-            Alert.alert('Error', error.message);
+            Alert.alert(t('signup.errorAlert'), error.message);
         }
     };
 
@@ -51,7 +53,7 @@ const SignUp = () => {
             enableAutomaticScroll={true}
         >
             <View style={{ width: "100%", marginBottom: 8 }}>
-                <Text style={styles.inputHeader}>Email</Text>
+                <Text style={styles.inputHeader}>{t('signup.email')}</Text>
                 <TextInput
                     style={[styles.input, { backgroundColor: "white" }]}
                     value={email}
@@ -62,7 +64,7 @@ const SignUp = () => {
                 />
             </View>
             <View style={{ width: "100%", marginBottom: 8 }}>
-                <Text style={styles.inputHeader}>Participant ID</Text>
+                <Text style={styles.inputHeader}>{t('signup.participantID')}</Text>
                 <TextInput
                     style={[styles.input, { backgroundColor: "white" }]}
                     value={participantID}
@@ -73,7 +75,7 @@ const SignUp = () => {
                 />
             </View>
             <View style={{ width: "100%", marginBottom: 8 }}>
-                <Text style={styles.inputHeader}>Password</Text>
+                <Text style={styles.inputHeader}>{t('signup.password')}</Text>
                 <TextInput
                     style={[styles.input, { backgroundColor: "white" }]}
                     value={password}
@@ -84,7 +86,7 @@ const SignUp = () => {
                 />
             </View>
             <View style={{ width: "100%", marginBottom: 8 }}>
-                <Text style={styles.inputHeader}>Confirm Password</Text>
+                <Text style={styles.inputHeader}>{t('signup.confirmPassword')}</Text>
                 <TextInput
                     style={[styles.input, { backgroundColor: "white" }]}
                     value={confirmPassword}
@@ -96,7 +98,7 @@ const SignUp = () => {
             </View>
 
             <TouchableOpacity style = {[styles.blueNextButton]} onPress={handleSignUp}>
-                <Text style = {[styles.btnText]}>Next</Text>
+                <Text style = {[styles.btnText]}>{t('signup.next')}</Text>
             </TouchableOpacity>
         </KeyboardAwareScrollView>
     )
