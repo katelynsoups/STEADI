@@ -33,6 +33,7 @@ export default{
       visionApiKey: process.env.VISION_KEY,
     },
     plugins: [
+      "expo-localization",
       [
         "expo-video",
         {
