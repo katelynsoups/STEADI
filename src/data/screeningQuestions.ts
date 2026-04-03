@@ -4,73 +4,73 @@ export const screeningQuestionSets: ScreeningQuestion[][] = [
   [
     {
       id: 'fallen',
-      prompt: 'I have fallen in the past year.',
-      whyItMatters: 'People who have fallen once are likely to fall again.',
+      prompt: 'screeningQuestions.q1.prompt',
+      whyItMatters: 'screeningQuestions.q1.whyItMatters',
     },
     {
       id: 'cane',
-      prompt: 'I use or have been advised to use a cane or walker to get around safely.',
-      whyItMatters: 'People who have been advised to use a cane or walker may already be more likely to fall.',
+      prompt: 'screeningQuestions.q2.prompt',
+      whyItMatters: 'screeningQuestions.q2.whyItMatters',
     },
   ],
   [
     {
       id: 'unsteady',
-      prompt: 'Sometimes I feel unsteady when walking.',
-      whyItMatters: 'Unsteadiness or needing support while walking are signs of poor balance.',
+      prompt: 'screeningQuestions.q3.prompt',
+      whyItMatters: 'screeningQuestions.q3.whyItMatters',
     },
     {
       id: 'worried',
-      prompt: 'I worry about falling.',
-      whyItMatters: 'People who are worried about falling are more likely to fall.',
+      prompt: 'screeningQuestions.q4.prompt',
+      whyItMatters: 'screeningQuestions.q4.whyItMatters',
     },
   ],
   [
     {
       id: 'handsToStand',
-      prompt: 'I need to push with my hands to stand up from a chair.',
-      whyItMatters: 'This is a sign of weak leg muscles, a major reason for falling.',
+      prompt: 'screeningQuestions.q5.prompt',
+      whyItMatters: 'screeningQuestions.q5.whyItMatters',
     },
     {
       id: 'curb',
-      prompt: 'I have trouble stepping up onto a curb.',
-      whyItMatters: 'This is a sign of weak leg muscles, a major reason for falling.',
+      prompt: 'screeningQuestions.q6.prompt',
+      whyItMatters: 'screeningQuestions.q6.whyItMatters',
     },
   ],
   [
     {
       id: 'numbFeet',
-      prompt: 'I have lost some feeling in my feet.',
-      whyItMatters: 'Numbness in your feet can cause stumbles and lead to falls.',
+      prompt: 'screeningQuestions.q7.prompt',
+      whyItMatters: 'screeningQuestions.q7.whyItMatters',
     },
     {
       id: 'lightheaded',
-      prompt: 'I often feel light-headed when getting up.',
-      whyItMatters: 'Light-headedness can cause sudden drops in blood pressure that lead to falls.',
+      prompt: 'screeningQuestions.q8.prompt',
+      whyItMatters: 'screeningQuestions.q8.whyItMatters',
     },
   ],
   [
     {
       id: 'medDizzy',
-      prompt: 'I take medicine that makes me feel tired or dizzy.',
-      whyItMatters: 'Side effects from medicines can sometimes increase your chance of falling.',
+      prompt: 'screeningQuestions.q9.prompt',
+      whyItMatters: 'screeningQuestions.q9.whyItMatters',
     },
     {
       id: 'sleepMeds',
-      prompt: 'I take medicine to help me sleep or improve my mood.',
-      whyItMatters: 'These medicines can sometimes increase your chance of falling.',
+      prompt: 'screeningQuestions.q10.prompt',
+      whyItMatters: 'screeningQuestions.q10.whyItMatters',
     },
   ],
   [
     {
       id: 'sad',
-      prompt: 'I often feel sad or depressed.',
-      whyItMatters: 'Symptoms of depression, such as not feeling well or feeling slowed down, are linked to falls.',
+      prompt: 'screeningQuestions.q11.prompt',
+      whyItMatters: 'screeningQuestions.q11.whyItMatters',
     },
     {
       id: 'rushBathroom',
-      prompt: 'I have to rush to the toilet.',
-      whyItMatters: 'Rushing to the bathroom, especially at night, increases your chance of falling.',
+      prompt: 'screeningQuestions.q12.prompt',
+      whyItMatters: 'screeningQuestions.q12.whyItMatters',
     },
   ],
 ];
