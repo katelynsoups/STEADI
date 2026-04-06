@@ -45,7 +45,7 @@ const es = {
             "forgotPassword": "¿Olvidó su contraseña?",
             "login": "Iniciar sesión",
             "noAccount": "¿No tiene una cuenta?",
-            "signUp": "Inscribirse",
+            "signUp": " Inscribirse",
             "alert": "¡Error de acceso!"
         },
         signup: {

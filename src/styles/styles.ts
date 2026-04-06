@@ -252,9 +252,9 @@ export const styles = StyleSheet.create({
         color: '#3B82F6', // blue-600
     },
     globeContainer: {
-        position: 'absolute',
-        bottom: 16,
-        right: 16,
+        alignSelf: 'center',
+        marginTop: 24,
+        marginBottom: 16,
     },
 
     //Header Styles

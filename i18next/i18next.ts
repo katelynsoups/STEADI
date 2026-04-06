@@ -8,7 +8,7 @@ import es from "./locales/es";
 const deviceLanguage = getLocales()?.[0]?.languageCode ?? "en";
 export const lng = deviceLanguage === "es" ? "es" : "en";
 
-i18n
+export const i18nInitPromise = i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     // the translations

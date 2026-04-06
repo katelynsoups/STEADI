@@ -17,8 +17,10 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../utils/gcipAuth';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import '../../i18next/i18next';
+import LanguageSelector from '../components/LanguageSelector';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -53,6 +55,20 @@ const Login: React.FC = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  //tell react when to rerender for language switch
+  const [isChangingLang, setIsChangingLang] = useState(false);
+
+  const handleLanguageToggle = useCallback(async () => {
+    if (isChangingLang) return; // prevent double-tap
+    setIsChangingLang(true);
+    try {
+      const nextLang = i18n.language.startsWith('en') ? 'es' : 'en';
+      await i18n.changeLanguage(nextLang);
+    } finally {
+      setIsChangingLang(false);
+    }
+  }, [i18n.language, isChangingLang]);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={[styles.keyboardScroll]} enableOnAndroid={true} enableAutomaticScroll={true}>
@@ -141,9 +157,9 @@ const Login: React.FC = () => {
                 </View>
 
                 {/* Language Icon */}
-                <TouchableOpacity onPress={() => i18n.changeLanguage(i18n.language.startsWith('en') ? 'es' : 'en')}><View style={styles.globeContainer}><Entypo name="language" size={24} color="#ACB5BB" />
+                  <View style={styles.globeContainer}>
+                    <LanguageSelector />
                 </View>
-                </TouchableOpacity>
               </View>
             </View>
           </View>

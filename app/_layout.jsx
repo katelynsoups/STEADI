@@ -1,37 +1,51 @@
 import { StyleSheet, View, Text, Platform, TouchableOpacity} from 'react-native'
-import React from 'react'
 import { Stack, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { styles } from '../src/styles/styles'
 import { useTranslation } from 'react-i18next'
-import '../i18next/i18next.ts';
+import React, { useState, useEffect } from 'react'
+import { i18nInitPromise } from '../i18next/i18next';
+import LanguageSelector from '../src/components/LanguageSelector';
+
+//Custom header, Stack from expo-router does NOT allow you to asjust many things about it. 
+//BUG: White flash when back button is pressed
+const CustomHeader = ({ headerText }) => (
+  <View style={styles.layoutHeader}>
+
+    <TouchableOpacity>
+      <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
+        style = {styles.backBtn}
+        onPress = {() => router.back()}
+      />
+    </TouchableOpacity>
+    <Text style={styles.headerText}>{headerText}</Text>
+    <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
+      <LanguageSelector 
+        triggerStyle={{ borderColor: '#fff' }}
+        triggerTextStyle={{ color: '#fff' }}
+      />
+    </View>
+  </View>
+);
+
+const HomeHeader = ({ welcomeText, dateText }) => (
+  <View style={styles.layoutHeader}>
+    <Text style={[styles.headerText, {top: 75, fontSize: 25, textAlign: 'center', position: 'relative'}]}>{welcomeText}</Text>
+    <Text style={[styles.headerText, {top: 100, textAlign: 'center', position: 'relative'}]}>{dateText}</Text>
+  </View>
+);
 
 const RootLayout = () => 
 { 
   const { t, i18n } = useTranslation();
+    const [i18nReady, setI18nReady] = useState(false);
 
-  //Custom header, Stack from expo-router does NOT allow you to asjust many things about it. 
-  //BUG: White flash when back button is pressed
-  const CustomHeader = ({ headerText }) => (
-    <View style={styles.layoutHeader}>
+  useEffect(() => {
+    i18nInitPromise.then(() => setI18nReady(true));
+  }, []);
 
-      <TouchableOpacity>
-        <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
-          style = {styles.backBtn}
-          onPress = {() => router.back()}
-        />
-      </TouchableOpacity>
-      <Text style={styles.headerText}>{headerText}</Text>
-    </View>
-  );
-
-  const HomeHeader = ({ welcomeText, dateText }) => (
-    <View style={styles.layoutHeader}>
-      <Text style={[styles.headerText, {top: 75, fontSize: 25, textAlign: 'center', position: 'relative'}]}>{welcomeText}</Text>
-      <Text style={[styles.headerText, {top: 100, textAlign: 'center', position: 'relative'}]}>{dateText}</Text>
-    </View>
-  );
+  if (!i18nReady) return null;
 
   return (
     <>
