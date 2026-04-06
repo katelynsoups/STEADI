@@ -15,6 +15,7 @@ import { updateSaveStatus } from '../utils/saveUnit';
 import { getVideoURL} from '../utils/videoUtils';
 import { transcribeAudio } from '../utils/transcribeAudio';
 import { enterVisionTest } from '../utils/dataEntry';
+import { uploadTugVideo } from '../utils/videoUpload';
 
 type uploadType = 
 {
@@ -64,6 +65,9 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
             setVision(result.assets[0].uri);
             console.log('[Upload] Video selected from gallery:', result.assets[0].uri);
             if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+            if (test === "walking") await uploadTugVideo(result.assets[0].uri, (pct) => {
+                console.log(`Upload progress: ${pct}%`);
+            });
             router.navigate(route);
         }
     }
@@ -93,6 +97,9 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
             setVision(result.assets[0].uri);
             console.log('[Upload] Video captured from camera:', result.assets[0].uri);
             if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+            if (test === "walking") await uploadTugVideo(result.assets[0].uri, (pct) => {
+                console.log(`Upload progress: ${pct}%`);
+            });
             router.navigate(route);
         }
     }

@@ -43,6 +43,7 @@ const Shortcut = () =>
         {
           height: 56,
           justifyContent: 'center',
+          marginBottom: 16,
         },
       ]}>
       <Text style = {styles.btnText}>Test PDFGen</Text>
@@ -55,9 +56,22 @@ const Shortcut = () =>
         {
           height: 56,
           justifyContent: 'center',
+          marginBottom: 16,
         },
       ]}>
-      <Text style = {styles.btnText}>Go to FootTest</Text>
+      <Text style = {styles.btnText}>Go to Foot Test</Text>
+    </TouchableOpacity>
+
+      <TouchableOpacity
+      onPress={() => router.navigate('/walkingupload')}
+      style={[
+        styles.btn,
+        {
+          height: 56,
+          justifyContent: 'center',
+        },
+      ]}>
+      <Text style = {styles.btnText}>Go to TUG test</Text>
     </TouchableOpacity>
 
     </View>

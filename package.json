@@ -27,7 +27,7 @@
     "expo-status-bar": "~3.0.8",
     "expo-video": "~3.0.16",
     "expo-video-audio-extractor": "^0.1.0",
-    "firebase": "^12.10.0",
+    "firebase": "^12.11.0",
     "react": "19.1.0",
     "react-native": "0.81.4",
     "react-native-fs": "^2.20.0",
