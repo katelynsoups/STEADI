@@ -6,22 +6,30 @@ const fs = require('fs');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
-const API_KEY = 'INSERT_API_KEY_HERE';
+const API_KEY = 'APIKEY';
 
 app.post('/transcribe', upload.single('audio'), async (req, res) => {
     console.log('[Server] Received file:', req.file);
     console.log('[Server] File size:', req.file?.size);
 
     try {
-        const audioBytes = fs.readFileSync(req.file.path).toString('base64');
+        const audioBytes = fs.readFileSync(req.file.path);
+
+        //changed to detecting rate and number of channels since different hardware will affect this
+        const channelCount = audioBytes.readUInt16LE(22);
+        const sampleRate = audioBytes.readUInt32LE(24);
+
+        console.log('[Server] Detected channels:', channelCount);
+        console.log('[Server] Detected sample rate:', sampleRate);
 
         const requestBody = {
-            audio: { content: audioBytes },
+            audio: { content: audioBytes.toString('base64') },
             config: {
                 encoding: 'LINEAR16',
                 languageCode: 'en-US',
-                audioChannelCount: 2,
-                enableSeparateRecognitionPerChannel: false,
+                audioChannelCount: channelCount,
+                sampleRateHertz: sampleRate,
+                enableSeparateRecognitionPerChannel: channelCount > 1,
             },
         };
 

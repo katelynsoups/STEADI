@@ -89,6 +89,7 @@ const BloodTest = ({screenId}: {screenId: string}) =>
   });
 
   return (
+    <View style={{ flex: 1 }}>
     <KeyboardAwareScrollView contentContainerStyle = {[styles.background, styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
       <Text style = {styles.inputHeader}>Watch the video tutorial on how to use your at-home kit blood pressure reader.</Text>
 
@@ -126,7 +127,7 @@ const BloodTest = ({screenId}: {screenId: string}) =>
       </View>
 
       {/* Lying BP */}
-      <View style={bt.card}>
+      <View style={[bt.card, { marginBottom: 150 }]}>
         <Text style={bt.cardTitle}>Lying Blood Pressure</Text>
         <View style={bt.inputGroup}>
           <Text style={bt.label}>SYS: </Text>
@@ -151,11 +152,12 @@ const BloodTest = ({screenId}: {screenId: string}) =>
           />
         </View>
       </View>
-
-      <TouchableOpacity onPress = {() => {player.pause(); handleBP();}} style = {styles.blueNextButton}>
-        <Text style = {[styles.btnText]}>Next</Text>
-      </TouchableOpacity>
     </KeyboardAwareScrollView>
+
+    <TouchableOpacity onPress = {() => {player.pause(); handleBP();}} style = {styles.blueNextButton}>
+      <Text style = {[styles.btnText]}>Next</Text>
+    </TouchableOpacity>
+    </View>
     
   )
 }

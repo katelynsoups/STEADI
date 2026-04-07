@@ -16,7 +16,7 @@ const ScreeningPage = () => {
     fields: [
       {
         id: 'fallCount',
-        label: 'How many times have you fallen in the past week?',
+        label: 'How many times have you fallen in the past year?',
         placeholder: '0',
         type: 'number',
       },
