@@ -16,6 +16,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { saveScreeningEvent } from '../utils/eventLogger';
 import { styles as appStyles } from '../styles/styles';
 import { enterScreeningResponse } from '../utils/dataEntry';
+import { useTranslation } from 'react-i18next';
 
 type AnswerOption = 'Yes' | 'No';
 
@@ -56,11 +57,12 @@ const Screening: React.FC<ScreeningProps> = ({
   questions,
   nextRoute,
   onComplete,
-  ctaLabel = 'Next',
+  ctaLabel,
   startNumber = 1,
   followUpModal, // This parameter is only true for screening.jsx
 }) => {
   const router = useRouter();
+  const { t, i18n } = useTranslation();
   const [responses, setResponses] = useState<Record<string, AnswerOption | undefined>>({});
   const [activeQuestion, setActiveQuestion] = useState<ScreeningQuestion | null>(null);
   const [followUpVisible, setFollowUpVisible] = useState(false);
@@ -104,6 +106,8 @@ const Screening: React.FC<ScreeningProps> = ({
     }
   };
 
+  const resolvedCtaLabel = ctaLabel ?? t('screening.nextButton');
+
   return (
     <SafeAreaView style={appStyles.safeArea}>
       <StatusBar style="light" />
@@ -113,9 +117,9 @@ const Screening: React.FC<ScreeningProps> = ({
           const value = responses[question.id];
           return (
             <View key={question.id} style={appStyles.screeningCard}>
-              <Text style={appStyles.screeningQuestionText}>{`${startNumber + index}. ${question.prompt}`}</Text>
+              <Text style={appStyles.screeningQuestionText}>{`${startNumber + index}. ${t(question.prompt)}`}</Text>
               <TouchableOpacity style={appStyles.screeningWhyItMatters} onPress={() => setActiveQuestion(question)}>
-                <Text style={appStyles.screeningWhyText}>Why it matters</Text>
+                <Text style={appStyles.screeningWhyText}>{t('screening.whyItMatters')}</Text>
                 <Ionicons name="information-circle-outline" size={16} color="#6B7280" />
               </TouchableOpacity>
 
@@ -132,7 +136,7 @@ const Screening: React.FC<ScreeningProps> = ({
                       <View style={[appStyles.screeningBubble, selected && appStyles.screeningBubbleSelected]}>
                         {selected && <View style={appStyles.screeningBubbleDot} />}
                       </View>
-                      <Text style={appStyles.screeningOptionLabel}>{option}</Text>
+                      <Text style={appStyles.screeningOptionLabel}>{t(`screening.answerOptions.${option.toLowerCase()}`)}</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -151,7 +155,7 @@ const Screening: React.FC<ScreeningProps> = ({
         onPress={handleNext}
         disabled={!allAnswered}
       >
-        <Text style={appStyles.blueButtonText}>{ctaLabel}</Text>
+        <Text style={appStyles.blueButtonText}>{resolvedCtaLabel}</Text>
       </TouchableOpacity>
 
       <Modal
@@ -162,9 +166,9 @@ const Screening: React.FC<ScreeningProps> = ({
       >
         <Pressable style={screeningStyles.modalBackdrop} onPress={() => setActiveQuestion(null)}>
           <Pressable style={screeningStyles.modalCard}>
-            <Text style={screeningStyles.modalText}>{activeQuestion?.whyItMatters}</Text>
+            <Text style={screeningStyles.modalText}>{activeQuestion ? t(activeQuestion.whyItMatters) : ''}</Text>
             <TouchableOpacity style={screeningStyles.modalButton} onPress={() => setActiveQuestion(null)}>
-              <Text style={screeningStyles.modalButtonText}>Got it</Text>
+              <Text style={screeningStyles.modalButtonText}>{t('screening.modalButton')}</Text>
             </TouchableOpacity>
           </Pressable>
         </Pressable>

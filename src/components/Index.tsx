@@ -3,12 +3,15 @@ import React from 'react';
 import { useRouter } from 'expo-router';
 import {styles} from '../styles/styles';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
 const Index = () => 
 {
   const Shield = require('../assets/Shield.png');
 
   const router = useRouter()
+
+  const { t, i18n } = useTranslation();
 
   //Remove shortcut button when app is ready -Jean
   return (
@@ -19,15 +22,15 @@ const Index = () =>
       >
 
       <ImageBackground source = {Shield} style = {styles.shield}>
-        <Text style = {styles.tempText}>STEADI</Text>
+        <Text style = {styles.tempText}>{t('index.title')}</Text>
       </ImageBackground>
 
       <TouchableOpacity onPress = {() => router.navigate('/login')} style = {[styles.btn, styles.inxBtn]}>
-        <Text style = {styles.btnText}>Get Started</Text>
+        <Text style = {styles.btnText}>{t('index.getStarted')}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress = {() => router.navigate('/shortcut')} style = {[styles.btn, styles.shortBtn]}>
-        <Text style = {styles.btnText}>Page Shortcut</Text>
+        <Text style = {styles.btnText}>{t('index.shortcut')}</Text>
       </TouchableOpacity>
 
       </LinearGradient>

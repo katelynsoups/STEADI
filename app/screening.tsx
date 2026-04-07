@@ -2,9 +2,11 @@ import React from 'react';
 import Screening, { FollowUpModalConfig } from '../src/components/Screening';
 import { getScreeningQuestionsForStep } from '../src/data/screeningQuestions';
 import { updateSaveStatus } from '../src/utils/saveUnit';
+import { useTranslation } from 'react-i18next';
 
 const ScreeningPage = () => {
   const questions = getScreeningQuestionsForStep(0);
+  const { t } = useTranslation();
 
   updateSaveStatus(`/screening`);
 
@@ -12,19 +14,19 @@ const ScreeningPage = () => {
   const followUpModal: FollowUpModalConfig = {
     questionId: 'fallen',
     triggerAnswer: 'Yes',
-    submitLabel: 'Submit',
+    submitLabel: t('screeningFollowUps.submitButton'),
     fields: [
       {
         id: 'fallCount',
-        label: 'How many times have you fallen in the past year?',
+        label: t('screeningFollowUps.fallCount'),
         placeholder: '0',
         type: 'number',
       },
       {
         id: 'injured',
-        label: 'Were you injured?',
+        label: t('screeningFollowUps.injuryAssessment'),
         type: 'select',
-        options: ['Yes', 'No'],
+        options: [t('screeningFollowUps.injuryOptions.yes'), t('screeningFollowUps.injuryOptions.no')],
       },
     ],
     onSubmit: (values) => {
