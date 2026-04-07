@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from './gcipAuth';
 
-async function getPID(): Promise<string> {
+export async function getPID(): Promise<string> {
     const docRef = doc(db, "Users-AppData", auth.currentUser!.uid);
     return (await getDoc(docRef)).data()?.participantID;
 };
