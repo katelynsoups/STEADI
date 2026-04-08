@@ -5,7 +5,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from 'react-native';
 import Radiobtn from './RadioBtn';
 import { useRouter } from 'expo-router';
@@ -17,9 +18,13 @@ const VitaminDTest = () =>
     const router = useRouter();
     
   const handleVitaminD = async () => {
+    if (!vitaminD) {
+      Alert.alert('Please select a result before continuing.');
+      return;
+    }
     try {
       await enterVitaminD(vitaminD);
-      router.navigate('/home');
+      router.navigate('/pdfgen');
     } catch (error: any) {
       console.error('Database entry error:', error);
     }
@@ -42,7 +47,7 @@ const VitaminDTest = () =>
        style = {{marginBottom: 15}}
       />
 
-      <TouchableOpacity onPress = {() => {handleVitaminD; router.navigate('/pdfgen')}} style = {styles.blueNextButton}>
+      <TouchableOpacity onPress={handleVitaminD} style = {styles.blueNextButton}>
         <Text style = {[styles.btnText]}>Next</Text>
       </TouchableOpacity>
     </View>

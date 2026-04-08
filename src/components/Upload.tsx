@@ -67,7 +67,17 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
             //URI points to cache, which is temporary. Users may need to re-upload the video to server if session is interrupted.
             setVision(result.assets[0].uri);
             console.log('[Upload] Video selected from gallery:', result.assets[0].uri);
-            if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+            if(test === 'vision'){
+                setUploading(true);
+                try {
+                    await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+                } catch (err) {
+                    Alert.alert('Upload failed', 'Could not upload video. Please try again.');
+                    setUploading(false);
+                    return;
+                }
+                setUploading(false);
+            }
             if (test === 'walking') {
                 setUploading(true);
                 setUploadProgress(0);
@@ -110,7 +120,17 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
         {
             setVision(result.assets[0].uri);
             console.log('[Upload] Video captured from camera:', result.assets[0].uri);
-            if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+            if(test === 'vision'){
+                setUploading(true);
+                try {
+                    await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+                } catch (err) {
+                    Alert.alert('Upload failed', 'Could not upload video. Please try again.');
+                    setUploading(false);
+                    return;
+                }
+                setUploading(false);
+            }
             if (test === 'walking') {
                 setUploading(true);
                 setUploadProgress(0);

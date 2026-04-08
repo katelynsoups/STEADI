@@ -28,7 +28,7 @@ export async function uploadTugVideo(
       "Content-Type": "video/mp4",
     },
     uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
-    sessionType: FileSystem.FileSystemSessionType.BACKGROUND,
+    sessionType: FileSystem.FileSystemSessionType.FOREGROUND, //possible fix to the reload issue during demo
   });
 
   if (uploadResult.status !== 200) {
