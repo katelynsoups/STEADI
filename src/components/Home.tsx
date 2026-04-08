@@ -9,10 +9,11 @@ import {
 import { useRouter } from 'expo-router';
 import { getSaveStatus } from '../utils/saveUnit';
 import Logout from './Logout';
+import { useTranslation } from 'react-i18next';
 
 const Home = () =>
 {
-
+    const { t, i18n } = useTranslation();
     const router = useRouter()
 
     //checks if there is a parameter with the saved status - used for the screening results page
@@ -24,7 +25,7 @@ const Home = () =>
 
             router.navigate({ pathname, params });
         } catch (err: any) {
-            Alert.alert('Error', 'Could not retrieve your assessment progress.');
+            Alert.alert(t('home.errorTitle'), t('home.errorMessage'));
         }
     };
 
@@ -40,15 +41,15 @@ const Home = () =>
         <View style = {styles.background}> 
 
             <TouchableOpacity onPress = {() => {router.navigate('/pastassessments')}} style = {[styles.blueNextButton, {top: "20%"}]}>
-                <Text style = {[styles.btnText]}>View Past Assessments</Text>
+                <Text style = {[styles.btnText]}>{t('home.pastAssessments')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress = {handleResume} style = {[styles.blueNextButton, {top: '40%'}]}>
-                <Text style = {[styles.btnText]}>Resume Assessmnets</Text>
+                <Text style = {[styles.btnText]}>{t('home.resume')}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress = {() => {router.navigate('/screening')}} style = {[styles.blueNextButton, {top: '60%'}]}>
-                <Text style = {[styles.btnText]}>Start New Assessment</Text>
+                <Text style = {[styles.btnText]}>{t('home.newAssessment')}</Text>
             </TouchableOpacity>
 
             <Logout/>

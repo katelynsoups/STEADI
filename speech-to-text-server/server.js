@@ -6,7 +6,7 @@ const fs = require('fs');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
-const API_KEY = 'APIKEY';
+const API_KEY = 'ADDKEYHERE';
 
 app.post('/transcribe', upload.single('audio'), async (req, res) => {
     console.log('[Server] Received file:', req.file);
@@ -50,8 +50,9 @@ app.post('/transcribe', upload.single('audio'), async (req, res) => {
         }
 
         const transcription = (data.results ?? [])
-            .map(result => result.alternatives[0].transcript)
-            .join('\n');
+        .filter(result => !result.channelTag || result.channelTag === 1)
+        .map(result => result.alternatives[0].transcript)
+        .join('\n');
 
         console.log('[Server] Transcription:', transcription);
 

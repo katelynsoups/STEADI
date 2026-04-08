@@ -5,6 +5,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { styles } from '../src/styles/styles';
 import { updateSaveStatus } from '../src/utils/saveUnit';
 import ScreeningResult from '../src/components/ScreeningResult';
+import { useTranslation } from 'react-i18next';
+import '../i18next/i18next';
 
 // we use these constants so that the same component can be used for two different results screens
 // at risk text
@@ -15,9 +17,10 @@ const AT_RISK_BODY =
 // not at risk text
 const NOT_AT_RISK_HEADER = 'Your screening results are associated with a lower risk of falling.';
 const NOT_AT_RISK_BODY =
-  'You are not currently at a high risk for falling. It is still important to stay aware and imformed in order to prevent falls. You have the option to complete the assesmnet of modifiable risk factors, or you may select to return to your home profile and view prevention resources from the CDC.';
+  'You are not currently at a high risk for falling. It is still important to stay aware and informed in order to prevent falls. You have the option to complete the assessment of modifiable risk factors, or you may select to return to your home profile and view prevention resources from the CDC.';
 
 const ScreeningResultPage = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { atRisk } = useLocalSearchParams();
   const isAtRisk = atRisk === 'true';
@@ -25,8 +28,8 @@ const ScreeningResultPage = () => {
   //needs to be called here so we have the correct conditional statement
   updateSaveStatus(`/screeningresult?atRisk=${isAtRisk}`);
 
-  const headerText = isAtRisk ? AT_RISK_HEADER : NOT_AT_RISK_HEADER;
-  const bodyText = isAtRisk ? AT_RISK_BODY : NOT_AT_RISK_BODY;
+  const headerText = isAtRisk ? t('screeningResults.highRisk.bodyHeader') : t('screeningResults.lowRisk.bodyHeader');
+  const bodyText = isAtRisk ? t('screeningResults.highRisk.bodyText') : t('screeningResults.lowRisk.bodyText');
 
   return (
     <View style={[styles.safeArea, { flex: 1 }]}>
@@ -47,7 +50,7 @@ const ScreeningResultPage = () => {
             activeOpacity={0.9}
             onPress={() => router.push('/vitamindtestinstruct')}
           >
-            <Text style={styles.blueButtonText}>Start Assessment</Text>
+            <Text style={styles.blueButtonText}>{t('screeningResults.startAssessmentButton')}</Text>
           </TouchableOpacity>
         )}
       </View>

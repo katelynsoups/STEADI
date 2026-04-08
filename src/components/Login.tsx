@@ -17,6 +17,10 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../utils/gcipAuth';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import '../../i18next/i18next';
+import LanguageSelector from '../components/LanguageSelector';
 
 const Login: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -27,6 +31,8 @@ const Login: React.FC = () => {
   const Shield = require('../assets/Shield.png');
   const router = useRouter();
 
+  const { t, i18n } = useTranslation();
+
   const handleLogin = async () => {
     try {
       const userCredential = await signIn(emailOrPhone, password);
@@ -36,13 +42,13 @@ const Login: React.FC = () => {
       const isFirstLogin = docSnap.data()?.firstLogin === true;
 
       if (isFirstLogin) {
-        await updateDoc(docRef, { firstLogin: false }); 
+        await updateDoc(docRef, { firstLogin: false });
         router.push('/screening');
       } else {
         router.push('/home');
       }
     } catch (err: any) {
-      Alert.alert('Login Failed', err.response?.data?.error?.message || err.message);
+      Alert.alert(t('login.alert'), err.response?.data?.error?.message || err.message);
     }
   };
 
@@ -50,32 +56,46 @@ const Login: React.FC = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  //tell react when to rerender for language switch
+  const [isChangingLang, setIsChangingLang] = useState(false);
+
+  const handleLanguageToggle = useCallback(async () => {
+    if (isChangingLang) return; // prevent double-tap
+    setIsChangingLang(true);
+    try {
+      const nextLang = i18n.language.startsWith('en') ? 'es' : 'en';
+      await i18n.changeLanguage(nextLang);
+    } finally {
+      setIsChangingLang(false);
+    }
+  }, [i18n.language, isChangingLang]);
+
   return (
-    <KeyboardAwareScrollView contentContainerStyle = {[styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
+    <KeyboardAwareScrollView contentContainerStyle={[styles.keyboardScroll]} enableOnAndroid={true} enableAutomaticScroll={true}>
       <SafeAreaProvider>
-        <SafeAreaView style={[styles.safeArea, {paddingBottom: 350}]}>
-          <StatusBar backgroundColor = '#B14B02'/>
+        <SafeAreaView style={[styles.safeArea, { paddingBottom: 350 }]}>
+          <StatusBar backgroundColor='#B14B02' />
           <View style={styles.header}>
-            <Image source = {Shield} style = {{width: 60, height: 60, alignSelf: "center", marginTop: 10}}/>
-            <Text style={[styles.headerTitle, {marginTop: 10}]}>Sign in to your Account</Text>
+            <Image source={Shield} style={{ width: 60, height: 60, alignSelf: "center", marginTop: 10 }} />
+            <Text style={[styles.headerTitle, { marginTop: 10 }]}>{t('login.title')}</Text>
             <Text style={styles.headerSubtitle}>
-              Enter your phone number and password to log in
+              {t('login.subtitle')}
             </Text>
           </View>
 
           <View style={styles.outerContainer}>
-            <View style={[styles.container, {marginTop: 150, position: "absolute"}]}>
+            <View style={[styles.container, { marginTop: 150, position: "absolute" }]}>
               <View style={styles.formContainer}>
                 {/* Apple Button */}
                 <TouchableOpacity style={styles.appleButton}>
                   <AntDesign name="apple" size={24} color="black" />
-                  <Text style={styles.appleButtonText}>Continue with Apple</Text>
+                  <Text style={styles.appleButtonText}>{t('login.appleButton')}</Text>
                 </TouchableOpacity>
 
                 {/* Divider */}
                 <View style={styles.dividerContainer}>
                   <View style={styles.dividerLine} />
-                  <Text style={styles.dividerText}>Or</Text>
+                  <Text style={styles.dividerText}>{t('login.or')}</Text>
                   <View style={styles.dividerLine} />
                 </View>
 
@@ -83,7 +103,7 @@ const Login: React.FC = () => {
                 <View style={styles.form}>
                   <TextInput
                     style={[styles.input, { marginBottom: 16 }]}
-                    placeholder="email@example.com"
+                    placeholder={t('login.emailPlaceholder')}
                     placeholderTextColor="#6B7280"
                     keyboardType="email-address"
                     value={emailOrPhone}
@@ -93,7 +113,7 @@ const Login: React.FC = () => {
                   <View style={[styles.passwordContainer, { marginBottom: 16 }]}>
                     <TextInput
                       style={styles.input}
-                      placeholder="********"
+                      placeholder={t('login.passwordPlaceholder')}
                       placeholderTextColor="#6B7280"
                       secureTextEntry={!passwordVisible}
                       value={password}
@@ -115,30 +135,30 @@ const Login: React.FC = () => {
                       onPress={() => setRememberMe(!rememberMe)}
                     >
                       <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]} />
-                      <Text style={styles.rememberMeText}>Remember me</Text>
+                      <Text style={styles.rememberMeText}>{t('login.rememberMe')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
-                      <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                      <Text style={styles.forgotPasswordText}>{t('login.forgotPassword')}</Text>
                     </TouchableOpacity>
                   </View>
 
                   {/* Login Button */}
                   <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                    <Text style={styles.blueButtonText}>Log In</Text>
+                    <Text style={styles.blueButtonText}>{t('login.login')}</Text>
                   </TouchableOpacity>
                 </View>
 
                 {/* Sign Up Link */}
                 <View style={styles.signupContainer}>
-                  <Text style={styles.signupText}>Don't have an account? </Text>
+                  <Text style={styles.signupText}>{t('login.noAccount')}</Text>
                   <TouchableOpacity onPress={() => router.push('/signup')}>
-                    <Text style={styles.signupLink}>Sign Up</Text>
+                    <Text style={styles.signupLink}>{t('login.signUp')}</Text>
                   </TouchableOpacity>
                 </View>
 
                 {/* Language Icon */}
-                <View style={styles.globeContainer}>
-                  <Entypo name="language" size={24} color="#ACB5BB" />
+                  <View style={styles.globeContainer}>
+                    <LanguageSelector />
                 </View>
               </View>
             </View>

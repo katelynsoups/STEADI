@@ -13,6 +13,7 @@ import {
   setDoc,
 } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { getFunctions } from 'firebase/functions';
 
 const extra = Constants.expoConfig?.extra ?? Constants.extra;
 
@@ -21,8 +22,8 @@ const firebaseConfig = {
   authDomain: 'research-digital-steadi-dev.firebaseapp.com',
   projectId: 'research-digital-steadi-dev',
   storageBucket: "research-digital-steadi-dev.firebasestorage.app",
-  //messagingSenderId: "228929058201",
-  //appId: "1:228929058201:web:5299155e03c12213efcf08"
+  messagingSenderId: "228929058201",
+  appId: "1:228929058201:web:5299155e03c12213efcf08"
 };
 
 // Initialize Firebase/GCIP/Database
@@ -51,3 +52,4 @@ export async function createDeIDUser(participantID: string): Promise<string> {
 export async function signIn(email: string, password: string): Promise<UserCredential> {
   return await signInWithEmailAndPassword(auth, email, password);
 }
+export const functions = getFunctions(app);

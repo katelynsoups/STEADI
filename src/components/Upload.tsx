@@ -5,6 +5,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -15,6 +16,7 @@ import { updateSaveStatus } from '../utils/saveUnit';
 import { getVideoURL} from '../utils/videoUtils';
 import { transcribeAudio } from '../utils/transcribeAudio';
 import { enterVisionTest } from '../utils/dataEntry';
+import { uploadTugVideo } from '../utils/videoUpload';
 
 type uploadType = 
 {
@@ -30,6 +32,8 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
 {
     const [vision, setVision] = useState<string | null>(null);
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
+    const [uploading, setUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
@@ -63,7 +67,31 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
             //URI points to cache, which is temporary. Users may need to re-upload the video to server if session is interrupted.
             setVision(result.assets[0].uri);
             console.log('[Upload] Video selected from gallery:', result.assets[0].uri);
-            if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+            if(test === 'vision'){
+                setUploading(true);
+                try {
+                    await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+                } catch (err) {
+                    Alert.alert('Upload failed', 'Could not upload video. Please try again.');
+                    setUploading(false);
+                    return;
+                }
+                setUploading(false);
+            }
+            if (test === 'walking') {
+                setUploading(true);
+                setUploadProgress(0);
+                try {
+                    await uploadTugVideo(result.assets[0].uri, (pct) => {
+                        setUploadProgress(pct);
+                    });
+                } catch (err) {
+                    Alert.alert('Upload failed', 'Could not upload video. Please try again.');
+                    setUploading(false);
+                    return;
+                }
+                setUploading(false);
+            }
             router.navigate(route);
         }
     }
@@ -92,7 +120,31 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
         {
             setVision(result.assets[0].uri);
             console.log('[Upload] Video captured from camera:', result.assets[0].uri);
-            if(test === 'vision') await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+            if(test === 'vision'){
+                setUploading(true);
+                try {
+                    await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+                } catch (err) {
+                    Alert.alert('Upload failed', 'Could not upload video. Please try again.');
+                    setUploading(false);
+                    return;
+                }
+                setUploading(false);
+            }
+            if (test === 'walking') {
+                setUploading(true);
+                setUploadProgress(0);
+                try {
+                    await uploadTugVideo(result.assets[0].uri, (pct) => {
+                        setUploadProgress(pct);
+                    });
+                } catch (err) {
+                    Alert.alert('Upload failed', 'Could not upload video. Please try again.');
+                    setUploading(false);
+                    return;
+                }
+                setUploading(false);
+            }
             router.navigate(route);
         }
     }
@@ -207,6 +259,33 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
         <TouchableOpacity onPress = {cameraOrGallery} style = {styles.blueNextButton}>
             <Text style = {[styles.btnText]}>Upload</Text>
         </TouchableOpacity>
+
+        {uploading && (
+            <View style={{
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.6)',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <View style={{
+                    backgroundColor: 'white',
+                    borderRadius: 16,
+                    padding: 32,
+                    alignItems: 'center',
+                    width: '75%',
+                    marginBottom: 270
+                }}>
+                    <ActivityIndicator size="large" color="#2196F3" />
+                    <Text style={{ fontSize: 18, fontWeight: '600', marginTop: 16 }}>
+                        Uploading Video
+                    </Text>
+                    <Text style={{ color: '#666', marginTop: 8, textAlign: 'center' }}>
+                        Please keep the app open while your video uploads.
+                    </Text>
+                </View>
+            </View>
+        )}
 
         </View>
     )
