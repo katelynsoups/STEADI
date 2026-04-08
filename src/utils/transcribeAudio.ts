@@ -2,7 +2,7 @@ import * as FileSystem from 'expo-file-system/legacy';
 
 // you must use your machine's local IP, not localhost (emulator can't reach localhost)
 // run ipconfig | findstr IPv4 in terminal
-const SERVER_URL = 'URL HERE/transcribe';
+const SERVER_URL = 'ADDURLHERE/transcribe';
 
 export const transcribeAudio = async (audioUri: string): Promise<string> => {
     console.log('[Transcribe] Starting transcription for:', audioUri);
