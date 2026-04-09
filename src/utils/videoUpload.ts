@@ -1,6 +1,6 @@
 import {httpsCallable} from "firebase/functions";
 import {functions} from "./gcipAuth";
-import {getPID} from "./dataEntry";
+import {getPID, getActiveSessionId} from "./dataEntry";
 import * as FileSystem from "expo-file-system/legacy";
 
 interface UploadUrlResponse {
@@ -13,13 +13,14 @@ export async function uploadTugVideo(
   onProgress?: (percentage: number) => void
 ): Promise<string> {
   const participantID = await getPID();
+  const sessionId = await getActiveSessionId();
   if (!participantID) throw new Error("No participantID found for current user.");
 
-  const getUploadUrl = httpsCallable<{participantID: string}, UploadUrlResponse>(
+  const getUploadUrl = httpsCallable<{participantID: string; sessionId: string}, UploadUrlResponse>(
     functions,
     "getVideoUploadUrl"
   );
-  const {data} = await getUploadUrl({participantID});
+  const { data } = await getUploadUrl({ participantID, sessionId });
   const {signedUrl, fileName} = data;
 
   const uploadResult = await FileSystem.uploadAsync(signedUrl, videoUri, {

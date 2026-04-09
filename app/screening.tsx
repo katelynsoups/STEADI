@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Screening, { FollowUpModalConfig } from '../src/components/Screening';
 import { getScreeningQuestionsForStep } from '../src/data/screeningQuestions';
 import { updateSaveStatus } from '../src/utils/saveUnit';
 import { useTranslation } from 'react-i18next';
+import { startNewSession } from '../src/utils/dataEntry';
 
-const ScreeningPage = () => {
+const ScreeningPage =  () => {
   const questions = getScreeningQuestionsForStep(0);
   const { t } = useTranslation();
+  const [sessionReady, setSessionReady] = useState(false);
 
-  updateSaveStatus(`/screening`);
+  useEffect(() => {
+      const initSession = async () => {
+          await startNewSession();
+          await updateSaveStatus(`/screening`);
+          setSessionReady(true);
+      };
+      initSession();
+  }, []);
+
+  if (!sessionReady) return null;
 
   //changes this file to tsx to allow types for the modal
   const followUpModal: FollowUpModalConfig = {
