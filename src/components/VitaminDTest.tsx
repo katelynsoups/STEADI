@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Radiobtn from './RadioBtn';
 import { useRouter } from 'expo-router';
-import { enterVitaminD } from '../utils/dataEntry';
+import { completeSession, enterVitaminD } from '../utils/dataEntry';
 
 const VitaminDTest = () =>
 {
@@ -24,6 +24,7 @@ const VitaminDTest = () =>
     }
     try {
       await enterVitaminD(vitaminD);
+      await completeSession();
       router.navigate('/pdfgen');
     } catch (error: any) {
       console.error('Database entry error:', error);

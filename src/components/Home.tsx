@@ -10,6 +10,7 @@ import { useRouter } from 'expo-router';
 import { getSaveStatus } from '../utils/saveUnit';
 import Logout from './Logout';
 import { useTranslation } from 'react-i18next';
+import { getActiveSessionId } from '../utils/dataEntry';
 
 const Home = () =>
 {
@@ -19,6 +20,7 @@ const Home = () =>
     //checks if there is a parameter with the saved status - used for the screening results page
     const handleResume = async () => {
         try {
+            await getActiveSessionId();
             const saved = await getSaveStatus();
             const [pathname, query] = saved.split('?');
             const params = query ? Object.fromEntries(new URLSearchParams(query)) : {};

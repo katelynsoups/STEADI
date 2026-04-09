@@ -24,8 +24,9 @@ export const getVideoUploadUrl = onCall(
     }
 
     const uid = request.auth.uid;
+    const sessionId = request.data.sessionId;
     const timestamp = Date.now();
-    const fileName = `${uid}/${participantID}_${timestamp}.mp4`;
+    const fileName = `${uid}/${participantID}_${sessionId}_${timestamp}.mp4`;
 
     const [signedUrl] = await storage
       .bucket(BUCKET_NAME)
@@ -38,5 +39,5 @@ export const getVideoUploadUrl = onCall(
       });
 
     return {signedUrl, fileName};
-  }
+  },
 );
