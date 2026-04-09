@@ -10,7 +10,7 @@ import LanguageSelector from '../src/components/LanguageSelector';
 
 //Custom header, Stack from expo-router does NOT allow you to asjust many things about it. 
 //BUG: White flash when back button is pressed
-const CustomHeader = ({ headerText }) => (
+const CustomHeader = ({ headerText, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
     <TouchableOpacity>
@@ -22,28 +22,37 @@ const CustomHeader = ({ headerText }) => (
 
     <Text style={styles.headerText}>{headerText}</Text>
     
-    <View style={{ position: 'absolute', right: 75, bottom: 100 }}>
+    <View style={{ position: 'absolute', right: langRight, bottom: 100 }}>
       <LanguageSelector 
         triggerStyle={{ borderColor: '#fff' }}
         triggerTextStyle={{ color: '#fff' }}
       />
     </View>
-    <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
-      <TouchableOpacity>
-        <Ionicons name={"home-outline"}
-          style = {{color: 'white', fontSize: 30}}
-          onPress = {() => router.back()}
-        />
-      </TouchableOpacity>
-    </View>
+    {showHome && (
+      <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
+        <TouchableOpacity>
+          <Ionicons name={"home-outline"}
+            style = {{color: 'white', fontSize: 30}}
+            onPress = {() => router.navigate('/home')}
+          />
+        </TouchableOpacity>
+      </View>
+    )}
   </View>
 );
 
 const HomeHeader = ({ welcomeText, dateText }) => (
   <View style={styles.layoutHeader}>
-    <Text style={[styles.headerText, {top: 75, fontSize: 25, textAlign: 'center', position: 'relative'}]}>{welcomeText}</Text>
+    <Text style={[styles.headerText, {top: 75, fontSize: 35, textAlign: 'center', position: 'relative'}]}>{welcomeText}</Text>
     <Text style={[styles.headerText, {top: 100, textAlign: 'center', position: 'relative'}]}>{dateText}</Text>
+        <View style={{ position: 'absolute', right: 16, bottom: 90 }}>
+      <LanguageSelector 
+        triggerStyle={{ borderColor: '#fff' }}
+        triggerTextStyle={{ color: '#fff' }}
+      />
+    </View>
   </View>
+  
 );
 
 const RootLayout = () => 
@@ -88,7 +97,7 @@ const RootLayout = () =>
 
         <Stack.Screen name = "signup" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.signup")}/>
+            <CustomHeader headerText = {t("layout.signup")} showHome={false} langRight={16}/>
         }}/>
 
         <Stack.Screen name = "screening" options = {{

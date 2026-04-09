@@ -24,8 +24,7 @@ const VitaminDTest = () =>
     }
     try {
       await enterVitaminD(vitaminD);
-      await completeSession();
-      router.navigate('/pdfgen');
+      router.navigate('/assesscomplete');
     } catch (error: any) {
       console.error('Database entry error:', error);
     }
