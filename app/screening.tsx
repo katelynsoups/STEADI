@@ -4,8 +4,9 @@ import { getScreeningQuestionsForStep } from '../src/data/screeningQuestions';
 import { updateSaveStatus } from '../src/utils/saveUnit';
 import { useTranslation } from 'react-i18next';
 import { startNewSession } from '../src/utils/dataEntry';
+import { ActivityIndicator, View, Text } from 'react-native';
 
-const ScreeningPage =  () => {
+const ScreeningPage = (): React.ReactElement => {
   const questions = getScreeningQuestionsForStep(0);
   const { t } = useTranslation();
   const [sessionReady, setSessionReady] = useState(false);
@@ -19,7 +20,14 @@ const ScreeningPage =  () => {
       initSession();
   }, []);
 
-  if (!sessionReady) return null;
+  if (!sessionReady) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+        <Text style={{ marginTop: 16, fontSize: 16 }}>Starting session...</Text>
+      </View>
+    );
+  }
 
   //changes this file to tsx to allow types for the modal
   const followUpModal: FollowUpModalConfig = {
