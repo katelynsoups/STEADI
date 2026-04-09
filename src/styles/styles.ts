@@ -122,6 +122,7 @@ export const styles = StyleSheet.create({
         borderColor: '#D1D5DB',
         borderRadius: 8,
         fontSize: 16,
+        color: "black"
     },
     passwordContainer: {
         position: 'relative',

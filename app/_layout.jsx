@@ -19,12 +19,22 @@ const CustomHeader = ({ headerText }) => (
         onPress = {() => router.back()}
       />
     </TouchableOpacity>
+
     <Text style={styles.headerText}>{headerText}</Text>
-    <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
+    
+    <View style={{ position: 'absolute', right: 75, bottom: 100 }}>
       <LanguageSelector 
         triggerStyle={{ borderColor: '#fff' }}
         triggerTextStyle={{ color: '#fff' }}
       />
+    </View>
+    <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
+      <TouchableOpacity>
+        <Ionicons name={"home-outline"}
+          style = {{color: 'white', fontSize: 30}}
+          onPress = {() => router.back()}
+        />
+      </TouchableOpacity>
     </View>
   </View>
 );
@@ -181,6 +191,11 @@ const RootLayout = () =>
         <Stack.Screen name = "moodquestions" options = {{
           header: () => 
             <CustomHeader headerText = {t("layout.moodQuestions")}/>
+        }}/>
+
+        <Stack.Screen name = "assesscomplete" options = {{
+          header: () => 
+            <CustomHeader headerText = {t("layout.assessComplete")}/>
         }}/>
 
       </Stack>

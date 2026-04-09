@@ -8,7 +8,7 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system/legacy';
@@ -32,6 +32,8 @@ const PDFGen = () =>
     const [isLoaded, setLoaded] = useState(false);
     const [ready, isReady] = useState(false);
     const screenResults = useRef(new Map<string, string>()).current;
+
+    const { id } = useLocalSearchParams();
 
     const setScreenings = async (results : Object) =>
     {
@@ -101,40 +103,43 @@ const PDFGen = () =>
 
     useEffect(() => 
     {
-        getUserStudyData().then(userData =>
+        if(typeof id === "string")
         {
-            if(userData)
-            { 
-                if (userData[6])
-                    setScreenings(userData[6])
+            getUserStudyData(id).then(userData =>
+            {
+                if(userData)
+                { 
+                    if (userData[6])
+                        setScreenings(userData[6])
 
-                if(userData[0])
-                {
-                    setStandingBP(userData[0].standingBP);
-                    setLyingBP(userData[0].lyingBP);
+                    if(userData[0])
+                    {
+                        setStandingBP(userData[0].standingBP);
+                        setLyingBP(userData[0].lyingBP);
+                    }
+                    
+                    if(userData[1])
+                        checkMedications(userData[1]);
+
+                    if(userData[2])
+                        checkHazards(userData[2]);
+
+                    if(userData[4] && userData[5])
+                    {
+                        setDepress(userData[4]);
+                        setPleasure(userData[5]);
+                    }
+
+                    if(userData[7])
+                        setVitamin(userData[7])
+
                 }
-                
-                if(userData[1])
-                    checkMedications(userData[1]);
 
-                if(userData[2])
-                    checkHazards(userData[2]);
-
-                if(userData[4] && userData[5])
-                {
-                    setDepress(userData[4]);
-                    setPleasure(userData[5]);
-                }
-
-                if(userData[7])
-                    setVitamin(userData[7])
-
-            }
-
-        }).then(result =>
-        {
-            setLoaded(true);
-        });
+            }).then(result =>
+            {
+                setLoaded(true);
+            });
+        }
     }, []);
 
     useEffect(() =>
@@ -364,15 +369,9 @@ const PDFGen = () =>
 
     return (
         <View style = {styles.background}> 
-            {!ready && <Text style = {styles.inputHeader}>Saving results...</Text>}
-            {ready && <Text style = {styles.inputHeader}>Thank you for your patience! You may download your results and return to the Home Page.</Text>}
 
             {ready && <TouchableOpacity onPress = {() => downloadPDF()} style = {[styles.blueNextButton, {bottom: 150}]}>
                     <Text style = {[styles.btnText]}>Download Results PDF</Text>
-            </TouchableOpacity>}
-
-            {ready && <TouchableOpacity onPress = {() => router.navigate('/home')} style = {[styles.blueNextButton, {bottom: 60}]}>
-                    <Text style = {[styles.btnText]}>End Assessment</Text>
             </TouchableOpacity>}
         </View>
         

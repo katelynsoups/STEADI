@@ -73,8 +73,7 @@ const Login: React.FC = () => {
   return (
     <KeyboardAwareScrollView contentContainerStyle={[styles.keyboardScroll]} enableOnAndroid={true} enableAutomaticScroll={true}>
       <SafeAreaProvider>
-        <SafeAreaView style={[styles.safeArea, { paddingBottom: 350 }]}>
-          <StatusBar backgroundColor='#B14B02' />
+        <SafeAreaView style={[styles.safeArea, {paddingBottom: 353, backgroundColor: '#B14B02'}]}>
           <View style={styles.header}>
             <Image source={Shield} style={{ width: 60, height: 60, alignSelf: "center", marginTop: 10 }} />
             <Text style={[styles.headerTitle, { marginTop: 10 }]}>{t('login.title')}</Text>
@@ -86,23 +85,25 @@ const Login: React.FC = () => {
           <View style={styles.outerContainer}>
             <View style={[styles.container, { marginTop: 150, position: "absolute" }]}>
               <View style={styles.formContainer}>
-                {/* Apple Button */}
+                {/*
+                {/* Apple Button }
                 <TouchableOpacity style={styles.appleButton}>
                   <AntDesign name="apple" size={24} color="black" />
                   <Text style={styles.appleButtonText}>{t('login.appleButton')}</Text>
                 </TouchableOpacity>
 
-                {/* Divider */}
+                {/* Divider }
                 <View style={styles.dividerContainer}>
                   <View style={styles.dividerLine} />
                   <Text style={styles.dividerText}>{t('login.or')}</Text>
                   <View style={styles.dividerLine} />
                 </View>
+                */}
 
                 {/* Form Inputs */}
                 <View style={styles.form}>
                   <TextInput
-                    style={[styles.input, { marginBottom: 16 }]}
+                    style={[styles.input, {marginTop: "50%",marginBottom: 16 }]}
                     placeholder={t('login.emailPlaceholder')}
                     placeholderTextColor="#6B7280"
                     keyboardType="email-address"
