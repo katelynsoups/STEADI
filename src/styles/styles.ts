@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     container: { // white rounded container in the center of login
         width: '100%',
         maxWidth: 384, // max-w-sm
-        height: 500,
+        height: 400,
         marginTop: 200,
         backgroundColor: '#FFFFFF',
         borderRadius: 24, // rounded-3xl
@@ -122,6 +122,7 @@ export const styles = StyleSheet.create({
         borderColor: '#D1D5DB',
         borderRadius: 8,
         fontSize: 16,
+        color: "black"
     },
     passwordContainer: {
         position: 'relative',
@@ -239,7 +240,7 @@ export const styles = StyleSheet.create({
     },
 
     signupContainer: {
-        marginTop: 32,
+        marginTop: 25,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'

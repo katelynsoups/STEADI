@@ -42,17 +42,21 @@ const Home = () =>
     return (
         <View style = {styles.background}> 
 
-            <TouchableOpacity onPress = {() => {router.navigate('/pastassessments')}} style = {[styles.blueNextButton, {top: "20%"}]}>
+            <TouchableOpacity onPress = {() => {router.navigate('/pastassessments')}} style = {[styles.blueNextButton, {top: "15%"}]}>
                 <Text style = {[styles.btnText]}>{t('home.pastAssessments')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress = {handleResume} style = {[styles.blueNextButton, {top: '40%'}]}>
+            <TouchableOpacity onPress = {handleResume} style = {[styles.blueNextButton, {top: '35%'}]}>
                 <Text style = {[styles.btnText]}>{t('home.resume')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress = {() => {router.navigate('/screening')}} style = {[styles.blueNextButton, {top: '60%'}]}>
+            <TouchableOpacity onPress = {() => {router.navigate('/screening')}} style = {[styles.blueNextButton, {top: '55%'}]}>
                 <Text style = {[styles.btnText]}>{t('home.newAssessment')}</Text>
             </TouchableOpacity>
+
+                  <TouchableOpacity onPress = {() => router.navigate('/shortcut')} style = {[styles.blueNextButton, {top: '75%'}]}>
+                    <Text style = {styles.btnText}>{t('index.shortcut')}</Text>
+                  </TouchableOpacity>
 
             <Logout/>
 

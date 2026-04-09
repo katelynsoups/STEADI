@@ -2,7 +2,7 @@ const en = {
     translation: {
         layout: {
             "shortcut": "Temporary shortcut menu",
-            "pdfGen": "Congratulations! You have finished the assessment!",
+            "pdfGen": "WIP!!!",
             "home": "Welcome!",
             "pastAssessments": "Past Assessments",
             "signup": "Please create an account using the participant ID provided by the research team:",
@@ -20,6 +20,7 @@ const en = {
             "medicationResults": "Please view the summary of your medication below.",
             "medicationTypedUpload": "Next, we want to assess your medications to determine how they might influence fall risk.",
             "moodQuestions": "Answer the following questions:",
+            "assessComplete": "Great job, you finished the assessment!",
 
         },
         index: {

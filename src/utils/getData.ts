@@ -1,4 +1,4 @@
-import { doc, getDoc, type FirestoreDataConverter, type DocumentData} from 'firebase/firestore';
+import { doc, getDoc, getDocs, query, collection, type FirestoreDataConverter, type DocumentData} from 'firebase/firestore';
 import { db, auth } from './gcipAuth';
 
 export interface BloodPressure
@@ -7,13 +7,20 @@ export interface BloodPressure
     lyingBP: string
 }
 
+export interface Assessment
+{
+    id : string,
+    sessionNumber : string,
+    date : string
+}
+
 async function getPID(): Promise<string> {
     const docRef = doc(db, "Users-AppData", auth.currentUser!.uid);
     return (await getDoc(docRef)).data()?.participantID;
 };
 
 
-export async function getUserStudyData(): 
+export async function getUserStudyData(id : string): 
 Promise<[
     BloodPressure | null, 
     Object | null, 
@@ -26,7 +33,7 @@ Promise<[
     | null>
 {
     const pid = await getPID();
-    const docSnap = await getDoc(doc(db, "Users-StudyData", pid));
+    const docSnap = await getDoc(doc(db, "Users-StudyData", pid, "assessments", id));
 
     if(!docSnap.exists()) return null;
 
@@ -40,4 +47,21 @@ Promise<[
     const screening = docSnap.data()?.screening as Object;
     const vitaminD = docSnap.data()?.VitaminD as string;
     return [bloodPressure, medications, hazards, footNeuropathyTest, depression, lackPleasure, screening, vitaminD];
+}
+
+export async function getCompletedAssessments():Promise<Assessment[]>
+{
+    const assessments : Assessment[] = []
+
+    const pid = await getPID();
+    const docSnap = await getDocs(collection(db, "Users-StudyData", pid, "assessments"));
+ 
+
+    docSnap.forEach((doc) =>
+    {
+        assessments.push({id: doc.id as string, sessionNumber:doc.data()?.sessionNumber as string, date: doc.data()?.startedAt.toDate().toDateString() as string })
+        //console.log(doc.id, " = >", doc.data()?.sessionNumber, "assessments")
+    })
+
+    return assessments as Assessment[];
 }

@@ -73,10 +73,9 @@ const Login: React.FC = () => {
   return (
     <KeyboardAwareScrollView contentContainerStyle={[styles.keyboardScroll]} enableOnAndroid={true} enableAutomaticScroll={true}>
       <SafeAreaProvider>
-        <SafeAreaView style={[styles.safeArea, { paddingBottom: 350 }]}>
-          <StatusBar backgroundColor='#B14B02' />
+        <SafeAreaView style={[styles.safeArea, {paddingBottom: 400, backgroundColor: '#B14B02'}]}>
           <View style={styles.header}>
-            <Image source={Shield} style={{ width: 60, height: 60, alignSelf: "center", marginTop: 10 }} />
+            <Image source={Shield} style={{ width: 70, height: 70, alignSelf: "center", marginTop: 30 }} />
             <Text style={[styles.headerTitle, { marginTop: 10 }]}>{t('login.title')}</Text>
             <Text style={styles.headerSubtitle}>
               {t('login.subtitle')}
@@ -86,23 +85,25 @@ const Login: React.FC = () => {
           <View style={styles.outerContainer}>
             <View style={[styles.container, { marginTop: 150, position: "absolute" }]}>
               <View style={styles.formContainer}>
-                {/* Apple Button */}
+                {/*
+                {/* Apple Button }
                 <TouchableOpacity style={styles.appleButton}>
                   <AntDesign name="apple" size={24} color="black" />
                   <Text style={styles.appleButtonText}>{t('login.appleButton')}</Text>
                 </TouchableOpacity>
 
-                {/* Divider */}
+                {/* Divider }
                 <View style={styles.dividerContainer}>
                   <View style={styles.dividerLine} />
                   <Text style={styles.dividerText}>{t('login.or')}</Text>
                   <View style={styles.dividerLine} />
                 </View>
+                */}
 
                 {/* Form Inputs */}
                 <View style={styles.form}>
                   <TextInput
-                    style={[styles.input, { marginBottom: 16 }]}
+                    style={[styles.input, {marginTop: "15%",marginBottom: 20 }]}
                     placeholder={t('login.emailPlaceholder')}
                     placeholderTextColor="#6B7280"
                     keyboardType="email-address"
@@ -110,7 +111,7 @@ const Login: React.FC = () => {
                     onChangeText={setEmailOrPhone}
                   />
 
-                  <View style={[styles.passwordContainer, { marginBottom: 16 }]}>
+                  <View style={[styles.passwordContainer, { marginBottom: 20 }]}>
                     <TextInput
                       style={styles.input}
                       placeholder={t('login.passwordPlaceholder')}
@@ -129,7 +130,7 @@ const Login: React.FC = () => {
                   </View>
 
                   {/* Options */}
-                  <View style={[styles.optionsContainer, { marginBottom: 16 }]}>
+                  <View style={[styles.optionsContainer, { marginBottom: 20 }]}>
                     <TouchableOpacity
                       style={styles.rememberMeContainer}
                       onPress={() => setRememberMe(!rememberMe)}

@@ -13,7 +13,6 @@ const Index = () =>
 
   const { t, i18n } = useTranslation();
 
-  //Remove shortcut button when app is ready -Jean
   return (
     <View style = {{flex: 1}}>
       <LinearGradient
@@ -27,10 +26,6 @@ const Index = () =>
 
       <TouchableOpacity onPress = {() => router.navigate('/login')} style = {[styles.btn, styles.inxBtn]}>
         <Text style = {styles.btnText}>{t('index.getStarted')}</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress = {() => router.navigate('/shortcut')} style = {[styles.btn, styles.shortBtn]}>
-        <Text style = {styles.btnText}>{t('index.shortcut')}</Text>
       </TouchableOpacity>
 
       </LinearGradient>

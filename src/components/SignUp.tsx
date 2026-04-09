@@ -11,6 +11,7 @@ import { useRouter } from 'expo-router';
 import { createDeIDUser, signUp } from '../utils/gcipAuth';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useTranslation } from 'react-i18next';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const SignUp = () => {
     const { t, i18n } = useTranslation();
@@ -44,6 +45,14 @@ const SignUp = () => {
     };
 
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+    
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+    const toggleConfirmPasswordVisibility = () => {
+        setConfirmPasswordVisible(!confirmPasswordVisible);
+    };
 
     return (
          <KeyboardAwareScrollView
@@ -76,25 +85,44 @@ const SignUp = () => {
             </View>
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>{t('signup.password')}</Text>
-                <TextInput
-                    style={[styles.input, { backgroundColor: "white" }]}
-                    value={password}
-                    onChangeText={setPassword}
-                    placeholder="********"
-                    placeholderTextColor="#6B7280"
-                    secureTextEntry={!passwordVisible}
-                />
+                <View style={[styles.passwordContainer, { backgroundColor: "white" }]}>
+                    <TextInput
+                        style={styles.input}
+                        value={password}
+                        onChangeText={setPassword}
+                        placeholder="********"
+                        placeholderTextColor="#6B7280"
+                        secureTextEntry={!passwordVisible}
+                    />
+                    <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
+                      <AntDesign
+                        name={passwordVisible ? 'eye' : 'eye-invisible'}
+                        size={20}
+                        color="#ACB5BB"
+                      />
+                    </TouchableOpacity>
+                </View>
             </View>
+
             <View style={{ width: "100%", marginBottom: 8 }}>
                 <Text style={styles.inputHeader}>{t('signup.confirmPassword')}</Text>
-                <TextInput
-                    style={[styles.input, { backgroundColor: "white" }]}
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    placeholder="********"
-                    placeholderTextColor="#6B7280"
-                    secureTextEntry={!passwordVisible}
-                />
+                <View style={[styles.passwordContainer, { backgroundColor: "white" }]}>
+                    <TextInput
+                        style={styles.input}
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        placeholder="********"
+                        placeholderTextColor="#6B7280"
+                        secureTextEntry={!confirmPasswordVisible}
+                    />
+                    <TouchableOpacity onPress={toggleConfirmPasswordVisibility} style={styles.eyeIcon}>
+                      <AntDesign
+                        name={confirmPasswordVisible ? 'eye' : 'eye-invisible'}
+                        size={20}
+                        color="#ACB5BB"
+                      />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <TouchableOpacity style = {[styles.blueNextButton]} onPress={handleSignUp}>
