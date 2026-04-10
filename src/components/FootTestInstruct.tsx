@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 
+//this component could be replaced with existing VideoInstruction component later to avoid code duplication
 const FootTestInstruct = () =>
 {
 

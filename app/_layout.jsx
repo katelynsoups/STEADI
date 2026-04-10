@@ -207,6 +207,21 @@ const RootLayout = () =>
             <CustomHeader headerText = {t("layout.assessComplete")}/>
         }}/>
 
+        <Stack.Screen name = "visioninstruction" options = {{
+          header: () => 
+            <CustomHeader headerText = {t("layout.visionInstruction")}/>
+        }}/>
+
+        <Stack.Screen name = "visiontestleft" options = {{
+          header: () => 
+            <CustomHeader headerText = {t("layout.visionTestLeft")}/>
+        }}/>
+
+        <Stack.Screen name = "visiontestright" options = {{
+          header: () => 
+            <CustomHeader headerText = {t("layout.visionTestRight")}/>
+        }}/>
+
       </Stack>
     </>
   )

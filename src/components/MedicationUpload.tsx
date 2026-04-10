@@ -237,7 +237,7 @@ const medicationUpload = () =>
                 <Text style = {[styles.greySkipButtonText]}>Type Medication Names</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress = {() => { router.navigate('/visionupload')}}  
+            onPress = {() => { router.navigate('/visioninstruction')}}  
             style = {styles.greySkipButton}>
                 <Text style = {[styles.greySkipButtonText]}>Skip</Text>
             </TouchableOpacity>

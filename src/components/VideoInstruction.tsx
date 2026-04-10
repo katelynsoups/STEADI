@@ -9,7 +9,14 @@ import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { getVideoURL} from '../utils/videoUtils';
 
-const VitaminDTestInstruct = ({screenId}: {screenId: string}) =>
+export type screenVars = {
+    text1 : string,
+    text2 : string,
+    screenId :string,
+    nextRoute : string,
+};
+
+const VideoInstruction: React.FC<screenVars> = ({text1, text2, screenId, nextRoute}) =>
 {
     const router = useRouter()
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -27,7 +34,7 @@ const VitaminDTestInstruct = ({screenId}: {screenId: string}) =>
 
     return (
         <View style = {styles.background}> 
-            <Text style = {styles.inputHeader}>Watch the video tutorial on how to asses your vitamin D level.</Text>
+            <Text style = {styles.inputHeader}>{text1}</Text>
 
             <VideoView
                 player = {player}
@@ -35,10 +42,9 @@ const VitaminDTestInstruct = ({screenId}: {screenId: string}) =>
                 style = {styles.video}
             />
 
-            <Text style = {styles.inputHeader}>Once completed, set the test aside for later. 
-    Results take approximately 20 minutes to appear.</Text>
+            <Text style = {styles.inputHeader}>{text2}</Text>
 
-            <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/bloodtest')}} style = {styles.blueNextButton}>
+            <TouchableOpacity onPress = {() => {player.pause(); router.navigate(nextRoute)}} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>
@@ -46,4 +52,4 @@ const VitaminDTestInstruct = ({screenId}: {screenId: string}) =>
     )
 }
 
-export default VitaminDTestInstruct;
+export default VideoInstruction;

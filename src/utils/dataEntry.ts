@@ -102,10 +102,11 @@ export async function enterMedication(medications: Map<string, boolean>): Promis
     return;
 };
 
-export async function enterVisionTest(transcription: string): Promise<void> {
+//changed to accept a side parameter for left and right eye tests
+export async function enterVisionTest(transcription: string, side: 'left' | 'right'): Promise<void> {
     const sessionRef = await getActiveSessionRef();
     await setDoc(sessionRef, {
-        visionTranscription: transcription
+        [`visionTranscription_${side}`]: transcription
     }, { merge: true });
     return;
 };

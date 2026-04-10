@@ -21,6 +21,9 @@ const en = {
             "medicationTypedUpload": "Next, we want to assess your medications to determine how they might influence fall risk.",
             "moodQuestions": "Answer the following questions:",
             "assessComplete": "Great job, you finished the assessment!",
+            "visionInstruction": "Vision Test Instructions",
+            "visionTestLeft": "Vision Test using Left Eye",
+            "visionTestRight": "Vision Test using Right Eye"
 
         },
         index: {
