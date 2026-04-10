@@ -22,6 +22,10 @@ const es = {
             "medicationResults": "Por favor, revise el resumen de su medicamento a continuación",
             "medicationTypedUpload": "A continuación, queremos evaluar sus medicamentos para determinar cómo podrían influir en el riesgo de caída.",
             "moodQuestions": "Favor de responder las siguientes preguntas:",
+            "assessComplete": "¡Buen trabajo, has terminado la evaluación!", 
+            "visionInstruction": "Instrucciones de la Prueba Visual",
+            "visionTestLeft": "Prueba Visual (Ojo Izquierdo)",
+            "visionTestRight": "Prueba Visual (Ojo Derecho)"
         },
         index: {
             "title": "STEADI",

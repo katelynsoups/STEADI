@@ -9,7 +9,7 @@ const SuccessPage = () =>
     const nextRoute = isWalking ? '/homehazards' : '/walkingupload';
     const message = isWalking
         ? 'Thank you for uploading your walking assessment!'
-        : 'Thank you for uploading your vision assessment!';
+        : 'Thank you for uploading your vision assessments!';
 
     updateSaveStatus(`/success?test=${test}`);
 

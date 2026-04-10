@@ -1,5 +1,6 @@
 import { doc, getDoc, setDoc, updateDoc, collection, addDoc, Timestamp } from 'firebase/firestore';
 import { db, auth } from './gcipAuth';
+import { checkVisionExam } from './visionExam';
 
 export async function getPID(): Promise<string> {
     const docRef = doc(db, "Users-AppData", auth.currentUser!.uid);
@@ -102,13 +103,28 @@ export async function enterMedication(medications: Map<string, boolean>): Promis
     return;
 };
 
-export async function enterVisionTest(transcription: string): Promise<void> {
+//changed to accept a side parameter for left and right eye tests
+//changed to call scoring algorithm
+export async function enterVisionTest(
+    transcription: string,
+    side: 'left' | 'right',
+): Promise<void> {
+
     const sessionRef = await getActiveSessionRef();
+    const result = checkVisionExam(transcription);
+
     await setDoc(sessionRef, {
-        visionTranscription: transcription
+        vision: {
+            [side]: {
+                transcription: transcription,
+                score: result.score,
+                matched: result.matched_count,
+                total: result.total,
+                feedback: result.feedback,
+            }
+        }
     }, { merge: true });
-    return;
-};
+}
 
 export async function enterMood(pleasure: string, depress: string): Promise<void> {
     const sessionRef = await getActiveSessionRef();

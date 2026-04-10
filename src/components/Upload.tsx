@@ -23,12 +23,14 @@ type uploadType =
     //Vision or Walking, determines where video gets sent for processing
     test : string,
     text : string,
+    boldPhrase?: string,
     screenId :string,
     route : string,
+    side?: 'left' | 'right', //for the vision exam
 
 };
 
-const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
+const Upload : React.FC <uploadType> = ({test, text, boldPhrase, screenId, route, side}) =>
 {
     const [vision, setVision] = useState<string | null>(null);
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -70,7 +72,7 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
             if(test === 'vision'){
                 setUploading(true);
                 try {
-                    await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+                    await processVideoToAudio(result.assets[0].uri, side); // only perform mp4 -> wav if the test type is vision
                 } catch (err) {
                     Alert.alert('Upload failed', 'Could not upload video. Please try again.');
                     setUploading(false);
@@ -123,7 +125,7 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
             if(test === 'vision'){
                 setUploading(true);
                 try {
-                    await processVideoToAudio(result.assets[0].uri); // only perform mp4 -> wav if the test type is vision
+                    await processVideoToAudio(result.assets[0].uri, side); // only perform mp4 -> wav if the test type is vision
                 } catch (err) {
                     Alert.alert('Upload failed', 'Could not upload video. Please try again.');
                     setUploading(false);
@@ -174,14 +176,17 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
         );
     };
 
-    const player = useVideoPlayer(videoUrl ?? '', player => {
-        player.loop = false;
-        player.play();
+    //prevent auto play of vision assessment
+    const player = useVideoPlayer(test === 'walking' ? (videoUrl ?? '') : '', player => {
+        if (test === 'walking') {
+            player.loop = false;
+            player.play();
+        }
     });
 
     // uses expo-video-audio-extractor 3rd party dependency to convert uploaded mp4 -> wav
     // FIXME: store wav in cache and ensure it deletes off local storage / store somewhere else temporarily
-    const processVideoToAudio = async (videoUri: string) => {
+    const processVideoToAudio = async (videoUri: string, side?: 'left' | 'right') => {
         console.log('[Upload] Starting video->audio processing');
         console.log('[Upload] Input video uri:', videoUri);
 
@@ -234,7 +239,7 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
 
             const transcription = await transcribeAudio(verifyUri);
             console.log('[Upload] Transcription:', transcription);
-            await enterVisionTest(transcription);
+            await enterVisionTest(transcription, side ?? 'left');
 
             return verifyUri;
         } catch (err) {
@@ -246,13 +251,24 @@ const Upload : React.FC <uploadType> = ({test, text, screenId, route}) =>
 
     return (
         <View style = {styles.background}> 
-        <Text style = {styles.inputHeader}>{text}</Text>
+        <Text style={styles.inputHeader}>
+            {boldPhrase && text.includes(boldPhrase)
+                ? <>
+                    {text.split(boldPhrase)[0]}
+                    <Text style={{ fontWeight: 'bold' }}>{boldPhrase}</Text>
+                    {text.split(boldPhrase)[1]}
+                </>
+                : text
+            }
+        </Text>
 
-        <VideoView
-            player = {player}
-            allowsFullscreen
-            style = {styles.video}
-        />
+        {test === 'walking' && (
+            <VideoView
+                player={player}
+                allowsFullscreen
+                style={styles.video}
+            />
+        )}
 
         <Text style = {styles.inputHeader}>Select "Upload" to select video or take video.</Text>
 
