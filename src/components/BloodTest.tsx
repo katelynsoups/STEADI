@@ -101,7 +101,7 @@ const BloodTest = ({screenId}: {screenId: string}) =>
 
     {/* Standing BP */}
       <View style={bt.card}>
-        <Text style={bt.cardTitle}>Standing Blood Pressure</Text>
+        <Text style={bt.cardTitle}>Sitting Upright Blood Pressure</Text>
         <View style={bt.inputGroup}>
           <Text style={bt.label}>SYS: </Text>
           <TextInput
