@@ -29,7 +29,10 @@ Promise<[
     string | null,
     string | null,
     Object | null,
-    string | null] 
+    string | null,
+    Object | null,
+    number | null,
+    number | null] 
     | null>
 {
     const pid = await getPID();
@@ -46,7 +49,10 @@ Promise<[
     const lackPleasure = docSnap.data()?.mood?.lackPleasure as string;
     const screening = docSnap.data()?.screening as Object;
     const vitaminD = docSnap.data()?.VitaminD as string;
-    return [bloodPressure, medications, hazards, footNeuropathyTest, depression, lackPleasure, screening, vitaminD];
+    const tugTests = docSnap.data()?.tugTest?.tug_tests as Object;
+    const visionLeft = docSnap.data()?.vision?.left?.matched as number;
+    const visionRight = docSnap.data()?.vision?.right?.matched as number;
+    return [bloodPressure, medications, hazards, footNeuropathyTest, depression, lackPleasure, screening, vitaminD, tugTests, visionLeft, visionRight];
 }
 
 export async function getCompletedAssessments():Promise<Assessment[]>
@@ -59,8 +65,11 @@ export async function getCompletedAssessments():Promise<Assessment[]>
 
     docSnap.forEach((doc) =>
     {
-        assessments.push({id: doc.id as string, sessionNumber:doc.data()?.sessionNumber as string, date: doc.data()?.startedAt.toDate().toDateString() as string })
-        //console.log(doc.id, " = >", doc.data()?.sessionNumber, "assessments")
+        //if (doc.data()?.completedAt != null && typeof doc.data()?.tugTest != "undefined" && doc.data()?.tugTest?.status as string == "completed")
+        //{
+            assessments.push({id: doc.id as string, sessionNumber:doc.data()?.sessionNumber as string, date: doc.data()?.startedAt.toDate().toDateString() as string })
+            console.log(doc.id, " = >", doc.data()?.sessionNumber, "assessments")
+        //}
     })
 
     return assessments as Assessment[];

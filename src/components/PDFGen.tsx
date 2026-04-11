@@ -3,20 +3,19 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { styles } from '../styles/styles';
 import {
-    Alert,
     View,
     Text,
     TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system/legacy';
 import {diagramFileName} from './FootTest';
+import { getPID } from '../utils/dataEntry';
 import {getUserStudyData} from '../utils/getData';
 import {getHazards} from '../data/hazardQuestions';
-
-const router = useRouter()
 
 const PDFGen = () =>
 {
@@ -29,11 +28,14 @@ const PDFGen = () =>
     const [depress, setDepress] = useState<string>("");
     const [pleasure, setPleasure] = useState<string>("");
     const [vitaminD, setVitamin] = useState<string>("");
+    const [leftMatch, setLeft] = useState<number>(-1);
+    const [rightMatch, setRight] = useState<number>(-1);
+    const [test, setTest] = useState<string[]>([]);
     const [isLoaded, setLoaded] = useState(false);
     const [ready, isReady] = useState(false);
     const screenResults = useRef(new Map<string, string>()).current;
 
-    const { id } = useLocalSearchParams();
+    const { id, date } = useLocalSearchParams();
 
     const setScreenings = async (results : Object) =>
     {
@@ -50,39 +52,72 @@ const PDFGen = () =>
 
     const checkMedications = async (meds : Object) =>
     {
-        let trueMeds : string = "" 
+        let trueMeds : string = `<h1 id = "med">Medications Identified for Fall Risk</h1><table>`
+        let counter = 0;
+        let hasEntry : boolean = false;
 
         for (const [key, value] of Object.entries(meds))
+        {
             if (value == true)
-                trueMeds = trueMeds.concat(key, "<br>")
+            {
+                trueMeds = trueMeds.concat("<tr><th>", key, "</th></tr>")
+                counter++;
+                hasEntry = true;
+            }
+            if ((counter % 26) == 0 && counter > 0)
+                trueMeds = trueMeds.concat(`</table><h1 id = "med">Medications Identified for Fall Risk (Continued)</h1><table>`)
+        }
 
-        setMedications(trueMeds);
+        if(hasEntry)
+        {
+            trueMeds = trueMeds.concat("</table>");
+            setMedications(trueMeds);
+        }
+        else
+            setMedications("");
     }
 
     const checkHazards = async (hazards : Object) =>
     {
-        let trueHazards : string = "" 
-        let bedLight : string = getHazards(1)[1].text;
-        let nightLight : string = getHazards(1)[2].text;
-        let stool : string = getHazards(1)[0].text;
+        let trueHazards : string = "<h1>Home Hazards</h1><table>" 
+        const bedLight : string = getHazards(1)[1].text;
+        const nightLight : string = getHazards(1)[2].text;
+        const stool : string = getHazards(1)[0].text;
+        let hasEntry : boolean = false;
 
         for (const [key, value] of Object.entries(hazards))
         {
             if (key === bedLight || key === nightLight || key === stool)
             {
                 if(value == false)
-                    trueHazards = trueHazards.concat("Does not have ", key.toLowerCase(), "<br>");
+                {
+                    trueHazards = trueHazards.concat("<tr><th>Does not have ", key.toLowerCase(), "</th></tr>");
+                    hasEntry = true;
+                }
             }
             else if (value == true)
-                trueHazards = trueHazards.concat(key, "<br>");
+            {
+                trueHazards = trueHazards.concat("<tr><th>", key, "</th></tr>");
+                hasEntry = true;
+            }
         }
 
-        setHazards(trueHazards);
+        if (hasEntry)
+        {
+            trueHazards = trueHazards.concat("</table>");
+            setHazards(trueHazards);
+        }
+        else
+            setHazards("");
+            
+
+        
     }
 
     const convertURI = async () =>
     {  
-        const uri : string = FileSystem.documentDirectory + 'images';
+        const pid = await getPID();
+        const uri : string = FileSystem.documentDirectory + pid + 'images';
         const dirCheck = await FileSystem.getInfoAsync(uri)
         
         if(!dirCheck.exists)
@@ -91,12 +126,24 @@ const PDFGen = () =>
             console.log("Created directory!");
         }
 
-        let base64 : string = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'images' + diagramFileName,
+        let base64 : string = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + pid + 'images' + id + diagramFileName,
         {
             encoding: FileSystem.EncodingType.Base64
         })
 
         setDiagram(base64);
+    }
+
+    const setTests = async (tests : Object) =>
+    {
+        let temp : string[] = []
+
+        for (const [key, value] of Object.entries(tests))
+        {
+            temp.push(value.total_duration)
+        }
+
+        setTest(temp);
     }
 
     convertURI();
@@ -133,6 +180,13 @@ const PDFGen = () =>
                     if(userData[7])
                         setVitamin(userData[7])
 
+                    if(userData[8])
+                        setTests(userData[8])
+                    if(userData[9] && userData[10])
+                    {
+                        setLeft(userData[9])
+                        setRight(userData[10])
+                    }
                 }
 
             }).then(result =>
@@ -146,10 +200,8 @@ const PDFGen = () =>
     {
         if(isLoaded)
         {
-            savePDF();
+            isReady(true);
         }
-
-        isReady(true);
     }, [isLoaded]);
 
     const html = `
@@ -188,9 +240,39 @@ const PDFGen = () =>
             background-color: #dddddd;
         }
 
+        .Category
+        {
+            border-bottom: 2px solid #dddddd;
+        }
+
+        .Container
+        {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            gap: 5px;
+        }
+
+        .ContainerP
+        {
+            padding: 1px;
+        }
+
+        #vision
+        {
+            margin-top: 100px;
+            padding-top: 25px;
+        }
+
+        #mood
+        {
+            margin-top: 100px;
+            padding-top: 25px;
+        }
+
         #med
         {
-            border: 1px solid black;    
+            margin-top: 1000px;
+            padding-top: 25px;
         }
 
         #feetResults
@@ -207,11 +289,11 @@ const PDFGen = () =>
         <h1 style = "font-family: Calibri; font-size: 70px; justify-content: flex-start; margin-top: 1%">STEADI</h1>
 
         <div style = "margin-left:auto; margin-top: 1%">
-            <h2>Date: ${new Date().toLocaleDateString()}</h2>
+            <h2>Assessment Date: ${date}</h2>
         </div>
     </header>
 
-    <h1>Screening Questions</h1>
+    <h1 class>Screening Questions</h1>
      <table>
         <tr>
             <th>Question</th>
@@ -266,35 +348,80 @@ const PDFGen = () =>
             <th>${screenResults.get("rushBathroom")}</th>
         </tr>
     </table>
-    <h1>Fall Risk Score: ${riskScore}</h1>
+
+    <h1 class = "Category">Fall Risk Score: ${riskScore}</h1>
+
+    <h1 class = "Category">Vitamin D Levels: ${vitaminD}</h1>
 
     <h1>Blood Pressure</h1>
     <table>
         <tr>
-            <th>Standing Blood Pressure</th>
+            <th>Test</th>
+            <th>Blood Pressure</th>
+        </tr>
+        <tr>
+            <th>Standing</th>
             <th>${standingBP}</th>
         </tr>
         <tr>
-            <th>Lying Blood Pressure</th>
+            <th>Lying</th>
             <th>${lyingBP}</thth>
         </tr>
     </table>
 
-    <h1>Medications Identified for Fall Risk</h1>
-    <p id = "med">${medications}</p>
+    <h1 id = "vision">Vision Test Scores</h1>
+        <table>
+            <tr>
+                <th>Test</th>
+                <th>Score</th>
+            </tr>
+            <tr>
+                <th>Left Eye</th>
+                <th>${(Math.round((leftMatch / 40) * 100))}% (${leftMatch} / 44)</th>
+            </tr>
+            <tr>
+                <th>Right Eye</th>
+                <th>${(Math.round((rightMatch / 40) * 100))}% (${rightMatch} / 44)</th>
+            </tr>
+        </table>
+    
+    
 
-    <h1>Home Hazards</h1>
-    <p id = "med">${hazards}</p>
+    <h1>TUG Test Results<h1>
+    <table>
+        <tr>
+            <th>Test</th>
+            <th>Duration</th>
+        </tr>
+        <tr>
+            <th>Test 1</th>
+            <th>${test[0]}</th>
+        </tr>
+        <tr>
+            <th>Test 2</th>
+            <th>${test[1]}</th>
+        </tr>
+        <tr>
+            <th>Test 3</th>
+            <th>${test[2]}</th>
+        </tr>
+    </table>
 
     <h1>Neuropathy Results<h1>
     <img id = "feetResults" src ="data:image/png;base64,${diagram}"></img>
 
-    <h1>Mood Questions</h1>
-            <p>1: Not at all</p>
-            <p>2: Several days</p>
-            <p>3: More than half days</p>
-            <p>4: Nearly everyday</p>
+    <h1 id = "mood">Mood Questions</h1>
+        <div class = "Container">
+            <p class = "ContainerP">1: Not at all</p>
+            <p class = "ContainerP">2: Several days</p>
+            <p class = "ContainerP">3: More than half days</p>
+            <p class = "ContainerP">4: Nearly everyday</p>
+        </div>
     <table>
+        <tr>
+            <th>Question</th>
+            <th>Answer</th>
+        </tr>
         <tr>
             <th>Little interest or pleasure in doing things.</th>
             <th>${depress}</th>
@@ -305,25 +432,41 @@ const PDFGen = () =>
         </tr>
     </table>
 
-    <h1>Vitamin D Levels: ${vitaminD}</h1>
+    ${hazards}
+
+    ${medications}
 
   </body>
 </html>
     `;
 
-    const printToFile = async () => 
+    const downloadPDF = async () => 
     {
+        const pid = await getPID();
+
         const { uri } = await Print.printToFileAsync({html});
         console.log('File has been saved to:', uri);
-        return uri;
+
+
+        const pdfName = `${uri.slice(0, uri.lastIndexOf('/') + 1)}${pid + date}.pdf`
+
+        await FileSystem.moveAsync({
+            from: uri,
+            to: pdfName
+        })
+
+        if(await Sharing.isAvailableAsync())
+        {
+            await Sharing.shareAsync(pdfName);
+        }
     }
 
-    const savePDF = async () => 
+    /*const savePDF = async () => 
     {
         const uri = await printToFile();
         if (uri) 
         {
-            const pdfURI = `${FileSystem.documentDirectory}pdf/${new Date().toDateString()}.pdf`
+            const pdfURI = `${FileSystem.documentDirectory}pdf/STEADIResults${date}.pdf`
             const dirCheck = await FileSystem.getInfoAsync(FileSystem.documentDirectory + "pdf")
 
             if(!dirCheck.exists)
@@ -359,17 +502,43 @@ const PDFGen = () =>
 
     const downloadPDF = async () =>
     {
-        const pdfURI = `${FileSystem.documentDirectory}pdf/${new Date().toDateString()}.pdf`
-
+        //const pdfURI = `${FileSystem.documentDirectory}pdf/STEADIResults${date}.pdf`
+        const pdfURI = await printToFile();
         if(await Sharing.isAvailableAsync())
         {
             await Sharing.shareAsync(pdfURI);
         }
-    }
+    }*/
 
     return (
         <View style = {styles.background}> 
 
+        {!ready && (
+            <View style={{
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.6)',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <View style={{
+                    backgroundColor: 'white',
+                    borderRadius: 16,
+                    padding: 32,
+                    alignItems: 'center',
+                    width: '75%',
+                    marginBottom: 270
+                }}>
+                    <ActivityIndicator size="large" color="#2196F3" />
+                    <Text style={{ fontSize: 18, fontWeight: '600', marginTop: 16 }}>
+                        Generating PDF
+                    </Text>
+                    <Text style={{ color: '#666', marginTop: 8, textAlign: 'center' }}>
+                        Please keep the app open while we create your PDF.
+                    </Text>
+                </View>
+            </View>
+        )}
             {ready && <TouchableOpacity onPress = {() => downloadPDF()} style = {[styles.blueNextButton, {bottom: 150}]}>
                     <Text style = {[styles.btnText]}>Download Results PDF</Text>
             </TouchableOpacity>}
