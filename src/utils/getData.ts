@@ -65,11 +65,11 @@ export async function getCompletedAssessments():Promise<Assessment[]>
 
     docSnap.forEach((doc) =>
     {
-        //if (doc.data()?.completedAt != null && typeof doc.data()?.tugTest != "undefined" && doc.data()?.tugTest?.status as string == "completed")
-        //{
+        if (doc.data()?.completedAt != null && typeof doc.data()?.tugTest != "undefined" && doc.data()?.tugTest?.status as string == "completed")
+        {
             assessments.push({id: doc.id as string, sessionNumber:doc.data()?.sessionNumber as string, date: doc.data()?.startedAt.toDate().toDateString() as string })
             console.log(doc.id, " = >", doc.data()?.sessionNumber, "assessments")
-        //}
+        }
     })
 
     return assessments as Assessment[];
