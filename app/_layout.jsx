@@ -16,7 +16,7 @@ const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => 
     <TouchableOpacity>
       <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
         style = {styles.backBtn}
-        onPress = {() => router.navigate(route)}
+        onPress = {() => router.replace(route)}
       />
     </TouchableOpacity>
 
