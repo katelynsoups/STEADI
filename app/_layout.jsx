@@ -10,13 +10,13 @@ import LanguageSelector from '../src/components/LanguageSelector';
 
 //Custom header, Stack from expo-router does NOT allow you to asjust many things about it. 
 //BUG: White flash when back button is pressed
-const CustomHeader = ({ headerText, showHome = true, langRight = 75}) => (
+const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
     <TouchableOpacity>
       <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
         style = {styles.backBtn}
-        onPress = {() => router.back()}
+        onPress = {() => router.navigate(route)}
       />
     </TouchableOpacity>
 
@@ -75,12 +75,12 @@ const RootLayout = () =>
 
         <Stack.Screen name = "shortcut" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.shortcut")}/>
+            <CustomHeader headerText = {t("layout.shortcut")} route = {"/home"}/>
         }}/>
 
         <Stack.Screen name = "pdfgen" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.pdfGen")}/>
+            <CustomHeader headerText = {t("layout.pdfGen")} route = {"/pastassessments"}/>
         }}/>
 
         <Stack.Screen name = "login" options = {{headerShown: false}}/>
@@ -92,134 +92,139 @@ const RootLayout = () =>
 
         <Stack.Screen name = "pastassessments" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.pastAssessments")}/>
+            <CustomHeader headerText = {t("layout.pastAssessments")} route = {"/home"}/>
         }}/>
 
         <Stack.Screen name = "signup" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.signup")} showHome={false} langRight={16}/>
+            <CustomHeader headerText = {t("layout.signup")} showHome={false} langRight={16} route = {"/login"}/>
         }}/>
 
         <Stack.Screen name = "screening" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")}/>
+                <CustomHeader headerText = {t("layout.screening")} route = {"/home"}/>
         }}/>
 
         <Stack.Screen name = "screening2" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")}/>
+                <CustomHeader headerText = {t("layout.screening")} route = {"/screening"}/>
         }}/>
 
         <Stack.Screen name = "screening3" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")}/>
+                <CustomHeader headerText = {t("layout.screening")} route = {"/screening2"}/>
         }}/>
 
         <Stack.Screen name = "screening4" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")}/>
+                <CustomHeader headerText = {t("layout.screening")} route = {"/screening3"}/>
         }}/>
 
         <Stack.Screen name = "screening5" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")}/>
+                <CustomHeader headerText = {t("layout.screening")} route = {"/screening4"}/>
         }}/>
 
         <Stack.Screen name = "screening6" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")}/>
+                <CustomHeader headerText = {t("layout.screening")} route = {"/screening5"}/>
         }}/>
 
         <Stack.Screen name = "screeningresult" options = {{ headerShown: false }}/>
 
         <Stack.Screen name = "bloodtest" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.bloodTest")}/>
+            <CustomHeader headerText = {t("layout.bloodTest")} route = {"/vitamindtestinstruct"}/>
         }}/>
 
         <Stack.Screen name = "visionupload" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.visionUpload")}/>
-        }}/>
-
-        <Stack.Screen name = "walkingupload" options = {{
-          header: () =>
-            <CustomHeader headerText = {t("layout.walkingUpload")}/>
+            <CustomHeader headerText = {t("layout.visionUpload")} route = {"/medicationupload"}/>
         }}/>
 
         <Stack.Screen name = "success" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.success")}/>
+            <CustomHeader headerText = {t("layout.success")} route = {"/visiontestright"}/>
+        }}/>
+
+        <Stack.Screen name = "walkingupload" options = {{
+          header: () =>
+            <CustomHeader headerText = {t("layout.walkingUpload")} route = {"/success"}/>
+        }}/>
+
+        <Stack.Screen name = "walkingsuccess" options = {{
+          header: () => 
+            <CustomHeader headerText = {t("layout.success")} route = {"/walkingupload"}/>
         }}/>
 
         <Stack.Screen name = "homehazards" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.homeHazards")}/>
+            <CustomHeader headerText = {t("layout.homeHazards")} route = {"/walkingsuccess"}/>
         }}/>
 
         <Stack.Screen name = "homehazards2" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.homeHazards")}/>
+            <CustomHeader headerText = {t("layout.homeHazards")} route = {"/homehazards"}/>
         }}/>
 
         <Stack.Screen name = "foottestinstruct" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.footTestInstruct")}/>
+            <CustomHeader headerText = {t("layout.footTestInstruct")} route = {"/homehazards2"}/>
         }}/>
 
         <Stack.Screen name = "foottest" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.footTest")}/>
+            <CustomHeader headerText = {t("layout.footTest")} route = {"/foottestinstruct"}/>
         }}/>
 
         <Stack.Screen name = "vitamindtestinstruct" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.vitaminDTestInstruct")}/>
+            <CustomHeader headerText = {t("layout.vitaminDTestInstruct")} route = {"/home"}/>
         }}/>
 
         <Stack.Screen name = "vitamindtest" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.vitaminDTest")}/>
+            <CustomHeader headerText = {t("layout.vitaminDTest")} route = {"/moodquestions"}/>
         }}/>
 
         <Stack.Screen name = "medicationupload" options = {{
           header: () =>
-            <CustomHeader headerText = {t("layout.medicationUpload")}/>
+            <CustomHeader headerText = {t("layout.medicationUpload")} route = {"/bloodtest"}/>
         }}/>
 
         <Stack.Screen name = "medicationresults" options = {{
           header: () =>
-            <CustomHeader headerText = {t("layout.medicationResults")}/>
+            <CustomHeader headerText = {t("layout.medicationResults")} route = {"/medicationupload"}/>
         }}/>
 
         <Stack.Screen name = "medicationtypedupload" options = {{
           header: () =>
-            <CustomHeader headerText = {t("layout.medicationTypedUpload")}/>
+            <CustomHeader headerText = {t("layout.medicationTypedUpload")} route = {"/medicationupload"}/>
         }}/>
 
         <Stack.Screen name = "moodquestions" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.moodQuestions")}/>
+            <CustomHeader headerText = {t("layout.moodQuestions")} route = {"/foottest"}/>
         }}/>
 
         <Stack.Screen name = "assesscomplete" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.assessComplete")}/>
+            <CustomHeader headerText = {t("layout.assessComplete")} route = {"/vitamindtest"}/>
         }}/>
 
         <Stack.Screen name = "visioninstruction" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.visionInstruction")}/>
+            <CustomHeader headerText = {t("layout.visionInstruction")} route = {"/medicationupload"}/>
         }}/>
 
         <Stack.Screen name = "visiontestleft" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.visionTestLeft")}/>
+            <CustomHeader headerText = {t("layout.visionTestLeft")} route = {"/visioninstruction"}/>
         }}/>
 
         <Stack.Screen name = "visiontestright" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.visionTestRight")}/>
+            <CustomHeader headerText = {t("layout.visionTestRight")} route = {"/visiontestleft"}/>
         }}/>
 
       </Stack>
