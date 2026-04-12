@@ -2,7 +2,7 @@ const en = {
     translation: {
         layout: {
             "shortcut": "Temporary shortcut menu",
-            "pdfGen": "WIP!!!",
+            "pdfGen": "Please download your assessment to your device by pressing the button below.",
             "home": "Welcome!",
             "pastAssessments": "Past Assessments",
             "signup": "Please create an account using the participant ID provided by the research team:",

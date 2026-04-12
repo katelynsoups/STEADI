@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'expo-router';
 import ViewShot, {captureRef} from 'react-native-view-shot';
 import * as FileSystem from 'expo-file-system/legacy';
-import { enterFootTest } from '../utils/dataEntry';
+import { enterFootTest, getActiveSessionId, getPID } from '../utils/dataEntry';
 
 export type buttonStats = {
     id: number;
@@ -76,17 +76,18 @@ const FootTest = () =>
 
     const diagramURI = async () =>
     {
-
+        const assessmentNum = await getActiveSessionId();
+        const pid = await getPID();
         try 
         {
             const uri = await captureRef(diagramRef,
             {
                 format: 'png',
                 quality: 0.9,
-                fileName: diagramFileName
+                fileName: assessmentNum + diagramFileName
             });
 
-            const newURI : string = FileSystem.documentDirectory + 'images';
+            const newURI : string = FileSystem.documentDirectory + pid + 'images';
             const dirCheck = await FileSystem.getInfoAsync(newURI)
 
             console.log(dirCheck)
@@ -102,7 +103,7 @@ const FootTest = () =>
                 encoding: FileSystem.EncodingType.Base64
             })
 
-            await FileSystem.writeAsStringAsync(newURI + diagramFileName, base64, 
+            await FileSystem.writeAsStringAsync(newURI + assessmentNum + diagramFileName, base64, 
             {
                 encoding: FileSystem.EncodingType.Base64
             })
