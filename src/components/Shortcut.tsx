@@ -37,19 +37,6 @@ const Shortcut = () =>
 
     </TouchableOpacity>
 
-       <TouchableOpacity
-      onPress={() => router.navigate('/pdfgen')}
-      style={[
-        styles.btn,
-        {
-          height: 56,
-          justifyContent: 'center',
-          marginBottom: 16,
-        },
-      ]}>
-      <Text style = {styles.btnText}>{t('shortcut.pdfGen')}</Text>
-    </TouchableOpacity>
-
     <TouchableOpacity
       onPress={() => router.navigate('/foottest')}
       style={[

@@ -10,7 +10,7 @@ const TimedUpAndGoUpload = () => {
             test = {'walking'}
             text = {'Watch the video tutorial for completing the Up & Go test.'}
             screenId = {'walking-test'}
-            route = {'/success?test=walking'}
+            route = {'/walkingsuccess'}
         />
     );
 };
