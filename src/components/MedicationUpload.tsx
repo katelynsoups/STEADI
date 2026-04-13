@@ -51,7 +51,7 @@ const medicationUpload = () =>
 
         // call call-vision instead of Vision API directly
         const visionResponse = await fetch(
-            'https://call-vision-228929058201.us-central1.run.app',
+            'https://call-vision-228929058201.us-central1.run.app/ocr',
             {
                 method: 'POST',
                 headers: {
