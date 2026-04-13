@@ -23,6 +23,10 @@ const es = {
             "medicationTypedUpload": "A continuación, queremos evaluar sus medicamentos para determinar cómo podrían influir en el riesgo de caída.",
             "moodQuestions": "Favor de responder las siguientes preguntas:",
             "assessComplete": "¡Buen trabajo, has terminado la evaluación!", 
+            "educationalResources": "Enlaces a recursos educativos",
+            "educationalBrochures": "Folletos",
+            "educationalFactSheets": "Hojas informativas",
+            "additionalInformation": "Información adicional",
             "visionInstruction": "Instrucciones de la Prueba Visual",
             "visionTestLeft": "Prueba Visual (Ojo Izquierdo)",
             "visionTestRight": "Prueba Visual (Ojo Derecho)"
@@ -72,6 +76,7 @@ const es = {
             "pastAssessments": "Evaluaciones previas",
             "resume": "Continuar la evaluación",
             "newAssessment": "Iniciar nueva evaluación",
+            "educationalResources": "Recursos educativos",
             "errorTitle": "Error",
             "errorMessage": "No se pudo recuperar el progreso de su evaluación."
         },

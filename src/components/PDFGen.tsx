@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     ActivityIndicator
 } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system/legacy';
@@ -16,9 +16,12 @@ import {diagramFileName} from './FootTest';
 import { getPID } from '../utils/dataEntry';
 import {getUserStudyData} from '../utils/getData';
 import {getHazards} from '../data/hazardQuestions';
+import { useTranslation } from 'react-i18next';
 
 const PDFGen = () =>
 {
+    const router = useRouter();
+    const { t } = useTranslation();
     const [riskScore, setRiskScore] = useState<number>(0);
     const [standingBP, setStandingBP] = useState<string>("");
     const [lyingBP, setLyingBP] = useState<string>("");
@@ -377,11 +380,11 @@ const PDFGen = () =>
             </tr>
             <tr>
                 <th>Left Eye</th>
-                <th>${(Math.round((leftMatch / 40) * 100))}% (${leftMatch} / 44)</th>
+                <th>${(Math.round((leftMatch / 44) * 100))}% (${leftMatch} / 44)</th>
             </tr>
             <tr>
                 <th>Right Eye</th>
-                <th>${(Math.round((rightMatch / 40) * 100))}% (${rightMatch} / 44)</th>
+                <th>${(Math.round((rightMatch / 44) * 100))}% (${rightMatch} / 44)</th>
             </tr>
         </table>
     
@@ -461,55 +464,6 @@ const PDFGen = () =>
         }
     }
 
-    /*const savePDF = async () => 
-    {
-        const uri = await printToFile();
-        if (uri) 
-        {
-            const pdfURI = `${FileSystem.documentDirectory}pdf/STEADIResults${date}.pdf`
-            const dirCheck = await FileSystem.getInfoAsync(FileSystem.documentDirectory + "pdf")
-
-            if(!dirCheck.exists)
-            {
-                await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + "pdf", { intermediates: true })
-                console.log("Created directory!");
-            }
-
-            try
-            {
-                await FileSystem.moveAsync({
-                    from: uri,
-                    to: pdfURI
-                })
-            }
-            catch (error)
-            {
-                console.log("Could not save PDF: ", error);
-                Alert.alert(
-                    "Could not generate PDF!",
-                    "There was an issue generating your results.",
-                    [
-                        {
-                            text: "Ok",
-                            style: "cancel"
-                        },
-                    ],
-                    { cancelable: false }
-                );
-            }
-        }
-    }
-
-    const downloadPDF = async () =>
-    {
-        //const pdfURI = `${FileSystem.documentDirectory}pdf/STEADIResults${date}.pdf`
-        const pdfURI = await printToFile();
-        if(await Sharing.isAvailableAsync())
-        {
-            await Sharing.shareAsync(pdfURI);
-        }
-    }*/
-
     return (
         <View style = {styles.background}> 
 
@@ -539,9 +493,27 @@ const PDFGen = () =>
                 </View>
             </View>
         )}
-            {ready && <TouchableOpacity onPress = {() => downloadPDF()} style = {[styles.blueNextButton, {bottom: 150}]}>
-                    <Text style = {[styles.btnText]}>Download Results PDF</Text>
-            </TouchableOpacity>}
+            {ready && (
+                <>
+                    <TouchableOpacity
+                        onPress={() =>
+                            router.navigate({
+                                pathname: '/educationalresources',
+                                params: { returnRoute: '/pastassessments' },
+                            })
+                        }
+                        style={styles.blueExtraButton}
+                    >
+                        <Text style={styles.btnText}>{t('layout.additionalInformation')}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => downloadPDF()}
+                        style={[styles.blueNextButton, { bottom: 60 }]}
+                    >
+                        <Text style={styles.btnText}>Download Results PDF</Text>
+                    </TouchableOpacity>
+                </>
+            )}
         </View>
         
     )

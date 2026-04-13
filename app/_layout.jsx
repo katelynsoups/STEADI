@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Platform, TouchableOpacity} from 'react-native'
-import { Stack, router } from 'expo-router'
+import { Stack, router, useLocalSearchParams } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { styles } from '../src/styles/styles'
@@ -17,6 +17,51 @@ const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => 
       <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
         style = {styles.backBtn}
         onPress = {() => router.replace(route)}
+      />
+    </TouchableOpacity>
+
+    <Text style={styles.headerText}>{headerText}</Text>
+    
+    <View style={{ position: 'absolute', right: langRight, bottom: 100 }}>
+      <LanguageSelector 
+        triggerStyle={{ borderColor: '#fff' }}
+        triggerTextStyle={{ color: '#fff' }}
+      />
+    </View>
+    {showHome && (
+      <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
+        <TouchableOpacity>
+          <Ionicons name={"home-outline"}
+            style = {{color: 'white', fontSize: 30}}
+            onPress = {() => router.navigate('/home')}
+          />
+        </TouchableOpacity>
+      </View>
+    )}
+  </View>
+);
+
+const EducationalResourcesHeader = () => {
+  const { t } = useTranslation();
+  const params = useLocalSearchParams();
+  const back =
+    typeof params.returnRoute === 'string' && params.returnRoute.length > 0
+      ? params.returnRoute
+      : '/home';
+  return (
+    <CustomHeader
+      headerText={t('layout.educationalResources')}
+      route={back}
+    />
+  );
+};
+const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75}) => (
+  <View style={styles.layoutHeader}>
+
+    <TouchableOpacity>
+      <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
+        style = {styles.backBtn}
+        onPress = {() => router.replace({pathname: route, params: {param: param}})}
       />
     </TouchableOpacity>
 
@@ -83,6 +128,10 @@ const RootLayout = () =>
             <CustomHeader headerText = {t("layout.pdfGen")} route = {"/pastassessments"}/>
         }}/>
 
+        <Stack.Screen name = "educationalresources" options = {{
+          header: () => <EducationalResourcesHeader />
+        }}/>
+
         <Stack.Screen name = "login" options = {{headerShown: false}}/>
 
         <Stack.Screen name = "home" options = {{
@@ -107,7 +156,7 @@ const RootLayout = () =>
 
         <Stack.Screen name = "screening2" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")} route = {"/screening"}/>
+                <ParamHeader headerText = {t("layout.screening")} route = {"/screening"} param = {"n"}/>
         }}/>
 
         <Stack.Screen name = "screening3" options = {{
