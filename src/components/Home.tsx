@@ -50,7 +50,7 @@ const Home = () =>
                 <Text style = {[styles.btnText]}>{t('home.resume')}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress = {() => {router.navigate('/screening')}} style = {[styles.blueNextButton, {top: '55%'}]}>
+            <TouchableOpacity onPress = {() => {router.navigate({pathname: '/screening', params: {param: "y"}})}} style = {[styles.blueNextButton, {top: '55%'}]}>
                 <Text style = {[styles.btnText]}>{t('home.newAssessment')}</Text>
             </TouchableOpacity>
 
