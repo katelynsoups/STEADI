@@ -116,7 +116,7 @@ const MedicationResults = () =>
                 </TouchableOpacity>
                 
                 <TouchableOpacity 
-                    onPress = {() => { router.navigate('/visionupload')}} 
+                    onPress = {() => { router.navigate('/visioninstruction')}} 
                     style = {styles.blueNextButton}>
                     <Text style = {[styles.btnText]}>Next</Text>
                 </TouchableOpacity>

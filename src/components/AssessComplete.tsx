@@ -34,6 +34,8 @@ const AssessComplete = () =>
 
             <Image source = {confetti} style = {{width: 160, height: 160, marginTop: 50}}/>
 
+            {/* 
+            removing for now to make sure rhe user has to end the assessment
             <TouchableOpacity
                 onPress={() =>
                     router.navigate({
@@ -44,7 +46,7 @@ const AssessComplete = () =>
                 style={styles.blueExtraButton}
             >
                 <Text style={styles.btnText}>{t('layout.additionalInformation')}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity onPress = {handleEndAssessment} style = {[styles.blueNextButton, {bottom: 60}]}>
                 <Text style = {[styles.btnText]}>End Assessment</Text>

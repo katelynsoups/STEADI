@@ -16,6 +16,7 @@ const ScreeningPage = (): React.ReactElement => {
 
   useEffect(() => {
       const initSession = async () => {
+        console.log('[ScreeningPage] param value:', param, typeof param);
           if (param == "y")
             await startNewSession();
           

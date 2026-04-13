@@ -12,7 +12,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system/legacy';
-import {diagramFileName} from './FootTest';
+import {diagramFileName} from './LeftFootTest';
 import { getPID } from '../utils/dataEntry';
 import {getUserStudyData} from '../utils/getData';
 import {getHazards} from '../data/hazardQuestions';

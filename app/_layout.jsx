@@ -221,9 +221,14 @@ const RootLayout = () =>
             <CustomHeader headerText = {t("layout.footTestInstruct")} route = {"/homehazards2"}/>
         }}/>
 
-        <Stack.Screen name = "foottest" options = {{
+        <Stack.Screen name = "foottestleft" options = {{
           header: () => 
             <CustomHeader headerText = {t("layout.footTest")} route = {"/foottestinstruct"}/>
+        }}/>
+
+        <Stack.Screen name = "foottestright" options = {{
+          header: () => 
+            <CustomHeader headerText = {t("layout.footTest")} route = {"/foottestleft"}/>
         }}/>
 
         <Stack.Screen name = "vitamindtestinstruct" options = {{

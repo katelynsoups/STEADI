@@ -18,18 +18,18 @@ export type buttonStats = {
     left: number;
 }
 
-export const diagramFileName : string = "NeuropathyDiagram.png";
+export const diagramFileName : string = "LeftNeuropathyDiagram.png";
 
 const router = useRouter()
 
 const buttonMap = new Map<number, boolean>();
-//source @ https://www.vecteezy.com/vector-art/5218154-footprint-heel-the-black-color-icon, look into whether I need to attribute or pay a sub for image
-const feet = require('../assets/FootTest.png');
+//generated using gemini
+const feet = require('../assets/Left_foot_test.png');
 
 const handleFootTest = async () => {
     try{
-        await enterFootTest(buttonMap);
-        router.navigate('/moodquestions');
+        await enterFootTest(buttonMap, 'left');
+        router.navigate('/foottestright');
     } catch (error: any) {
         console.error('Database entry error:', error);
     }
@@ -37,7 +37,7 @@ const handleFootTest = async () => {
 
 const FootTest = () =>
 {
-    for (let i:number = 0; i < 20; i++)
+    for (let i:number = 0; i < 10; i++)
         buttonMap.set(i, false)
 
     const diagramRef = useRef(null);
@@ -118,33 +118,22 @@ const FootTest = () =>
 
     return (
         <View style = {styles.background}> 
-            <Text style = {styles.inputHeader}>When the patient feels the monofilament touching their feet, instruct them to tap on the screen where it was felt.</Text>
+            <Text style = {styles.inputHeader}>Please complete the test on the left foot and tap on the screen where the monofilament was felt.</Text>
             
             <ViewShot ref = {diagramRef} options = {{format: 'png', quality: 0.9}}>
             <View style = {{width: 375, height: 375}}>
                 <Image source = {feet} style = {{width: 375, height: 375}}/>
 
-                <FootButton id = {0} top = {83} left = {32}/>
-                <FootButton id = {1} top = {46} left = {67}/>
-                <FootButton id = {2} top = {24} left = {117}/>
-                <FootButton id = {3} top = {65} left = {107}/>
-                <FootButton id = {4} top = {132} left = {50}/>
-                <FootButton id = {5} top = {105} left = {85}/>
-                <FootButton id = {6} top = {105} left = {125}/>
-                <FootButton id = {7} top = {195} left = {67}/>
-                <FootButton id = {8} top = {180} left = {115}/>
-                <FootButton id = {9} top = {300} left = {110}/>                
-
-                <FootButton id = {10} top = {24} left = {228}/> 
-                <FootButton id = {11} top = {46} left = {275}/> 
-                <FootButton id = {12} top = {83} left = {310}/>
-                <FootButton id = {13} top = {65} left = {240}/>  
-                <FootButton id = {14} top = {105} left = {219}/>
-                <FootButton id = {15} top = {105} left = {260}/>  
-                <FootButton id = {16} top = {132} left = {295}/> 
-                <FootButton id = {17} top = {180} left = {226}/> 
-                <FootButton id = {18} top = {195} left = {276}/> 
-                <FootButton id = {19} top = {300} left = {235}/> 
+                <FootButton id = {0} top = {38} left = {225}/>
+                <FootButton id = {1} top = {45} left = {285}/>
+                <FootButton id = {2} top = {90} left = {325}/>
+                <FootButton id = {3} top = {110} left = {220}/>
+                <FootButton id = {4} top = {105} left = {270}/>
+                <FootButton id = {5} top = {140} left = {325}/>
+                <FootButton id = {6} top = {210} left = {245}/>
+                <FootButton id = {7} top = {220} left = {315}/>
+                <FootButton id = {8} top = {305} left = {270}/>
+                <FootButton id = {9} top = {160} left = {140}/>                
 
             </View>
             </ViewShot>
