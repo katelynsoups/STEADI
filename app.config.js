@@ -9,12 +9,17 @@ export default{
     orientation: "portrait",
     userInterfaceStyle: "light",
     newArchEnabled: true,
+    owner: "katelynsoups",
     splash: {
       resizeMode: "contain",
       backgroundColor: "#ffffff"
     },
     ios: {
-      supportsTablet: true
+      supportsTablet: true,
+      bundleIdentifier: "com.healthyaging.steadi",
+      infoPlist: {
+        "ITSAppUsesNonExemptEncryption": false
+      },
     },
     android: {
       adaptiveIcon: {
