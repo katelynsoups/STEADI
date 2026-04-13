@@ -71,20 +71,29 @@ const Login: React.FC = () => {
   }, [i18n.language, isChangingLang]);
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={[styles.keyboardScroll]} enableOnAndroid={true} enableAutomaticScroll={true}>
-      <SafeAreaProvider>
-        <SafeAreaView style={[styles.safeArea, {paddingBottom: 400, backgroundColor: '#B14B02'}]}>
-          <View style={styles.header}>
-            <Image source={Shield} style={{ width: 70, height: 70, alignSelf: "center", marginTop: 30 }} />
-            <Text style={[styles.headerTitle, { marginTop: 10 }]}>{t('login.title')}</Text>
-            <Text style={styles.headerSubtitle}>
-              {t('login.subtitle')}
-            </Text>
-          </View>
+    <SafeAreaProvider>
+      <View style={styles.loginRoot}>
+        <StatusBar barStyle="light-content" backgroundColor="#B14B02" />
+        <SafeAreaView style={styles.loginSafeArea} edges={['top', 'left', 'right']}>
+          <KeyboardAwareScrollView
+            style={styles.loginKeyboardScroll}
+            contentContainerStyle={styles.loginScrollContent}
+            enableOnAndroid={true}
+            enableAutomaticScroll={true}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.loginBody}>
+              <View style={styles.header}>
+                <Image source={Shield} style={{ width: 70, height: 70, alignSelf: 'center', marginTop: 16 }} />
+                <Text style={styles.headerTitle}>{t('login.title')}</Text>
+                <Text style={styles.headerSubtitle}>
+                  {t('login.subtitle')}
+                </Text>
+              </View>
 
-          <View style={styles.outerContainer}>
-            <View style={[styles.container, { marginTop: 150, position: "absolute" }]}>
-              <View style={styles.formContainer}>
+              <View style={styles.outerContainer}>
+                <View style={styles.container}>
+                  <View style={styles.formContainer}>
                 {/*
                 {/* Apple Button }
                 <TouchableOpacity style={styles.appleButton}>
@@ -103,7 +112,7 @@ const Login: React.FC = () => {
                 {/* Form Inputs */}
                 <View style={styles.form}>
                   <TextInput
-                    style={[styles.input, {marginTop: "15%",marginBottom: 20 }]}
+                    style={[styles.input, { marginBottom: 20 }]}
                     placeholder={t('login.emailPlaceholder')}
                     placeholderTextColor="#6B7280"
                     keyboardType="email-address"
@@ -158,15 +167,17 @@ const Login: React.FC = () => {
                 </View>
 
                 {/* Language Icon */}
-                  <View style={styles.globeContainer}>
-                    <LanguageSelector />
+                <View style={styles.globeContainer}>
+                  <LanguageSelector />
+                </View>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
+          </KeyboardAwareScrollView>
         </SafeAreaView>
-      </SafeAreaProvider>
-    </KeyboardAwareScrollView>
+      </View>
+    </SafeAreaProvider>
   );
 };
 

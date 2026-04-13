@@ -4,7 +4,7 @@ import Login from '../src/components/Login';
 
 const LoginPage = () => {
     return (
-        <View className="flex-1">
+        <View style={{ flex: 1, backgroundColor: '#B14B02' }}>
             <Login />
         </View>
     );

@@ -23,23 +23,44 @@ const androidShadow = {
 };
 
 export const styles = StyleSheet.create({
+    loginRoot: {
+        flex: 1,
+        backgroundColor: '#B14B02',
+    },
+    loginSafeArea: {
+        flex: 1,
+        backgroundColor: '#B14B02',
+    },
+    loginKeyboardScroll: {
+        flex: 1,
+    },
+    loginScrollContent: {
+        flexGrow: 1,
+    },
+    loginBody: {
+        flexGrow: 1,
+        width: '100%',
+        flexDirection: 'column',
+        backgroundColor: '#B14B02',
+    },
     safeArea: {
         flex: 1,
         backgroundColor: '#F6F8FA', // gray background color
     },
     outerContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingTop: 22,
+        paddingBottom: 16,
     },
-    container: { // white rounded container in the center of login
+    container: { // login white card — height from content; centered by outerContainer
         width: '100%',
-        maxWidth: 384, // max-w-sm
-        height: 400,
-        marginTop: 200,
+        maxWidth: 384,
+        alignSelf: 'center',
         backgroundColor: '#FFFFFF',
-        borderRadius: 24, // rounded-3xl
+        borderRadius: 24,
         overflow: 'hidden',
         flexDirection: 'column',
         ...Platform.select({
@@ -49,9 +70,11 @@ export const styles = StyleSheet.create({
         }),
     },
     header: {
-        backgroundColor: '#B14B02', // orange background color
-        height: 336,
+        backgroundColor: '#B14B02',
         paddingHorizontal: 24,
+        paddingTop: 12,
+        paddingBottom: 16,
+        flexShrink: 0,
     },
     logoContainer: {
         alignItems: 'center',
@@ -62,7 +85,7 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 100
+        marginTop: 8,
     },
     headerSubtitle: {
         color: '#FFFFFF',
@@ -71,14 +94,11 @@ export const styles = StyleSheet.create({
         opacity: 0.9,
     },
     formContainer: {
-        flex: 1,
         backgroundColor: '#FFFFFF',
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
-        marginTop: -24,
-        padding: 24,
-        justifyContent: 'space-between',
-        position: 'relative',
+        paddingHorizontal: 24,
+        paddingBottom: 24,
+        /* Match visual space above first field to space below ENG (paddingBottom 24 + globe marginBottom 16) */
+        paddingTop: 40,
     },
     appleButton: {
         flexDirection: 'row',
@@ -192,6 +212,18 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center', 
         height: 56,
+    },
+    homeNavButton: {
+        width: '80%',
+        maxWidth: 400,
+        alignSelf: 'center',
+        backgroundColor: '#172063',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 56,
+        marginBottom: 16,
     },
     blueExtraButton: { //when we need a second button over the next button
         position: 'absolute',
