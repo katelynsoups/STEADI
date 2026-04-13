@@ -15,10 +15,9 @@ import {
 import { getStorage } from 'firebase/storage';
 import { getFunctions } from 'firebase/functions';
 
-const extra = Constants.expoConfig?.extra ?? Constants.extra;
-
 const firebaseConfig = {
-  apiKey: extra?.apiKey,
+  //client-side key for firebase, identification only, not a security risk
+  apiKey: 'AIzaSyDqhHfigO9DG6nHYWHvhFZeLvwrB0BVsT4',
   authDomain: 'research-digital-steadi-dev.firebaseapp.com',
   projectId: 'research-digital-steadi-dev',
   storageBucket: "research-digital-steadi-dev.firebasestorage.app",

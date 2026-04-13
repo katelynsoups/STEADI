@@ -22,67 +22,59 @@ const medicationUpload = () =>
 
     //OCR function - calls Google Cloud Vision API
     const sendToOCR = async (imageUri: string): Promise<string | null> => {
-        try {
-            //OCR reqs image to be base64
-            const response = await fetch(imageUri);
-            const blob = await response.blob();
-            const base64 = await new Promise<string>((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    if (reader.result && typeof reader.result === 'string') {
-                        resolve(reader.result.split(',')[1]);
-                    } else {
-                        reject(new Error('Failed to read file'));
-                    }
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            });
-
-            const extra = Constants.expoConfig?.extra ?? Constants.extra;
-
-            //call api
-            const apiKey = extra?.visionApiKey;
-
-            if (!apiKey) {
-                console.error('Vision API key not found');
-                return null;
-            }
-
-            const visionResponse = await fetch(
-                `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        requests: [
-                            {
-                                image: { content: base64 },
-                                features: [{ type: 'TEXT_DETECTION' }]
-                            }
-                        ]
-                    })
+    try {
+        // convert to base64 same as before
+        const response = await fetch(imageUri);
+        const blob = await response.blob();
+        const base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                if (reader.result && typeof reader.result === 'string') {
+                    resolve(reader.result.split(',')[1]);
+                } else {
+                    reject(new Error('Failed to read file'));
                 }
-            );
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
 
-            if (!visionResponse.ok) {
-                console.error('Vision API error:', visionResponse.status);
-                return null;
-            }
+        // get identity platform token
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        const token = await auth.currentUser?.getIdToken();
 
-            const data = await visionResponse.json();
-            const extractedText = data.responses[0]?.textAnnotations[0]?.description || null;
-            return extractedText;
-
-        //instead of sending an error for images without text we will just log it and display a message on the next screen to the user
-        } catch (error) {
-            console.log('OCR Error:', error);
-            //Alert.alert('Error', 'Failed to extract text from image');
+        if (!token) {
+            console.error('No auth token available');
             return null;
         }
-    };
+
+        // call call-vision instead of Vision API directly
+        const visionResponse = await fetch(
+            'https://call-vision-228929058201.us-central1.run.app',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ image: base64 })
+            }
+        );
+
+        if (!visionResponse.ok) {
+            console.error('call-vision error:', visionResponse.status);
+            return null;
+        }
+
+        const data = await visionResponse.json();
+        return data.text || null;
+
+    } catch (error) {
+        console.log('OCR Error:', error);
+        return null;
+    }
+};
 
     const normalizeText = (text: string): string[] => {
         return text
