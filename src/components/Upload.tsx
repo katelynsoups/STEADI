@@ -37,10 +37,12 @@ const Upload : React.FC <uploadType> = ({test, text, boldPhrase, screenId, route
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getVideoURL(screenId).then(url => {
             if (url) setVideoUrl(url);
+            setIsLoading(false);
         });
     }, [screenId]);
 
@@ -133,20 +135,29 @@ const Upload : React.FC <uploadType> = ({test, text, boldPhrase, screenId, route
                 }
                 setUploading(false);
             }
-            if (test === 'walking') {
-                setUploading(true);
-                setUploadProgress(0);
-                try {
-                    await uploadTugVideo(result.assets[0].uri, (pct) => {
-                        setUploadProgress(pct);
-                    });
-                } catch (err) {
-                    Alert.alert('Upload failed', 'Could not upload video. Please try again.');
-                    setUploading(false);
-                    return;
-                }
-                setUploading(false);
-            }
+            {test === 'walking' && (
+                isLoading ? (
+                    <View style={[styles.video, {
+                        width: '95%',
+                        aspectRatio: 16/9,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 2,
+                        borderColor: '#2196F3',
+                        borderRadius: 8,
+                        backgroundColor: '#f0f0f0'
+                    }]}>
+                        <ActivityIndicator size="large" color="#2196F3" />
+                        <Text style={{ marginTop: 8, color: '#666' }}>Loading video...</Text>
+                    </View>
+                ) : (
+                    <VideoView
+                        player={player}
+                        allowsFullscreen
+                        style={[styles.video, { width: '95%', aspectRatio: 16/9 }]}
+                    />
+                )
+            )}
             router.navigate(route);
         }
     }

@@ -22,13 +22,17 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
 {
     const router = useRouter();
     const hazardsMap = useRef(new Map<string, boolean>()).current;
+    const [submitted, setSubmitted] = useState(false);
     
     const handleHazards = async () => {
+        if (submitted) return;
+        setSubmitted(true);
         try{
             await enterHazards(hazardsMap);
             router.navigate(next);
         } catch (error: any) {
             console.error('Database entry error:', error);
+            setSubmitted(false);
         }
     };
 
@@ -63,8 +67,12 @@ const HomeHazards: React.FC<PageData> = ({questions, next}) =>
             )) 
             }
 
-            <TouchableOpacity onPress = {handleHazards} style = {styles.blueNextButton}>
-                <Text style = {[styles.btnText]}>Next</Text>
+            <TouchableOpacity 
+                onPress={handleHazards} 
+                disabled={submitted}
+                style={[styles.blueNextButton, submitted && { opacity: 0.6 }]}
+            >
+                <Text style={styles.btnText}>Next</Text>
             </TouchableOpacity>
         </View>
         

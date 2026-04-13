@@ -22,6 +22,7 @@ const VideoInstruction: React.FC<screenVars> = ({text1, text2, screenId, nextRou
     const router = useRouter()
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
         getVideoURL(screenId).then(url => {
@@ -34,6 +35,11 @@ const VideoInstruction: React.FC<screenVars> = ({text1, text2, screenId, nextRou
         player.loop = false;
         player.play();
     });
+
+    const moveNext = async () => {
+        if (submitted) return;
+        setSubmitted(true);
+    }
 
     return (
         <View style = {styles.background}> 
@@ -63,7 +69,9 @@ const VideoInstruction: React.FC<screenVars> = ({text1, text2, screenId, nextRou
             <Text style={styles.inputHeader}>{text2}</Text>
 
 
-            <TouchableOpacity onPress = {() => {player.pause(); router.navigate(nextRoute)}} style = {styles.blueNextButton}>
+            <TouchableOpacity onPress = {() => {player.pause(); moveNext(), router.navigate(nextRoute)}} 
+            disabled={submitted}
+            style={[styles.blueNextButton, submitted && { opacity: 0.6 }]}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>

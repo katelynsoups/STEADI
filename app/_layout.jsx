@@ -13,10 +13,9 @@ import LanguageSelector from '../src/components/LanguageSelector';
 const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => router.replace(route)}>
       <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
-        style = {styles.backBtn}
-        onPress = {() => router.replace(route)}
+        style={styles.backBtn}
       />
     </TouchableOpacity>
 
@@ -30,10 +29,9 @@ const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => 
     </View>
     {showHome && (
       <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.navigate('/home')}>
           <Ionicons name={"home-outline"}
-            style = {{color: 'white', fontSize: 30}}
-            onPress = {() => router.navigate('/home')}
+            style={{color: 'white', fontSize: 30}}
           />
         </TouchableOpacity>
       </View>
@@ -58,10 +56,9 @@ const EducationalResourcesHeader = () => {
 const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => router.replace(route)}>
       <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
-        style = {styles.backBtn}
-        onPress = {() => router.replace({pathname: route, params: {param: param}})}
+        style={styles.backBtn}
       />
     </TouchableOpacity>
 
@@ -75,10 +72,9 @@ const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75
     </View>
     {showHome && (
       <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.navigate('/home')}>
           <Ionicons name={"home-outline"}
-            style = {{color: 'white', fontSize: 30}}
-            onPress = {() => router.navigate('/home')}
+            style={{color: 'white', fontSize: 30}}
           />
         </TouchableOpacity>
       </View>
