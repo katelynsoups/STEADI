@@ -258,7 +258,7 @@ const RootLayout = () =>
 
         <Stack.Screen name = "moodquestions" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.moodQuestions")} route = {"/foottest"}/>
+            <CustomHeader headerText = {t("layout.moodQuestions")} route = {"/foottestright"}/>
         }}/>
 
         <Stack.Screen name = "assesscomplete" options = {{

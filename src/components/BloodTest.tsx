@@ -6,7 +6,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -20,16 +21,18 @@ const BloodTest = ({screenId}: {screenId: string}) =>
   const [diaStanding, setLastStand] = useState('');
   const [sysLying, setFirstLying] = useState('');
   const [diaLying, setLastLying] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   //const [filter, setFilter] = useState(''); 
 
-  useEffect(() => {
-          getVideoURL(screenId).then(url => {
-              if (url) setVideoUrl(url);
-          });
-      }, [screenId]);
+    useEffect(() => {
+        getVideoURL(screenId).then(url => {
+            if (url) setVideoUrl(url);
+            setIsLoading(false);
+        });
+    }, [screenId]);
 
   const handleBP = async () => {
     
@@ -93,11 +96,26 @@ const BloodTest = ({screenId}: {screenId: string}) =>
     <KeyboardAwareScrollView contentContainerStyle = {[styles.background, styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
       <Text style = {styles.inputHeader}>Watch the video tutorial on how to use your at-home kit blood pressure reader.</Text>
 
-      <VideoView
-        player = {player}
-        allowsFullscreen
-        style = {styles.video}
-      />
+      {isLoading ? (
+          <View style={[styles.video, { 
+              width: '95%',
+              justifyContent: 'center', 
+              alignItems: 'center',
+              borderWidth: 2,
+              borderColor: '#2196F3',
+              borderRadius: 8,
+              backgroundColor: '#f0f0f0'
+          }]}>
+              <ActivityIndicator size="large" color="#2196F3" />
+              <Text style={{ marginTop: 8, color: '#666' }}>Loading video...</Text>
+          </View>
+      ) : (
+          <VideoView
+              player={player}
+              allowsFullscreen
+              style={[styles.video]}
+          />
+      )}
 
     {/* Standing BP */}
       <View style={bt.card}>
@@ -165,7 +183,7 @@ const BloodTest = ({screenId}: {screenId: string}) =>
 
 const bt = StyleSheet.create({
   card: {
-    width: '85%',
+    width: '95%',
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,

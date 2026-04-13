@@ -368,8 +368,8 @@ export const styles = StyleSheet.create({
     video: 
     {
       marginTop: 8,
-      width: 350,
-      height: 200,
+      width: "95%",
+      aspectRatio: 16/9,
       marginBottom: 8
     },
 
