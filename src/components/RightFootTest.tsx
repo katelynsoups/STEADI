@@ -18,7 +18,7 @@ export type buttonStats = {
     left: number;
 }
 
-export const diagramFileName : string = "LeftNeuropathyDiagram.png";
+export const diagramFileName : string = "RightNeuropathyDiagram.png";
 
 const router = useRouter()
 

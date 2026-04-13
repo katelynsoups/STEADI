@@ -27,7 +27,8 @@ const PDFGen = () =>
     const [lyingBP, setLyingBP] = useState<string>("");
     const [medications, setMedications] = useState<string>("");
     const [hazards, setHazards] = useState<string>("");
-    const [diagram, setDiagram] = useState<string>("");
+    const [leftDiagram, setLeftDiagram] = useState<string>("");
+    const [rightDiagram, setRightDiagram] = useState<string>("");
     const [depress, setDepress] = useState<string>("");
     const [pleasure, setPleasure] = useState<string>("");
     const [vitaminD, setVitamin] = useState<string>("");
@@ -117,24 +118,21 @@ const PDFGen = () =>
         
     }
 
-    const convertURI = async () =>
-    {  
+    const convertURI = async () => {
         const pid = await getPID();
-        const uri : string = FileSystem.documentDirectory + pid + 'images';
-        const dirCheck = await FileSystem.getInfoAsync(uri)
-        
-        if(!dirCheck.exists)
-        {
-            await FileSystem.makeDirectoryAsync(uri, { intermediates: true })
-            console.log("Created directory!");
-        }
+        const baseURI = FileSystem.documentDirectory + pid + 'images';
 
-        let base64 : string = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + pid + 'images' + id + diagramFileName,
-        {
-            encoding: FileSystem.EncodingType.Base64
-        })
+        const dirCheck = await FileSystem.getInfoAsync(baseURI);
+        if (!dirCheck.exists)
+            await FileSystem.makeDirectoryAsync(baseURI, { intermediates: true });
 
-        setDiagram(base64);
+        const leftBase64 = await FileSystem.readAsStringAsync(baseURI + id + "LeftNeuropathyDiagram.png",
+            { encoding: FileSystem.EncodingType.Base64 });
+        setLeftDiagram(leftBase64);
+
+        const rightBase64 = await FileSystem.readAsStringAsync(baseURI + id + "RightNeuropathyDiagram.png",
+            { encoding: FileSystem.EncodingType.Base64 });
+        setRightDiagram(rightBase64);
     }
 
     const setTests = async (tests : Object) =>
@@ -410,8 +408,17 @@ const PDFGen = () =>
         </tr>
     </table>
 
-    <h1>Neuropathy Results<h1>
-    <img id = "feetResults" src ="data:image/png;base64,${diagram}"></img>
+    <h1>Neuropathy Results</h1>
+    <div style="display:flex; flex-direction:row; gap:20px;">
+        <div>
+            <h3>Left Foot</h3>
+            <img id="feetResults" src="data:image/png;base64,${leftDiagram}"></img>
+        </div>
+        <div>
+            <h3>Right Foot</h3>
+            <img id="feetResults" src="data:image/png;base64,${rightDiagram}"></img>
+        </div>
+    </div>
 
     <h1 id = "mood">Mood Questions</h1>
         <div class = "Container">
