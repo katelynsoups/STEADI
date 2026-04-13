@@ -53,38 +53,21 @@ const Home = () =>
                 }}
                 showsVerticalScrollIndicator={false}
             >
-                <TouchableOpacity
-                    onPress={() => router.navigate('/pastassessments')}
-                    style={styles.homeNavButton}
-                >
-                    <Text style={styles.btnText}>{t('home.pastAssessments')}</Text>
-                </TouchableOpacity>
+                <TouchableOpacity onPress = {() => {router.navigate('/pastassessments')}} style = {[styles.blueNextButton, {top: "15%"}]}>
+                                <Text style = {[styles.btnText]}>{t('home.pastAssessments')}</Text>
+                            </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={handleResume}
-                    style={styles.homeNavButton}
-                >
-                    <Text style={styles.btnText}>{t('home.resume')}</Text>
-                </TouchableOpacity>
+                <TouchableOpacity onPress = {handleResume} style = {[styles.blueNextButton, {top: '35%'}]}>
+                                <Text style = {[styles.btnText]}>{t('home.resume')}</Text>
+                            </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() => router.navigate('/screening')}
-                    style={styles.homeNavButton}
-                >
-                    <Text style={styles.btnText}>{t('home.newAssessment')}</Text>
-                </TouchableOpacity>
+                <TouchableOpacity onPress = {() => {router.navigate('/screening')}} style = {[styles.blueNextButton, {top: '55%'}]}>
+                                <Text style = {[styles.btnText]}>{t('home.newAssessment')}</Text>
+                            </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() =>
-                        router.navigate({
-                            pathname: '/educationalresources',
-                            params: { returnRoute: '/home' },
-                        })
-                    }
-                    style={styles.homeNavButton}
-                >
-                    <Text style={styles.btnText}>{t('home.educationalResources')}</Text>
-                </TouchableOpacity>
+                <TouchableOpacity onPress = {() => {router.navigate('/educationalresources')}} style = {[styles.blueNextButton, {top: '55%'}]}>
+                                                <Text style = {[styles.btnText]}>{t('home.educationalResources')}</Text>
+                                            </TouchableOpacity>
             </ScrollView>
 
             <Logout/>
