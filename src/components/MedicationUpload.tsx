@@ -10,11 +10,13 @@ import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from "expo-constants";
 import medicationList from '../utils/medications.json'; //from RXNorm used to extract drug names
+import { ActivityIndicator } from 'react-native';
 
 //just extracting text here. no database
 const medicationUpload = () =>
 {
     const router = useRouter();
+    const [uploading, setUploading] = useState(false);
     
     //this is the data to be sent to database (will be able to store multiple meds for multiple uploads)
     //const [medications, setMedications] = useState<string[][]>([]);
@@ -154,30 +156,29 @@ const medicationUpload = () =>
         processImage(result);
     }
 
-    const processImage = async (result: ImagePicker.ImagePickerResult) => {
+    const processImage = async (result: ImagePicker.ImagePickerResult) => 
+    {
         if (!result.canceled){
+            setUploading(true); // START LOADING
+
             const imageUri = result.assets[0].uri;
             console.log('Image URI:', imageUri);
             
-            //send to OCR
             const imageText = await sendToOCR(imageUri);
             
             if(imageText){
                 const medicationName = await extractMedication(imageText);
                 console.log('Extracted Medication:', medicationName);
-                
-                // if (medicationName) {
-                //     //add to medications array
-                //     medicationMap.set(medicationName, false);//leaving as false for now
-                // }
-                
-                //pass empty string if no medication found in text
+
+                setUploading(false); // STOP LOADING
+
                 router.push({
                     pathname: '/medicationresults',
                     params: { medicationName: medicationName || '' }
                 });
             } else {
-                //OCR failed, still pass empty string
+                setUploading(false); // STOP LOADING
+
                 router.push({
                     pathname: '/medicationresults',
                     params: { medicationName: '' }
@@ -233,6 +234,32 @@ const medicationUpload = () =>
             style = {styles.greySkipButton}>
                 <Text style = {[styles.greySkipButtonText]}>Skip</Text>
             </TouchableOpacity>
+            {uploading && (
+                <View style={{
+                    position: 'absolute',
+                    top: 0, left: 0, right: 0, bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.6)',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <View style={{
+                        backgroundColor: 'white',
+                        borderRadius: 16,
+                        padding: 32,
+                        alignItems: 'center',
+                        width: '75%',
+                        marginBottom: 270
+                    }}>
+                        <ActivityIndicator size="large" color="#2196F3" />
+                        <Text style={{ fontSize: 18, fontWeight: '600', marginTop: 16 }}>
+                            Uploading Medication
+                        </Text>
+                        <Text style={{ color: '#666', marginTop: 8, textAlign: 'center' }}>
+                            Please keep the app open while your medication is processed.
+                        </Text>
+                    </View>
+                </View>
+            )}
         </View>
     )
 }
