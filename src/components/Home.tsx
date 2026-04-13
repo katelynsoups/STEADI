@@ -65,7 +65,7 @@ const Home = () =>
                                 <Text style = {[styles.btnText]}>{t('home.newAssessment')}</Text>
                             </TouchableOpacity>
 
-                <TouchableOpacity onPress = {() => {router.navigate('/educationalresources')}} style = {[styles.blueNextButton, {top: '55%'}]}>
+                <TouchableOpacity onPress = {() => {router.navigate('/educationalresources')}} style = {[styles.blueNextButton, {top: '75%'}]}>
                                                 <Text style = {[styles.btnText]}>{t('home.educationalResources')}</Text>
                                             </TouchableOpacity>
             </ScrollView>
