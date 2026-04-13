@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     ActivityIndicator
 } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system/legacy';
@@ -16,9 +16,12 @@ import {diagramFileName} from './FootTest';
 import { getPID } from '../utils/dataEntry';
 import {getUserStudyData} from '../utils/getData';
 import {getHazards} from '../data/hazardQuestions';
+import { useTranslation } from 'react-i18next';
 
 const PDFGen = () =>
 {
+    const router = useRouter();
+    const { t } = useTranslation();
     const [riskScore, setRiskScore] = useState<number>(0);
     const [standingBP, setStandingBP] = useState<string>("");
     const [lyingBP, setLyingBP] = useState<string>("");
@@ -539,9 +542,27 @@ const PDFGen = () =>
                 </View>
             </View>
         )}
-            {ready && <TouchableOpacity onPress = {() => downloadPDF()} style = {[styles.blueNextButton, {bottom: 150}]}>
-                    <Text style = {[styles.btnText]}>Download Results PDF</Text>
-            </TouchableOpacity>}
+            {ready && (
+                <>
+                    <TouchableOpacity
+                        onPress={() =>
+                            router.navigate({
+                                pathname: '/educationalresources',
+                                params: { returnRoute: '/pastassessments' },
+                            })
+                        }
+                        style={styles.blueExtraButton}
+                    >
+                        <Text style={styles.btnText}>{t('layout.additionalInformation')}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => downloadPDF()}
+                        style={[styles.blueNextButton, { bottom: 60 }]}
+                    >
+                        <Text style={styles.btnText}>Download Results PDF</Text>
+                    </TouchableOpacity>
+                </>
+            )}
         </View>
         
     )

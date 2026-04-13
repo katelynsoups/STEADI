@@ -453,4 +453,67 @@ export const styles = StyleSheet.create({
         color: '#111827',
         fontWeight: '600',
     },
+
+    educationalSectionCard: {
+        width: '100%',
+        maxWidth: 560,
+        alignSelf: 'center',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        paddingHorizontal: 16,
+        paddingVertical: 16,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+            },
+            android: { elevation: 3 },
+            web: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.08,
+                shadowRadius: 12,
+            },
+        }),
+    },
+    educationalSectionHeading: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#374151',
+        marginBottom: 8,
+    },
+    educationalRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 12,
+        gap: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#F3F4F6',
+    },
+    educationalRowLast: {
+        borderBottomWidth: 0,
+    },
+    educationalThumb: {
+        width: 72,
+        height: 96,
+        borderRadius: 8,
+        backgroundColor: '#E5E7EB',
+    },
+    educationalItemTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: '#111827',
+        flexShrink: 1,
+    },
+    educationalItemMeta: {
+        fontSize: 14,
+        color: '#6B7280',
+        marginTop: 4,
+        flexShrink: 1,
+    },
 });
