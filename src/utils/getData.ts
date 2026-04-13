@@ -1,5 +1,6 @@
 import { doc, getDoc, getDocs, query, collection, type FirestoreDataConverter, type DocumentData} from 'firebase/firestore';
 import { db, auth } from './gcipAuth';
+import {getActiveSessionId} from '../utils/dataEntry';
 
 export interface BloodPressure
 {
@@ -62,15 +63,62 @@ export async function getCompletedAssessments():Promise<Assessment[]>
     const pid = await getPID();
     const docSnap = await getDocs(collection(db, "Users-StudyData", pid, "assessments"));
  
-
     docSnap.forEach((doc) =>
     {
         if (doc.data()?.completedAt != null && typeof doc.data()?.tugTest != "undefined" && doc.data()?.tugTest?.status as string == "completed")
         {
             assessments.push({id: doc.id as string, sessionNumber:doc.data()?.sessionNumber as string, date: doc.data()?.startedAt.toDate().toDateString() as string })
-            console.log(doc.id, " = >", doc.data()?.sessionNumber, "assessments")
+            console.log(doc.id, " = >", "assessment ", doc.data()?.sessionNumber)
         }
     })
 
     return assessments as Assessment[];
+}
+
+export async function getScreeningData(): Promise<Object | null>
+{
+    const pid = await getPID();
+    const id = await getActiveSessionId();
+    const docSnap = await getDoc(doc(db, "Users-StudyData", pid, "assessments", id));
+
+    if(docSnap.exists() && docSnap.data()?.screening != "undefined")
+        return docSnap.data()?.screening as Object;
+
+    return null;
+}
+
+export async function getBloodPressure(): Promise<BloodPressure | null>
+{
+    const pid = await getPID();
+    const id = await getActiveSessionId();
+    const docSnap = await getDoc(doc(db, "Users-StudyData", pid, "assessments", id));
+
+    if(docSnap.exists() && docSnap.data()?.bloodPressure != "undefined")
+        return docSnap.data()?.bloodPressure as BloodPressure;
+
+    return null;
+}
+
+export async function getHazards(): Promise<Object | null>
+{
+    const pid = await getPID();
+    const id = await getActiveSessionId();
+    const docSnap = await getDoc(doc(db, "Users-StudyData", pid, "assessments", id));
+
+    if(docSnap.exists() && docSnap.data()?.homeHazards != "undefined")
+        return docSnap.data()?.homeHazards as Object;
+
+    return null;
+}
+
+export async function getFoot(): Promise<Object | null>
+{
+    const pid = await getPID();
+    const id = await getActiveSessionId();
+    const docSnap = await getDoc(doc(db, "Users-StudyData", pid, "assessments", id));
+
+    if(docSnap.exists() && docSnap.data()?.footNeuropathyTest != "undefined")
+        return docSnap.data()?.footNeuropathyTest as Object;
+
+    return null;
 }

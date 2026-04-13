@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -17,6 +17,8 @@ import { saveScreeningEvent } from '../utils/eventLogger';
 import { styles as appStyles } from '../styles/styles';
 import { enterScreeningResponse } from '../utils/dataEntry';
 import { useTranslation } from 'react-i18next';
+import { getScreeningData } from '../utils/getData';
+import { LoadingModal } from './LoadingModal';
 
 type AnswerOption = 'Yes' | 'No';
 
@@ -67,6 +69,7 @@ const Screening: React.FC<ScreeningProps> = ({
   const [activeQuestion, setActiveQuestion] = useState<ScreeningQuestion | null>(null);
   const [followUpVisible, setFollowUpVisible] = useState(false);
   const [followUpValues, setFollowUpValues] = useState<Record<string, string>>({});
+  const [ready, isReady] = useState(false);
   //instead of calling update save status here we will do it in the app screens since 6 screens use this component
 
   // is True when each question on the page is answered. Used for highlighting 'Next' button
@@ -108,11 +111,28 @@ const Screening: React.FC<ScreeningProps> = ({
 
   const resolvedCtaLabel = ctaLabel ?? t('screening.nextButton');
 
+  useEffect(() => {
+    getScreeningData().then(screeningMap =>
+    {
+      if(screeningMap)
+      {
+        for (const [key, value] of Object.entries(screeningMap))
+          setResponses((prev) => ({ ...prev, [key]: value }));
+      }
+    }).then(ignore => 
+    {
+      isReady(true);
+    })
+  }, []);
+
   return (
     <SafeAreaView style={appStyles.safeArea}>
       <StatusBar style="light" />
 
+      <LoadingModal ready = {ready} title = {"Loading Module..."} message = {""}/>
+
       <ScrollView contentContainerStyle={appStyles.screeningContent} showsVerticalScrollIndicator={false}>
+
         {questions.map((question, index) => {
           const value = responses[question.id];
           return (
@@ -133,7 +153,7 @@ const Screening: React.FC<ScreeningProps> = ({
                       style={appStyles.screeningOptionButton}
                       activeOpacity={0.8}
                     >
-                      <View style={[appStyles.screeningBubble, selected && appStyles.screeningBubbleSelected]}>
+                      <View style={[appStyles.screeningBubble, selected || question.id in responses && responses[question.id] == option ? appStyles.screeningBubbleSelected : null]}>
                         {selected && <View style={appStyles.screeningBubbleDot} />}
                       </View>
                       <Text style={appStyles.screeningOptionLabel}>{t(`screening.answerOptions.${option.toLowerCase()}`)}</Text>

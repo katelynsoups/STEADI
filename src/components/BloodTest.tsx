@@ -13,6 +13,8 @@ import { useVideoPlayer, VideoView } from 'expo-video';
 import { enterBP } from '../utils/dataEntry';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getVideoURL} from '../utils/videoUtils';
+import { getBloodPressure } from '../utils/getData';
+import { LoadingModal } from './LoadingModal';
 
 const BloodTest = ({screenId}: {screenId: string}) =>
 {
@@ -20,6 +22,7 @@ const BloodTest = ({screenId}: {screenId: string}) =>
   const [diaStanding, setLastStand] = useState('');
   const [sysLying, setFirstLying] = useState('');
   const [diaLying, setLastLying] = useState('');
+  const [ready, isReady] = useState(false);
 
   const router = useRouter();
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -30,6 +33,32 @@ const BloodTest = ({screenId}: {screenId: string}) =>
               if (url) setVideoUrl(url);
           });
       }, [screenId]);
+  
+   useEffect(() => {
+      getBloodPressure().then(bp =>
+      { 
+        let temp;
+        if(bp)
+        {
+          if(bp.standingBP)
+          {  
+            temp = bp.standingBP.split("/");
+            setFirstStand(temp[0])
+            setLastStand(temp[1])
+          }
+
+          if(bp.lyingBP)
+          {  
+            temp = bp.lyingBP.split("/");
+            setFirstLying(temp[0])
+            setLastLying(temp[1])
+          }
+        }
+      }).then(ignore => 
+      {
+        isReady(true);
+      })
+    }, []);
 
   const handleBP = async () => {
     
@@ -90,7 +119,13 @@ const BloodTest = ({screenId}: {screenId: string}) =>
 
   return (
     <View style={{ flex: 1 }}>
+
+    <LoadingModal ready = {ready} title = {"Loading Module..."} message = {""}/>
+
     <KeyboardAwareScrollView contentContainerStyle = {[styles.background, styles.keyboardScroll]} enableOnAndroid = {true}  enableAutomaticScroll = {true}>
+
+
+
       <Text style = {styles.inputHeader}>Watch the video tutorial on how to use your at-home kit blood pressure reader.</Text>
 
       <VideoView

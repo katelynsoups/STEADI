@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { styles } from '../styles/styles';
 import {
     Image,
@@ -11,6 +11,8 @@ import { useRouter } from 'expo-router';
 import ViewShot, {captureRef} from 'react-native-view-shot';
 import * as FileSystem from 'expo-file-system/legacy';
 import { enterFootTest, getActiveSessionId, getPID } from '../utils/dataEntry';
+import { getFoot } from '../utils/getData';
+import { LoadingModal } from './LoadingModal';
 
 export type buttonStats = {
     id: number;
@@ -29,7 +31,6 @@ const feet = require('../assets/FootTest.png');
 const handleFootTest = async () => {
     try{
         await enterFootTest(buttonMap);
-        router.navigate('/moodquestions');
     } catch (error: any) {
         console.error('Database entry error:', error);
     }
@@ -37,10 +38,25 @@ const handleFootTest = async () => {
 
 const FootTest = () =>
 {
-    for (let i:number = 0; i < 20; i++)
-        buttonMap.set(i, false)
-
     const diagramRef = useRef(null);
+    const [ready, isReady] = useState(false);
+
+    useEffect(() => {
+        for (let i:number = 0; i < 20; i++)
+            buttonMap.set(i, false)
+
+        getFoot().then(diagram =>
+        {
+          if(diagram)
+          {
+            for (const [key, value] of Object.entries(diagram))
+                buttonMap.set(+key, value);
+          }
+        }).then(ignore => 
+        {
+          isReady(true);
+        })
+      }, []);
 
     const FootButton = (props: buttonStats) =>
     {
@@ -48,8 +64,9 @@ const FootTest = () =>
 
         const press = () =>
         {
-            setPressed(!isPressed);
             buttonMap.set(props.id, isPressed);
+            setPressed(!isPressed);
+            handleFootTest();
         }
 
         const footStyle = StyleSheet.create(
@@ -67,7 +84,7 @@ const FootTest = () =>
         return (
             <TouchableOpacity
                 key = {props.id} 
-                style = { [footStyle.button, {backgroundColor: isPressed ? '#00000000' : 'blue', top: props.top, left: props.left, zIndex: 2}]}
+                style = { [footStyle.button, {backgroundColor: buttonMap.get(props.id) ? 'blue' : '#00000000', top: props.top, left: props.left, zIndex: 2}]}
                 onPress = {press}
             /> 
         );
@@ -118,6 +135,8 @@ const FootTest = () =>
 
     return (
         <View style = {styles.background}> 
+            <LoadingModal ready = {ready} title = {"Loading Module..."} message = {""}/>
+
             <Text style = {styles.inputHeader}>When the patient feels the monofilament touching their feet, instruct them to tap on the screen where it was felt.</Text>
             
             <ViewShot ref = {diagramRef} options = {{format: 'png', quality: 0.9}}>
@@ -149,7 +168,7 @@ const FootTest = () =>
             </View>
             </ViewShot>
 
-            <TouchableOpacity onPress = {() => {diagramURI(); handleFootTest()}} style = {styles.blueNextButton}>
+            <TouchableOpacity onPress = {() => {diagramURI(); router.navigate('/moodquestions');}} style = {styles.blueNextButton}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>
