@@ -55,6 +55,36 @@ const EducationalResourcesHeader = () => {
     />
   );
 };
+const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75}) => (
+  <View style={styles.layoutHeader}>
+
+    <TouchableOpacity>
+      <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
+        style = {styles.backBtn}
+        onPress = {() => router.replace({pathname: route, params: {param: param}})}
+      />
+    </TouchableOpacity>
+
+    <Text style={styles.headerText}>{headerText}</Text>
+    
+    <View style={{ position: 'absolute', right: langRight, bottom: 100 }}>
+      <LanguageSelector 
+        triggerStyle={{ borderColor: '#fff' }}
+        triggerTextStyle={{ color: '#fff' }}
+      />
+    </View>
+    {showHome && (
+      <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
+        <TouchableOpacity>
+          <Ionicons name={"home-outline"}
+            style = {{color: 'white', fontSize: 30}}
+            onPress = {() => router.navigate('/home')}
+          />
+        </TouchableOpacity>
+      </View>
+    )}
+  </View>
+);
 
 const HomeHeader = ({ welcomeText, dateText }) => (
   <View style={styles.layoutHeader}>
@@ -126,7 +156,7 @@ const RootLayout = () =>
 
         <Stack.Screen name = "screening2" options = {{
             header: () =>
-                <CustomHeader headerText = {t("layout.screening")} route = {"/screening"}/>
+                <ParamHeader headerText = {t("layout.screening")} route = {"/screening"} param = {"n"}/>
         }}/>
 
         <Stack.Screen name = "screening3" options = {{

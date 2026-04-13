@@ -5,19 +5,24 @@ import { updateSaveStatus } from '../src/utils/saveUnit';
 import { useTranslation } from 'react-i18next';
 import { startNewSession } from '../src/utils/dataEntry';
 import { ActivityIndicator, View, Text } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 
 const ScreeningPage = (): React.ReactElement => {
   const questions = getScreeningQuestionsForStep(0);
   const { t } = useTranslation();
   const [sessionReady, setSessionReady] = useState(false);
+  
+  const { param } = useLocalSearchParams();
 
   useEffect(() => {
       const initSession = async () => {
-          await startNewSession();
+          if (param == "y")
+            await startNewSession();
+          
           await updateSaveStatus(`/screening`);
           setSessionReady(true);
       };
-      initSession();
+        initSession();
   }, []);
 
   if (!sessionReady) {

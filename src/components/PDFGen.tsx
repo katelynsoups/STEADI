@@ -380,11 +380,11 @@ const PDFGen = () =>
             </tr>
             <tr>
                 <th>Left Eye</th>
-                <th>${(Math.round((leftMatch / 40) * 100))}% (${leftMatch} / 44)</th>
+                <th>${(Math.round((leftMatch / 44) * 100))}% (${leftMatch} / 44)</th>
             </tr>
             <tr>
                 <th>Right Eye</th>
-                <th>${(Math.round((rightMatch / 40) * 100))}% (${rightMatch} / 44)</th>
+                <th>${(Math.round((rightMatch / 44) * 100))}% (${rightMatch} / 44)</th>
             </tr>
         </table>
     
@@ -463,55 +463,6 @@ const PDFGen = () =>
             await Sharing.shareAsync(pdfName);
         }
     }
-
-    /*const savePDF = async () => 
-    {
-        const uri = await printToFile();
-        if (uri) 
-        {
-            const pdfURI = `${FileSystem.documentDirectory}pdf/STEADIResults${date}.pdf`
-            const dirCheck = await FileSystem.getInfoAsync(FileSystem.documentDirectory + "pdf")
-
-            if(!dirCheck.exists)
-            {
-                await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + "pdf", { intermediates: true })
-                console.log("Created directory!");
-            }
-
-            try
-            {
-                await FileSystem.moveAsync({
-                    from: uri,
-                    to: pdfURI
-                })
-            }
-            catch (error)
-            {
-                console.log("Could not save PDF: ", error);
-                Alert.alert(
-                    "Could not generate PDF!",
-                    "There was an issue generating your results.",
-                    [
-                        {
-                            text: "Ok",
-                            style: "cancel"
-                        },
-                    ],
-                    { cancelable: false }
-                );
-            }
-        }
-    }
-
-    const downloadPDF = async () =>
-    {
-        //const pdfURI = `${FileSystem.documentDirectory}pdf/STEADIResults${date}.pdf`
-        const pdfURI = await printToFile();
-        if(await Sharing.isAvailableAsync())
-        {
-            await Sharing.shareAsync(pdfURI);
-        }
-    }*/
 
     return (
         <View style = {styles.background}> 
