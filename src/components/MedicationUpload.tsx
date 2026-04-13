@@ -10,11 +10,13 @@ import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from "expo-constants";
 import medicationList from '../utils/medications.json'; //from RXNorm used to extract drug names
+import { ActivityIndicator } from 'react-native';
 
 //just extracting text here. no database
 const medicationUpload = () =>
 {
     const router = useRouter();
+    const [uploading, setUploading] = useState(false);
     
     //this is the data to be sent to database (will be able to store multiple meds for multiple uploads)
     //const [medications, setMedications] = useState<string[][]>([]);
@@ -22,67 +24,59 @@ const medicationUpload = () =>
 
     //OCR function - calls Google Cloud Vision API
     const sendToOCR = async (imageUri: string): Promise<string | null> => {
-        try {
-            //OCR reqs image to be base64
-            const response = await fetch(imageUri);
-            const blob = await response.blob();
-            const base64 = await new Promise<string>((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    if (reader.result && typeof reader.result === 'string') {
-                        resolve(reader.result.split(',')[1]);
-                    } else {
-                        reject(new Error('Failed to read file'));
-                    }
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            });
-
-            const extra = Constants.expoConfig?.extra ?? Constants.extra;
-
-            //call api
-            const apiKey = extra?.visionApiKey;
-
-            if (!apiKey) {
-                console.error('Vision API key not found');
-                return null;
-            }
-
-            const visionResponse = await fetch(
-                `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        requests: [
-                            {
-                                image: { content: base64 },
-                                features: [{ type: 'TEXT_DETECTION' }]
-                            }
-                        ]
-                    })
+    try {
+        // convert to base64 same as before
+        const response = await fetch(imageUri);
+        const blob = await response.blob();
+        const base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                if (reader.result && typeof reader.result === 'string') {
+                    resolve(reader.result.split(',')[1]);
+                } else {
+                    reject(new Error('Failed to read file'));
                 }
-            );
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
 
-            if (!visionResponse.ok) {
-                console.error('Vision API error:', visionResponse.status);
-                return null;
-            }
+        // get identity platform token
+        const { getAuth } = await import('firebase/auth');
+        const auth = getAuth();
+        const token = await auth.currentUser?.getIdToken();
 
-            const data = await visionResponse.json();
-            const extractedText = data.responses[0]?.textAnnotations[0]?.description || null;
-            return extractedText;
-
-        //instead of sending an error for images without text we will just log it and display a message on the next screen to the user
-        } catch (error) {
-            console.log('OCR Error:', error);
-            //Alert.alert('Error', 'Failed to extract text from image');
+        if (!token) {
+            console.error('No auth token available');
             return null;
         }
-    };
+
+        // call call-vision instead of Vision API directly
+        const visionResponse = await fetch(
+            'https://call-vision-228929058201.us-central1.run.app/ocr',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ image: base64 })
+            }
+        );
+
+        if (!visionResponse.ok) {
+            console.error('call-vision error:', visionResponse.status);
+            return null;
+        }
+
+        const data = await visionResponse.json();
+        return data.text || null;
+
+    } catch (error) {
+        console.log('OCR Error:', error);
+        return null;
+    }
+};
 
     const normalizeText = (text: string): string[] => {
         return text
@@ -162,30 +156,29 @@ const medicationUpload = () =>
         processImage(result);
     }
 
-    const processImage = async (result: ImagePicker.ImagePickerResult) => {
+    const processImage = async (result: ImagePicker.ImagePickerResult) => 
+    {
         if (!result.canceled){
+            setUploading(true); // START LOADING
+
             const imageUri = result.assets[0].uri;
             console.log('Image URI:', imageUri);
             
-            //send to OCR
             const imageText = await sendToOCR(imageUri);
             
             if(imageText){
                 const medicationName = await extractMedication(imageText);
                 console.log('Extracted Medication:', medicationName);
-                
-                // if (medicationName) {
-                //     //add to medications array
-                //     medicationMap.set(medicationName, false);//leaving as false for now
-                // }
-                
-                //pass empty string if no medication found in text
+
+                setUploading(false); // STOP LOADING
+
                 router.push({
                     pathname: '/medicationresults',
                     params: { medicationName: medicationName || '' }
                 });
             } else {
-                //OCR failed, still pass empty string
+                setUploading(false); // STOP LOADING
+
                 router.push({
                     pathname: '/medicationresults',
                     params: { medicationName: '' }
@@ -241,6 +234,32 @@ const medicationUpload = () =>
             style = {styles.greySkipButton}>
                 <Text style = {[styles.greySkipButtonText]}>Skip</Text>
             </TouchableOpacity>
+            {uploading && (
+                <View style={{
+                    position: 'absolute',
+                    top: 0, left: 0, right: 0, bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.6)',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <View style={{
+                        backgroundColor: 'white',
+                        borderRadius: 16,
+                        padding: 32,
+                        alignItems: 'center',
+                        width: '75%',
+                        marginBottom: 270
+                    }}>
+                        <ActivityIndicator size="large" color="#2196F3" />
+                        <Text style={{ fontSize: 18, fontWeight: '600', marginTop: 16 }}>
+                            Uploading Medication
+                        </Text>
+                        <Text style={{ color: '#666', marginTop: 8, textAlign: 'center' }}>
+                            Please keep the app open while your medication is processed.
+                        </Text>
+                    </View>
+                </View>
+            )}
         </View>
     )
 }

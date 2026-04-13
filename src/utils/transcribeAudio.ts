@@ -1,25 +1,43 @@
 import * as FileSystem from 'expo-file-system/legacy';
+import { getAuth } from 'firebase/auth';
 
-// you must use your machine's local IP, not localhost (emulator can't reach localhost)
-// run ipconfig | findstr IPv4 in terminal
-const SERVER_URL = 'ADDURLHERE/transcribe';
+const SERVER_URL = 'https://vision-server-228929058201.us-central1.run.app/transcribe';
 
 export const transcribeAudio = async (audioUri: string): Promise<string> => {
     console.log('[Transcribe] Starting transcription for:', audioUri);
 
     try {
-        const uploadResult = await FileSystem.uploadAsync(SERVER_URL, audioUri, {
-            httpMethod: 'POST',
-            uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-            fieldName: 'audio',
-            mimeType: 'audio/wav',
-        });
+        const auth = getAuth();
+        const token = await auth.currentUser?.getIdToken();
 
-        if (uploadResult.status !== 200) {
-            throw new Error(`Server error: ${uploadResult.status}`);
+        if (!token) {
+            throw new Error('No auth token available');
         }
 
-        const body = JSON.parse(uploadResult.body);
+        console.log('[Transcribe] Token obtained');
+
+        // read file as base64
+        const base64 = await FileSystem.readAsStringAsync(audioUri, {
+            encoding: 'base64'
+        });
+
+        console.log('[Transcribe] File read as base64, length:', base64.length);
+
+        // send as JSON instead of multipart to avoid iOS FormData issues
+        const response = await fetch(SERVER_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ audio: base64 })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const body = await response.json();
         console.log('[Transcribe] Transcription result:', body.transcription);
         return body.transcription;
 
