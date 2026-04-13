@@ -5,6 +5,7 @@ import {
     View,
     Text,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { getSaveStatus } from '../utils/saveUnit';
@@ -41,25 +42,35 @@ const Home = () =>
 
     return (
         <View style = {styles.background}> 
+            <ScrollView
+                style={{ flex: 1, width: '100%', alignSelf: 'stretch' }}
+                contentContainerStyle={{
+                    alignItems: 'center',
+                    paddingTop: 24,
+                    paddingBottom: 100,
+                    flexGrow: 1,
+                    width: '100%',
+                }}
+                showsVerticalScrollIndicator={false}
+            >
+                <TouchableOpacity onPress = {() => {router.navigate('/pastassessments')}} style = {[styles.blueNextButton, {top: "15%"}]}>
+                                <Text style = {[styles.btnText]}>{t('home.pastAssessments')}</Text>
+                            </TouchableOpacity>
 
-            <TouchableOpacity onPress = {() => {router.navigate('/pastassessments')}} style = {[styles.blueNextButton, {top: "15%"}]}>
-                <Text style = {[styles.btnText]}>{t('home.pastAssessments')}</Text>
-            </TouchableOpacity>
+                <TouchableOpacity onPress = {handleResume} style = {[styles.blueNextButton, {top: '35%'}]}>
+                                <Text style = {[styles.btnText]}>{t('home.resume')}</Text>
+                            </TouchableOpacity>
 
-            <TouchableOpacity onPress = {handleResume} style = {[styles.blueNextButton, {top: '35%'}]}>
-                <Text style = {[styles.btnText]}>{t('home.resume')}</Text>
-            </TouchableOpacity>
+                <TouchableOpacity onPress = {() => {router.navigate('/screening')}} style = {[styles.blueNextButton, {top: '55%'}]}>
+                                <Text style = {[styles.btnText]}>{t('home.newAssessment')}</Text>
+                            </TouchableOpacity>
 
-            <TouchableOpacity onPress = {() => {router.navigate({pathname: '/screening', params: {param: "y"}})}} style = {[styles.blueNextButton, {top: '55%'}]}>
-                <Text style = {[styles.btnText]}>{t('home.newAssessment')}</Text>
-            </TouchableOpacity>
-
-                  <TouchableOpacity onPress = {() => router.navigate('/shortcut')} style = {[styles.blueNextButton, {top: '75%'}]}>
-                    <Text style = {styles.btnText}>{t('index.shortcut')}</Text>
-                  </TouchableOpacity>
+                <TouchableOpacity onPress = {() => {router.navigate('/educationalresources')}} style = {[styles.blueNextButton, {top: '75%'}]}>
+                                                <Text style = {[styles.btnText]}>{t('home.educationalResources')}</Text>
+                                            </TouchableOpacity>
+            </ScrollView>
 
             <Logout/>
-
         </View>
     )
 }

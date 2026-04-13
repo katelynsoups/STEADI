@@ -10,10 +10,9 @@ import { useRouter } from 'expo-router';
 import Logout from './Logout';
 import {getCompletedAssessments, Assessment} from '../utils/getData';
 
-const router = useRouter()
-
 const PastAssessments = () =>
 {
+    const router = useRouter();
 
     const [assessments, setAssessments] = useState<Assessment[]>([])
     const [ready, setReady] = useState(false)

@@ -7,12 +7,14 @@ import {
     Image
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { completeSession } from '../utils/dataEntry';
 
 
 const AssessComplete = () =>
 {
-    const router = useRouter()
+    const router = useRouter();
+    const { t } = useTranslation();
     const confetti = require('../assets/confetti.png');
 
     const handleEndAssessment = async () => {
@@ -31,6 +33,18 @@ const AssessComplete = () =>
             </Text>
 
             <Image source = {confetti} style = {{width: 160, height: 160, marginTop: 50}}/>
+
+            <TouchableOpacity
+                onPress={() =>
+                    router.navigate({
+                        pathname: '/educationalresources',
+                        params: { returnRoute: '/assesscomplete' },
+                    })
+                }
+                style={styles.blueExtraButton}
+            >
+                <Text style={styles.btnText}>{t('layout.additionalInformation')}</Text>
+            </TouchableOpacity>
 
             <TouchableOpacity onPress = {handleEndAssessment} style = {[styles.blueNextButton, {bottom: 60}]}>
                 <Text style = {[styles.btnText]}>End Assessment</Text>

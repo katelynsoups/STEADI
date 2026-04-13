@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Platform, TouchableOpacity} from 'react-native'
-import { Stack, router } from 'expo-router'
+import { Stack, router, useLocalSearchParams } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { styles } from '../src/styles/styles'
@@ -41,6 +41,20 @@ const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => 
   </View>
 );
 
+const EducationalResourcesHeader = () => {
+  const { t } = useTranslation();
+  const params = useLocalSearchParams();
+  const back =
+    typeof params.returnRoute === 'string' && params.returnRoute.length > 0
+      ? params.returnRoute
+      : '/home';
+  return (
+    <CustomHeader
+      headerText={t('layout.educationalResources')}
+      route={back}
+    />
+  );
+};
 const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
@@ -112,6 +126,10 @@ const RootLayout = () =>
         <Stack.Screen name = "pdfgen" options = {{
           header: () => 
             <CustomHeader headerText = {t("layout.pdfGen")} route = {"/pastassessments"}/>
+        }}/>
+
+        <Stack.Screen name = "educationalresources" options = {{
+          header: () => <EducationalResourcesHeader />
         }}/>
 
         <Stack.Screen name = "login" options = {{headerShown: false}}/>
