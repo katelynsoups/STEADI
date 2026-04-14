@@ -5,6 +5,7 @@
   },
   "build": {
     "development": {
+      "npmFlags": "--legacy-peer-deps",
       "developmentClient": true,
       "distribution": "internal"
     },
