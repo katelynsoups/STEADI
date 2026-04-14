@@ -16,7 +16,7 @@ index 0000000..d585e09
 +}
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml b/node_modules/expo-video-audio-extractor/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
 new file mode 100644
-index 0000000..ff01927
+index 0000000..0be0844
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
 @@ -0,0 +1,7 @@
@@ -30,7 +30,7 @@ index 0000000..ff01927
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json b/node_modules/expo-video-audio-extractor/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
 new file mode 100644
-index 0000000..97078f4
+index 0000000..d1c94d1
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
 @@ -0,0 +1,18 @@
@@ -67,7 +67,7 @@ index 0000000..1211b1e
 +coreLibraryDesugaringEnabled=false
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json b/node_modules/expo-video-audio-extractor/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
 new file mode 100644
-index 0000000..9e26dfe
+index 0000000..8372b41
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
 @@ -0,0 +1 @@
@@ -75,8 +75,7 @@ index 0000000..9e26dfe
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/expo-video-audio-extractor/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
 new file mode 100644
-index 0000000..224716b
-Binary files /dev/null and b/node_modules/expo-video-audio-extractor/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt b/node_modules/expo-video-audio-extractor/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt
 new file mode 100644
 index 0000000..e69de29
@@ -89,7 +88,7 @@ index 0000000..0a6a333
 +#Mon Mar 30 16:54:21 EDT 2026
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
 new file mode 100644
-index 0000000..c83deba
+index 0000000..817f42e
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
 @@ -0,0 +1,2 @@
@@ -98,7 +97,7 @@ index 0000000..c83deba
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugAssets/merger.xml b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugAssets/merger.xml
 new file mode 100644
-index 0000000..673cf7f
+index 0000000..16ee1d6
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugAssets/merger.xml
 @@ -0,0 +1,2 @@
@@ -107,7 +106,7 @@ index 0000000..673cf7f
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
-index 0000000..7a75770
+index 0000000..388b2f1
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 @@ -0,0 +1,2 @@
@@ -116,7 +115,7 @@ index 0000000..7a75770
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 new file mode 100644
-index 0000000..c5b6c3f
+index 0000000..dc90089
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
 @@ -0,0 +1,2 @@
@@ -146,7 +145,7 @@ index 0000000..747cc12
 +7</manifest>
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml b/node_modules/expo-video-audio-extractor/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
 new file mode 100644
-index 0000000..ff01927
+index 0000000..0be0844
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
 @@ -0,0 +1,7 @@
@@ -160,7 +159,7 @@ index 0000000..ff01927
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json b/node_modules/expo-video-audio-extractor/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
 new file mode 100644
-index 0000000..0637a08
+index 0000000..8d3f940
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
 @@ -0,0 +1 @@
@@ -168,7 +167,7 @@ index 0000000..0637a08
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt b/node_modules/expo-video-audio-extractor/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
 new file mode 100644
-index 0000000..08f4ebe
+index 0000000..c1c7878
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
 @@ -0,0 +1 @@
@@ -183,7 +182,7 @@ index 0000000..5caf8d7
 +expo.modules.videoaudioextractor
 diff --git a/node_modules/expo-video-audio-extractor/android/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt b/node_modules/expo-video-audio-extractor/android/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt
 new file mode 100644
-index 0000000..da21c53
+index 0000000..de8946c
 --- /dev/null
 +++ b/node_modules/expo-video-audio-extractor/android/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt
 @@ -0,0 +1 @@
@@ -191,8 +190,7 @@ index 0000000..da21c53
 \ No newline at end of file
 diff --git a/node_modules/expo-video-audio-extractor/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin b/node_modules/expo-video-audio-extractor/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin
 new file mode 100644
-index 0000000..a3837cb
-Binary files /dev/null and b/node_modules/expo-video-audio-extractor/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin differ
+index 0000000..e69de29
 diff --git a/node_modules/expo-video-audio-extractor/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/expo-video-audio-extractor/android/build/outputs/logs/manifest-merger-debug-report.txt
 new file mode 100644
 index 0000000..302dd5d
