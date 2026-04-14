@@ -266,14 +266,10 @@ export const styles = StyleSheet.create({
         borderRadius: 8
     },
 
-    backBtn:
-    {
+    backBtn: {
         fontSize: 25,
         color: 'white',
-        left: 13,
-        top: 56,
-        fontWeight: "bold",
-        position: "absolute"
+        fontWeight: 'bold',
     },
 
     headerText:

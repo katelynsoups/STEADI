@@ -13,11 +13,18 @@ import LanguageSelector from '../src/components/LanguageSelector';
 const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
-    <TouchableOpacity onPress={() => router.replace(route)}>
-      <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
-        style={styles.backBtn}
-      />
-    </TouchableOpacity>
+  <TouchableOpacity 
+    onPress={() => {
+      console.log('[Header] pressed');
+      router.navigate(route);
+    }}
+    style={{ position: 'absolute', left: 13, top: 56, zIndex: 10, padding: 8 }}
+  >
+    <Ionicons 
+      name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
+      style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}
+    />
+  </TouchableOpacity>
 
     <Text style={styles.headerText}>{headerText}</Text>
     
@@ -56,11 +63,18 @@ const EducationalResourcesHeader = () => {
 const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
-    <TouchableOpacity onPress={() => router.replace(route)}>
-      <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
-        style={styles.backBtn}
-      />
-    </TouchableOpacity>
+  <TouchableOpacity 
+    onPress={() => {
+      console.log('[Header] pressed');
+      router.navigate(route);
+    }}
+    style={{ position: 'absolute', left: 13, top: 60, zIndex: 10, padding: 8 }}
+  >
+    <Ionicons 
+      name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
+      style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}
+    />
+  </TouchableOpacity>
 
     <Text style={styles.headerText}>{headerText}</Text>
     
