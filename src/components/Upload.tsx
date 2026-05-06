@@ -12,7 +12,6 @@ import { useVideoPlayer, VideoView } from 'expo-video';
 import * as ImagePicker from 'expo-image-picker';
 import { extractAudio } from 'expo-video-audio-extractor';
 import * as FileSystem from 'expo-file-system/legacy';
-import { updateSaveStatus } from '../utils/saveUnit';
 import { getVideoURL} from '../utils/videoUtils';
 import { transcribeAudio } from '../utils/transcribeAudio';
 import { enterVisionTest } from '../utils/dataEntry';
@@ -37,10 +36,12 @@ const Upload : React.FC <uploadType> = ({test, text, boldPhrase, screenId, route
     const [uploading, setUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getVideoURL(screenId).then(url => {
             if (url) setVideoUrl(url);
+            setIsLoading(false);
         });
     }, [screenId]);
 
@@ -263,11 +264,27 @@ const Upload : React.FC <uploadType> = ({test, text, boldPhrase, screenId, route
         </Text>
 
         {test === 'walking' && (
-            <VideoView
-                player={player}
-                allowsFullscreen
-                style={styles.video}
-            />
+            isLoading ? (
+                <View style={[styles.video, {
+                    width: '95%',
+                    aspectRatio: 16/9,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderWidth: 2,
+                    borderColor: '#2196F3',
+                    borderRadius: 8,
+                    backgroundColor: '#f0f0f0'
+                }]}>
+                    <ActivityIndicator size="large" color="#2196F3" />
+                    <Text style={{ marginTop: 8, color: '#666' }}>Loading video...</Text>
+                </View>
+            ) : (
+                <VideoView
+                    player={player}
+                    allowsFullscreen
+                    style={[styles.video, { width: '95%', aspectRatio: 16/9 }]}
+                />
+            )
         )}
 
         <Text style = {styles.inputHeader}>Select "Upload" to select video or take video.</Text>

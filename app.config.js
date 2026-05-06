@@ -34,6 +34,8 @@ export default{
     },
     plugins: [
       "expo-localization",
+      "expo-font",
+      "expo-router",
       [
         "expo-video",
         {

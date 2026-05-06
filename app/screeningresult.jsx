@@ -34,7 +34,9 @@ const ScreeningResultPage = () => {
   return (
     <View style={[styles.safeArea, { flex: 1 }]}>
       <View style={styles.layoutHeader}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity onPress={() => router.back()}
+          style={{ position: 'absolute', left: 13, top: 56, zIndex: 10, padding: 8 }}
+          >
           <Ionicons
             name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
             style={styles.backBtn}

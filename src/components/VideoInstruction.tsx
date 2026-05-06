@@ -4,6 +4,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useVideoPlayer, VideoView } from 'expo-video';
@@ -20,10 +21,13 @@ const VideoInstruction: React.FC<screenVars> = ({text1, text2, screenId, nextRou
 {
     const router = useRouter()
     const [videoUrl, setVideoUrl] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
         getVideoURL(screenId).then(url => {
             if (url) setVideoUrl(url);
+            setIsLoading(false);
         });
     }, [screenId]);
     
@@ -32,19 +36,42 @@ const VideoInstruction: React.FC<screenVars> = ({text1, text2, screenId, nextRou
         player.play();
     });
 
+    const moveNext = async () => {
+        if (submitted) return;
+        setSubmitted(true);
+    }
+
     return (
         <View style = {styles.background}> 
             <Text style = {styles.inputHeader}>{text1}</Text>
 
-            <VideoView
-                player = {player}
-                allowsFullscreen
-                style = {styles.video}
-            />
+            {isLoading ? (
+                <View style={[styles.video, { 
+                    width: '95%',
+                    justifyContent: 'center', 
+                    alignItems: 'center',
+                    borderWidth: 2,
+                    borderColor: '#2196F3',
+                    borderRadius: 8,
+                    backgroundColor: '#f0f0f0'
+                }]}>
+                    <ActivityIndicator size="large" color="#2196F3" />
+                    <Text style={{ marginTop: 8, color: '#666' }}>Loading video...</Text>
+                </View>
+            ) : (
+                <VideoView
+                    player={player}
+                    allowsFullscreen
+                    style={[styles.video]}
+                />
+            )}
 
-            <Text style = {styles.inputHeader}>{text2}</Text>
+            <Text style={styles.inputHeader}>{text2}</Text>
 
-            <TouchableOpacity onPress = {() => {player.pause(); router.navigate(nextRoute)}} style = {styles.blueNextButton}>
+
+            <TouchableOpacity onPress = {() => {player.pause(); moveNext(), router.navigate(nextRoute)}} 
+            disabled={submitted}
+            style={[styles.blueNextButton, submitted && { opacity: 0.6 }]}>
                 <Text style = {[styles.btnText]}>Next</Text>
             </TouchableOpacity>
         </View>

@@ -266,14 +266,10 @@ export const styles = StyleSheet.create({
         borderRadius: 8
     },
 
-    backBtn:
-    {
+    backBtn: {
         fontSize: 25,
         color: 'white',
-        left: 13,
-        top: 56,
-        fontWeight: "bold",
-        position: "absolute"
+        fontWeight: 'bold',
     },
 
     headerText:
@@ -368,8 +364,8 @@ export const styles = StyleSheet.create({
     video: 
     {
       marginTop: 8,
-      width: 350,
-      height: 200,
+      width: "95%",
+      aspectRatio: 16/9,
       marginBottom: 8
     },
 

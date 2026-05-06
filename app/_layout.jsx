@@ -13,12 +13,18 @@ import LanguageSelector from '../src/components/LanguageSelector';
 const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
-    <TouchableOpacity>
-      <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
-        style = {styles.backBtn}
-        onPress = {() => router.replace(route)}
-      />
-    </TouchableOpacity>
+  <TouchableOpacity 
+    onPress={() => {
+      console.log('[Header] pressed');
+      router.navigate(route);
+    }}
+    style={{ position: 'absolute', left: 13, top: 56, zIndex: 10, padding: 8 }}
+  >
+    <Ionicons 
+      name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
+      style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}
+    />
+  </TouchableOpacity>
 
     <Text style={styles.headerText}>{headerText}</Text>
     
@@ -30,10 +36,9 @@ const CustomHeader = ({ headerText, route, showHome = true, langRight = 75}) => 
     </View>
     {showHome && (
       <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.navigate('/home')}>
           <Ionicons name={"home-outline"}
-            style = {{color: 'white', fontSize: 30}}
-            onPress = {() => router.navigate('/home')}
+            style={{color: 'white', fontSize: 30}}
           />
         </TouchableOpacity>
       </View>
@@ -58,12 +63,18 @@ const EducationalResourcesHeader = () => {
 const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75}) => (
   <View style={styles.layoutHeader}>
 
-    <TouchableOpacity>
-      <Ionicons name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
-        style = {styles.backBtn}
-        onPress = {() => router.replace({pathname: route, params: {param: param}})}
-      />
-    </TouchableOpacity>
+  <TouchableOpacity 
+    onPress={() => {
+      console.log('[Header] pressed');
+      router.navigate(route);
+    }}
+    style={{ position: 'absolute', left: 13, top: 60, zIndex: 10, padding: 8 }}
+  >
+    <Ionicons 
+      name={Platform.OS === 'ios' ? 'chevron-back' : 'arrow-back-sharp'}
+      style={{ fontSize: 25, color: 'white', fontWeight: 'bold' }}
+    />
+  </TouchableOpacity>
 
     <Text style={styles.headerText}>{headerText}</Text>
     
@@ -75,10 +86,9 @@ const ParamHeader = ({ headerText, route, param, showHome = true, langRight = 75
     </View>
     {showHome && (
       <View style={{ position: 'absolute', right: 16, bottom: 100 }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.navigate('/home')}>
           <Ionicons name={"home-outline"}
-            style = {{color: 'white', fontSize: 30}}
-            onPress = {() => router.navigate('/home')}
+            style={{color: 'white', fontSize: 30}}
           />
         </TouchableOpacity>
       </View>
@@ -258,7 +268,7 @@ const RootLayout = () =>
 
         <Stack.Screen name = "moodquestions" options = {{
           header: () => 
-            <CustomHeader headerText = {t("layout.moodQuestions")} route = {"/foottest"}/>
+            <CustomHeader headerText = {t("layout.moodQuestions")} route = {"/foottestright"}/>
         }}/>
 
         <Stack.Screen name = "assesscomplete" options = {{

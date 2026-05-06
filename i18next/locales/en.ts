@@ -43,7 +43,7 @@ const en = {
         },
         login: {
             "title": "Sign in to your Account",
-            "subtitle": "Enter your phone number and password to log in",
+            "subtitle": "Enter your email and password to log in",
             "appleButton": "Continue with Apple",
             "or": "Or",
             "emailPlaceholder": "example@email.com",

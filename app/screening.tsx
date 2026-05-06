@@ -3,7 +3,7 @@ import Screening, { FollowUpModalConfig } from '../src/components/Screening';
 import { getScreeningQuestionsForStep } from '../src/data/screeningQuestions';
 import { updateSaveStatus } from '../src/utils/saveUnit';
 import { useTranslation } from 'react-i18next';
-import { startNewSession } from '../src/utils/dataEntry';
+import { startNewSession, enterScreeningResponse} from '../src/utils/dataEntry';
 import { ActivityIndicator, View, Text } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 
@@ -54,8 +54,15 @@ const ScreeningPage = (): React.ReactElement => {
         options: [t('screeningFollowUps.injuryOptions.yes'), t('screeningFollowUps.injuryOptions.no')],
       },
     ],
-    onSubmit: (values) => {
-      console.log('[FollowUpResponses]', values);
+    onSubmit: async (values) => {
+        console.log('[FollowUpResponses]', values);
+        try {
+            for (const [key, value] of Object.entries(values)) {
+                await enterScreeningResponse(key, value);
+            }
+        } catch (error) {
+            console.error('Failed to save follow up responses:', error);
+        }
     },
   };
 

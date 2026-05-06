@@ -135,13 +135,12 @@ const PDFGen = () =>
         setRightDiagram(rightBase64);
     }
 
-    const setTests = async (tests : Object) =>
-    {
-        let temp : string[] = []
+    const setTests = async (tests: Object) => {
+        let temp: string[] = []
 
         for (const [key, value] of Object.entries(tests))
         {
-            temp.push(value.total_duration)
+            temp.push(value.tug_duration)
         }
 
         setTest(temp);

@@ -1,4 +1,4 @@
-import FootTestInstruct from '../src/components/FootTestInstruct';
+import VideoInstruction from '../src/components/VideoInstruction';
 import { updateSaveStatus } from '../src/utils/saveUnit';
 
 const FootTestInstructPage = () => {
@@ -6,7 +6,13 @@ const FootTestInstructPage = () => {
     updateSaveStatus('/foottestinstruct');
     
     return (
-        <FootTestInstruct />
+        <VideoInstruction
+            test = {'foot'} 
+            text1 = {'Watch the video tutorial for completing the foot neuropathy test using the monofilament in the at-home kit.'}
+            text2 = {''}
+            screenId={'foot-test'}
+            nextRoute = {'/foottestleft'}
+        />
     );
 };
 
