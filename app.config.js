@@ -23,6 +23,12 @@ const withFixedBuildGradle = (config) => {
       `cliFile = new File(projectRoot, "node_modules/@expo/cli/build/bin/cli")`
     );
 
+    // Fix codegenDir
+    contents = contents.replace(
+      `codegenDir = new File(["node", "--print", "require.resolve('@react-native/codegen/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().getAbsoluteFile()`,
+      `codegenDir = new File(projectRoot, "node_modules/@react-native/codegen")`
+    );
+
     config.modResults.contents = contents;
     return config;
   });
