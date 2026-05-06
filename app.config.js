@@ -1,6 +1,33 @@
 import 'dotenv/config';
 
-export default{
+const withFixedBuildGradle = (config) => {
+  config.plugins = config.plugins || [];
+  
+  const { withAppBuildGradle } = require('@expo/config-plugins');
+  
+  return withAppBuildGradle(config, (config) => {
+    const contents = config.modResults.contents;
+    
+    // Fix reactNativeDir
+    config.modResults.contents = contents
+      .replace(
+        /reactNativeDir = new File\(\["node".*?'react-native\/package\.json'\].*?\)\.getParentFile\(\)\.getAbsoluteFile\(\)/,
+        'reactNativeDir = new File(projectRoot, "node_modules/react-native")'
+      )
+      .replace(
+        /hermesCommand = new File\(\["node".*?'react-native\/package\.json'\].*?\)\.getParentFile\(\)\.getAbsolutePath\(\) \+ "\/sdks\/hermesc\/%OS-BIN%\/hermesc"/,
+        'hermesCommand = new File(projectRoot, "node_modules/react-native/sdks/hermesc/%OS-BIN%/hermesc").getAbsolutePath()'
+      )
+      .replace(
+        /codegenDir = new File\(\["node".*?'@react-native\/codegen\/package\.json'.*?\].*?\)\.getParentFile\(\)\.getAbsoluteFile\(\)/,
+        'codegenDir = new File(projectRoot, "node_modules/@react-native/codegen")'
+      );
+    
+    return config;
+  });
+};
+
+export default {
   expo: {
     scheme: "digitalsteadi",
     name: "STEADI",
@@ -23,8 +50,7 @@ export default{
       edgeToEdgeEnabled: true,
       package: "com.katelynsoups.STEADI"
     },
-    web: {
-    },
+    web: {},
     extra: {
       eas: {
         projectId: "ff395ef2-c855-4583-973a-c0e11cbccfa5"
@@ -41,8 +67,9 @@ export default{
         {
           supportsBackgroundPlayback: false,
           supportsPictureInPicture: false
-        },
-      ]
+        }
+      ],
+      withFixedBuildGradle
     ]
   }
-}
+};
