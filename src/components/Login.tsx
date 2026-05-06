@@ -43,7 +43,7 @@ const Login: React.FC = () => {
 
       if (isFirstLogin) {
         await updateDoc(docRef, { firstLogin: false });
-        router.push('/screening');
+        router.push('/screening?param=y');
       } else {
         router.push('/home');
       }

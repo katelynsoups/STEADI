@@ -87,12 +87,14 @@ export async function enterHazards(hazards: Map<string, boolean>): Promise<void>
     return;
 };
 
-export async function enterFootTest(footTest: Map<number, boolean>): Promise<void> {
+//updated for left and right foot tests
+export async function enterFootTest(footTest: Map<number, boolean>, side: 'left' | 'right'): Promise<void> {
     const sessionRef = await getActiveSessionRef();
     await setDoc(sessionRef, {
-        footNeuropathyTest: Object.fromEntries(footTest)
-    },{ merge: true });
-    return;
+        footNeuropathyTest: {
+            [side]: Object.fromEntries(footTest)
+        }
+    }, { merge: true });
 }
 
 export async function enterMedication(medications: Map<string, boolean>): Promise<void> {

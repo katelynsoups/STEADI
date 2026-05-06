@@ -38,7 +38,7 @@ const Shortcut = () =>
     </TouchableOpacity>
 
     <TouchableOpacity
-      onPress={() => router.navigate('/foottest')}
+      onPress={() => router.navigate('/foottestright')}
       style={[
         styles.btn,
         {

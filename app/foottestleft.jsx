@@ -1,12 +1,12 @@
-import FootTest from '../src/components/FootTest';
+import FootTestLeft from '../src/components/LeftFootTest';
 import { updateSaveStatus } from '../src/utils/saveUnit';
 
 const FootTestPage = () => {
 
-    updateSaveStatus('/foottest');
+    updateSaveStatus('/foottestleft');
 
     return (
-        <FootTest />
+        <FootTestLeft />
     );
 };
 

@@ -35,7 +35,7 @@ const FootTestInstruct = () =>
             style = {styles.video}
         />
 
-        <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/foottest')}} style = {styles.blueNextButton}>
+        <TouchableOpacity onPress = {() => {player.pause(); router.navigate('/foottestleft')}} style = {styles.blueNextButton}>
             <Text style = {[styles.btnText]}>Next</Text>
         </TouchableOpacity>
         </View>
