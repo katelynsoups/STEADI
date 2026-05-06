@@ -3,22 +3,27 @@ import { withAppBuildGradle } from '@expo/config-plugins';
 
 const withFixedBuildGradle = (config) => {
   return withAppBuildGradle(config, (config) => {
-    const contents = config.modResults.contents;
-    
-    config.modResults.contents = contents
-      .replace(
-        /reactNativeDir = new File\(\["node".*?'react-native\/package\.json'\].*?\)\.getParentFile\(\)\.getAbsoluteFile\(\)/,
-        'reactNativeDir = new File(projectRoot, "node_modules/react-native")'
-      )
-      .replace(
-        /hermesCommand = new File\(\["node".*?'react-native\/package\.json'\].*?\)\.getParentFile\(\)\.getAbsolutePath\(\) \+ "\/sdks\/hermesc\/%OS-BIN%\/hermesc"/,
-        'hermesCommand = new File(projectRoot, "node_modules/react-native/sdks/hermesc/%OS-BIN%/hermesc").getAbsolutePath()'
-      )
-      .replace(
-        /codegenDir = new File\(\["node".*?'@react-native\/codegen\/package\.json'.*?\].*?\)\.getParentFile\(\)\.getAbsoluteFile\(\)/,
-        'codegenDir = new File(projectRoot, "node_modules/@react-native/codegen")'
-      );
-    
+    let contents = config.modResults.contents;
+
+    // Fix reactNativeDir
+    contents = contents.replace(
+      `reactNativeDir = new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim()).getParentFile().getAbsoluteFile()`,
+      `reactNativeDir = new File(projectRoot, "node_modules/react-native")`
+    );
+
+    // Fix hermesCommand
+    contents = contents.replace(
+      `hermesCommand = new File(["node", "--print", "require.resolve('hermes-compiler/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath() + "/hermesc/%OS-BIN%/hermesc"`,
+      `hermesCommand = new File(projectRoot, "node_modules/hermes-engine/hermesc/%OS-BIN%/hermesc").getAbsolutePath()`
+    );
+
+    // Fix cliFile
+    contents = contents.replace(
+      `cliFile = new File(["node", "--print", "require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })"].execute(null, rootDir).text.trim())`,
+      `cliFile = new File(projectRoot, "node_modules/@expo/cli/build/bin/cli")`
+    );
+
+    config.modResults.contents = contents;
     return config;
   });
 };
