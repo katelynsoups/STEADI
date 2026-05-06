@@ -14,7 +14,7 @@ const withFixedBuildGradle = (config) => {
     // Fix hermesCommand
     contents = contents.replace(
       `hermesCommand = new File(["node", "--print", "require.resolve('hermes-compiler/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile().getAbsolutePath() + "/hermesc/%OS-BIN%/hermesc"`,
-      `hermesCommand = new File(projectRoot, "node_modules/hermes-engine/hermesc/%OS-BIN%/hermesc").getAbsolutePath()`
+      `hermesCommand = new File(projectRoot, "node_modules/react-native/sdks/hermesc/%OS-BIN%/hermesc").getAbsolutePath()`
     );
 
     // Fix cliFile
