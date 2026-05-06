@@ -1,14 +1,10 @@
 import 'dotenv/config';
+import { withAppBuildGradle } from '@expo/config-plugins';
 
 const withFixedBuildGradle = (config) => {
-  config.plugins = config.plugins || [];
-  
-  const { withAppBuildGradle } = require('@expo/config-plugins');
-  
   return withAppBuildGradle(config, (config) => {
     const contents = config.modResults.contents;
     
-    // Fix reactNativeDir
     config.modResults.contents = contents
       .replace(
         /reactNativeDir = new File\(\["node".*?'react-native\/package\.json'\].*?\)\.getParentFile\(\)\.getAbsoluteFile\(\)/,
